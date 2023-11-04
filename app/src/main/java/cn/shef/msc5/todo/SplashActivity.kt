@@ -54,7 +54,7 @@ class SplashActivity : BaseActivity() {
      * jump to the main activity
      */
     private fun loadMainActivity() {
-        //waiting 4 seconds in the new thread, using intent to jump to the main activity
+        //waiting 4 seconds in the main thread, using intent to jump to the main activity
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             val intent = Intent(this, MainActivity::class.java)

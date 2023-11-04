@@ -1,5 +1,6 @@
 package cn.shef.msc5.todo.model.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import cn.shef.msc5.todo.base.BaseDAO
@@ -19,19 +20,22 @@ interface UserDAO : BaseDAO<User>{
     @Query("SELECT * FROM t_user WHERE id = :id")
     fun getUser(id: Long): User?
 
-    override fun insert(vararg product: User) {
+    @Query("select * from t_user")
+    fun queryList(): LiveData<List<User>>
+
+    override fun insert(vararg user: User) {
         TODO("Not yet implemented")
     }
 
-    override fun replaceInsert(vararg product: User) {
+    override fun replaceInsert(vararg user: User) {
         TODO("Not yet implemented")
     }
 
-    override fun update(vararg obj: User): Int {
+    override fun update(vararg user: User): Int {
         TODO("Not yet implemented")
     }
 
-    override fun delete(obj: User) {
+    override fun delete(user: User) {
         TODO("Not yet implemented")
     }
 }

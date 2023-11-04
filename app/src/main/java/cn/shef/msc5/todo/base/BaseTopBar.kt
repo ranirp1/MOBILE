@@ -3,8 +3,8 @@ package cn.shef.msc5.todo.base
 import androidx.activity.ComponentActivity
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -41,16 +41,16 @@ fun BaseTopBar(activity: ComponentActivity){
 
             }) {
                 Icon(
-                    imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = "Mark as favorite"
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit ToDos"
                 )
             }
             IconButton(onClick = {
 
             }) {
                 Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit notes"
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete ToDos"
                 )
             }
         }

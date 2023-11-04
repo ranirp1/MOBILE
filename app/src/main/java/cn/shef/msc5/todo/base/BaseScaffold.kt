@@ -34,7 +34,7 @@ fun BaseScaffold (
         bottomBar = bottomBar,
         snackbarHost = snackBarHost,
         floatingActionButton = floatingActionButton,
-        floatingActionButtonPosition = FabPosition.Center,
+        floatingActionButtonPosition = FabPosition.End,
         containerColor = containerColor,
         contentColor = contentColor,
         contentWindowInsets = contentWindowInsets,

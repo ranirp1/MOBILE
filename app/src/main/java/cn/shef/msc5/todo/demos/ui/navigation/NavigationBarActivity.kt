@@ -7,9 +7,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -25,8 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_HOME
-import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_POST
 import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_PROFILE
+import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_SEARCH
 
 
 /**
@@ -44,8 +44,8 @@ class NavigationBarActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    BottomNavigation()
-                    NavigationBarWithOnlySelected()
+                    BottomNavigation()
+                    //NavigationBarWithOnlySelected()
                 }
             }
         }
@@ -55,7 +55,7 @@ class NavigationBarActivity : ComponentActivity() {
 @Composable
 fun BottomNavigation() {
 
-    val items = listOf(NAVIGATION_HOME, NAVIGATION_POST, NAVIGATION_PROFILE)
+    val items = listOf(NAVIGATION_HOME, NAVIGATION_SEARCH, NAVIGATION_PROFILE)
     var selectedItem by remember { mutableStateOf(items.first()) }
 
     NavigationBar {
@@ -77,7 +77,7 @@ fun BottomNavigation() {
 @Composable
 fun NavigationBarWithOnlySelected() {
 
-    val items = listOf(NAVIGATION_HOME, NAVIGATION_POST, NAVIGATION_PROFILE)
+    val items = listOf(NAVIGATION_HOME, NAVIGATION_SEARCH, NAVIGATION_PROFILE)
     var selectedItem by remember { mutableStateOf(items.first()) }
 
     NavigationBar {
@@ -88,8 +88,8 @@ fun NavigationBarWithOnlySelected() {
                 selected = item == selectedItem,
                 onClick = {
                     selectedItem = item
-                    Log.d("NavigationBarWithOnlySelected", item)
-                          },
+                    Log.d("NavigationBar", item)
+                },
                 alwaysShowLabel = false
             )
         }
@@ -97,12 +97,11 @@ fun NavigationBarWithOnlySelected() {
 }
 
 
-
 @Composable
 fun getIconForScreen(items: String): ImageVector {
     return when (items) {
         NAVIGATION_HOME -> Icons.Default.Home
-        NAVIGATION_POST -> Icons.Default.Add
+        NAVIGATION_SEARCH -> Icons.Default.Search
         NAVIGATION_PROFILE -> Icons.Default.Person
         else -> Icons.Default.Home
     }
@@ -112,5 +111,5 @@ fun getIconForScreen(items: String): ImageVector {
 @Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewBottomNavigation() {
-    NavigationBarWithOnlySelected()
+    BottomNavigation()
 }

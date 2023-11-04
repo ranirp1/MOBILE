@@ -1,5 +1,6 @@
 package cn.shef.msc5.todo
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -29,12 +30,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.base.BaseScaffold
+import androidx.lifecycle.ViewModelProvider
 import cn.shef.msc5.todo.base.BaseActivity
+import cn.shef.msc5.todo.base.BaseFloatingActionBar
+import cn.shef.msc5.todo.base.BaseScaffold
 import cn.shef.msc5.todo.demos.ui.navigation.getIconForScreen
+import cn.shef.msc5.todo.model.viewmodel.UserViewModel
+import cn.shef.msc5.todo.ui.screen.HomeScreen
 import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_HOME
-import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_POST
 import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_PROFILE
+import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_SEARCH
 
 /**
  * @author Zhecheng Zhao
@@ -47,6 +52,11 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        val context = LocalContext.current
+        var userViewModel: UserViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory(application)
+        ).get(UserViewModel::class.java)
         setContent {
             MaterialTheme {
                 // A surface container using the 'background' color from the theme
@@ -54,7 +64,7 @@ class MainActivity : BaseActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(this)
+                    MainScreen(this, userViewModel)
                 }
             }
         }
@@ -69,18 +79,17 @@ class MainActivity : BaseActivity() {
 }
 
 @Composable
-fun MainScreen(mainActivity: MainActivity) {
+fun MainScreen(context : Context, userViewModel: UserViewModel) {
     //get context
-    val context = LocalContext.current
     val items = listOf(
         NAVIGATION_HOME,
-        NAVIGATION_POST,
+        NAVIGATION_SEARCH,
         NAVIGATION_PROFILE
     )
     var selectedItem by remember { mutableStateOf(items.first()) }
     BaseScaffold(
         bottomBar = {
-            NavigationBar {
+            NavigationBar() {
                 items.forEachIndexed { index, item ->
                     NavigationBarItem(
                         icon = { Icon(getIconForScreen(item), contentDescription = null) },
@@ -93,18 +102,21 @@ fun MainScreen(mainActivity: MainActivity) {
                     )
                 }
             }
+        },
+        floatingActionButton = {
+            BaseFloatingActionBar()
         }
     ) {
         when (selectedItem) {
-            NAVIGATION_HOME -> EmptyScreen(mainActivity)
-            NAVIGATION_POST -> EmptyScreen(mainActivity)
-            NAVIGATION_PROFILE -> EmptyScreen(mainActivity)
+            NAVIGATION_HOME -> HomeScreen(context, userViewModel)
+            NAVIGATION_SEARCH -> EmptyScreen(context)
+            NAVIGATION_PROFILE -> EmptyScreen(context)
         }
     }
 }
 
 @Composable
-fun EmptyScreen(mainActivity: MainActivity) {
+fun EmptyScreen(context : Context) {
     Column(
 //        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -126,7 +138,7 @@ fun EmptyScreen(mainActivity: MainActivity) {
         )
         Button(
             onClick = {
-                mainActivity.startActivity(Intent(mainActivity, DetailActivity::class.java))
+                context.startActivity(Intent(context, DetailActivity::class.java))
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -144,5 +156,6 @@ fun EmptyScreen(mainActivity: MainActivity) {
 @Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewMainScreen() {
-    MainScreen(MainActivity())
+
+//    MainScreen(MainActivity())
 }
