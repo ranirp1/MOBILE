@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo
+package cn.shef.msc5.todo.activity
 
 import android.os.Bundle
 import android.util.Log
@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -38,7 +37,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.base.BaseScaffold
 import cn.shef.msc5.todo.base.BaseActivity
-import com.msc5.todos.domain.UserDTO
 
 /**
  * @author Zhecheng Zhao
@@ -137,14 +135,9 @@ fun Content() {
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
 //            ContentShimmer()
-
         }
     }
 }
-@Composable
-fun ContentCard() {
-}
-
 
 @Composable
 fun ContentShimmer(

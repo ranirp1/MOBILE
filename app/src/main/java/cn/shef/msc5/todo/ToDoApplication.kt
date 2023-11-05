@@ -8,13 +8,13 @@ import android.content.Context
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 18:15
  */
-class ToDosApplication : Application() {
+class ToDoApplication : Application() {
     init {
         instance = this
     }
 
     companion object {
-        private var instance: ToDosApplication? = null
+        private var instance: ToDoApplication? = null
         fun getApplicationContext() : Context {
             return instance!!.applicationContext
         }

@@ -20,8 +20,12 @@ class Constants {
 
         const val NAVIGATION_PROFILE = "Profile"
 
-
         //delay times
         const val DELAY_TIME = 4000L
+
+
+        const val DATABASE_TASK = "d_task"
+        const val TABLE_TASK = "t_task"
+
     }
 }

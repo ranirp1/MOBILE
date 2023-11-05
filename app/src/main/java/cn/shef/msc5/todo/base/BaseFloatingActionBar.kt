@@ -16,6 +16,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import cn.shef.msc5.todo.model.Task
+import cn.shef.msc5.todo.model.database.ToDosDatabase
 import cn.shef.msc5.todo.utilities.AnimationUtility.getAnimate
 import kotlinx.coroutines.delay
 
@@ -38,6 +40,7 @@ fun BaseFloatingActionBar() {
 
     FloatingActionButton(
         onClick = {
+            ToDosDatabase.dataBase.getTaskDAO().insert(Task(0,"1",2,"3"))
             isClick = true
         },
         contentColor = Color.White,
