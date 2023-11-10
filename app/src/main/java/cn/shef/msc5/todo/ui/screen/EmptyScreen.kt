@@ -20,8 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.DetailActivity
-import cn.shef.msc5.todo.model.database.ToDosDatabase
-import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 
 /**
  * @author Zhecheng Zhao

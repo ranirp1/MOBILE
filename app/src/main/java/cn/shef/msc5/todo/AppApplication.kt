@@ -2,26 +2,26 @@ package cn.shef.msc5.todo
 
 import android.app.Application
 import android.content.Context
+import cn.shef.msc5.todo.model.database.AppDatabase
 
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 18:15
  */
-class ToDoApplication : Application() {
+class AppApplication : Application() {
+
+//    val database: AppDatabase by lazy { AppDatabase.INSTANCE }
     init {
         instance = this
     }
 
     companion object {
-        private var instance: ToDoApplication? = null
+        private var instance: AppApplication? = null
         fun getApplicationContext() : Context {
             return instance!!.applicationContext
         }
-    }
 
-    override fun onCreate() {
-        super.onCreate()
     }
 
 }

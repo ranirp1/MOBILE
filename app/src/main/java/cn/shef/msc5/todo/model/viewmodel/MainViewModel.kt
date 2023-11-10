@@ -3,6 +3,7 @@ package cn.shef.msc5.todo.model.viewmodel
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.dao.TaskDAO
@@ -53,5 +54,16 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
             taskDAO.insert(todoItem)
             postExecute = postInsert
         }
+    }
+}
+
+class MainViewModelFactory(
+    private val taskDAO: TaskDAO
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            return MainViewModel(taskDAO) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

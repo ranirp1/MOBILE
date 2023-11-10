@@ -16,8 +16,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import cn.shef.msc5.todo.base.BaseFloatingActionBar
 import cn.shef.msc5.todo.base.BaseScaffold
 import cn.shef.msc5.todo.demos.ui.navigation.getIconForScreen
-import cn.shef.msc5.todo.model.database.ToDosDatabase
+import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
+import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
 import cn.shef.msc5.todo.utilities.Constants
 
 /**
@@ -29,7 +30,8 @@ import cn.shef.msc5.todo.utilities.Constants
 fun MainScreen(context: Context) {
 
     val mainViewModel by lazy {
-        MainViewModel(ToDosDatabase.dataBase.getTaskDAO())
+        MainViewModelFactory(AppDatabase.INSTANCE.getTaskDAO()).
+            create(MainViewModel::class.java)
     }
 
     //get context
@@ -38,6 +40,7 @@ fun MainScreen(context: Context) {
         Constants.NAVIGATION_SEARCH,
         Constants.NAVIGATION_PROFILE
     )
+    
     var selectedItem by remember { mutableStateOf(items.first()) }
     BaseScaffold(
         bottomBar = {
@@ -66,6 +69,7 @@ fun MainScreen(context: Context) {
         }
     }
 }
+
 
 @Preview(name = "Light theme")
 @Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
