@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.sql.Date
 
 /**
  * @author Zhecheng Zhao
@@ -47,9 +48,11 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
         }
     }
 
-    fun addTask(title: String, level: Int, postInsert: (() -> Unit)? = null) {
+    fun addTask(title: String, description: String, level: Int, longitude: Float, latitude: Float,
+                imageUrl: String, gmtCreate: Date, remark: String, postInsert: (() -> Unit)? = null) {
         val id = taskList.lastOrNull()?.id ?: -1
-        val todoItem = Task(id + 1, title, level, "")
+        val todoItem = Task(id + 1, title, description, level,
+            longitude, latitude, imageUrl, gmtCreate, remark)
         viewModelScope.launch(Dispatchers.IO) {
             taskDAO.insert(todoItem)
             postExecute = postInsert

@@ -19,7 +19,10 @@ import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.utilities.AnimationUtility.getAnimate
+import cn.shef.msc5.todo.utilities.DateConverter
 import kotlinx.coroutines.delay
+import java.sql.Date
+import java.time.LocalDateTime
 
 /**
  * @author Zhecheng Zhao
@@ -40,7 +43,8 @@ fun BaseFloatingActionBar() {
 
     FloatingActionButton(
         onClick = {
-            AppDatabase.INSTANCE.getTaskDAO().insert(Task(0,"1",2,"3"))
+            AppDatabase.INSTANCE.getTaskDAO().insert(Task(0,"title","description",1,
+                0.11f, 0.22f, "123445", Date(System.currentTimeMillis()), "123"))
             isClick = true
         },
         contentColor = Color.White,

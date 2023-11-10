@@ -1,7 +1,10 @@
 package cn.shef.msc5.todo.model.mapper
 
+import androidx.room.ColumnInfo
+import androidx.room.PrimaryKey
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.dto.TaskDTO
+import java.sql.Date
 
 /**
  * @author Zhecheng Zhao
@@ -13,8 +16,13 @@ class TaskDTOMapper : DomainMapper<TaskDTO, Task> {
     override fun map2Model(model: TaskDTO): Task {
         return Task(
             id = model.id,
-            name = model.name,
+            title = model.title,
+            description = model.description,
             level =  model.level,
+            longitude =  model.longitude,
+            latitude =  model.latitude,
+            imageUrl =  model.imageUrl,
+            gmtCreate =  model.gmtCreate,
             remark = model.remark
         )
     }
@@ -22,8 +30,13 @@ class TaskDTOMapper : DomainMapper<TaskDTO, Task> {
     override fun map2DTOModel(domainModel: Task): TaskDTO {
         return TaskDTO(
             id = domainModel.id,
-            name = domainModel.name,
+            title = domainModel.title,
+            description = domainModel.description,
             level =  domainModel.level,
+            longitude =  domainModel.longitude,
+            latitude =  domainModel.latitude,
+            imageUrl =  domainModel.imageUrl,
+            gmtCreate =  domainModel.gmtCreate,
             remark = domainModel.remark
         )
     }

@@ -15,9 +15,11 @@ import cn.shef.msc5.todo.utilities.Constants.Companion.DATABASE_TASK
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 19:18
  */
-@Database(entities = [Task::class], version = 1, exportSchema = false)
+@Database(entities = [Task::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
+
     companion object {
+
         var INSTANCE: AppDatabase
         val TAG = AppDatabase::class.java.simpleName
         init {
@@ -33,6 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
                 })
                 .fallbackToDestructiveMigration()
                 .build()
+
         }
 
     }

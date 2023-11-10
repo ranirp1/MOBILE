@@ -60,7 +60,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
             key = { taskItem -> taskItem.id },
             itemContent = { item ->
                 val currentItem by rememberUpdatedState(item)
-                Text(text = "name: ${item.name}")
+                Text(text = "title: ${item.title}")
                 Text(text = "level: ${item.level}")
                 Text(text = "remark: ${item.remark}")
                 Divider(color = Color.Blue)
