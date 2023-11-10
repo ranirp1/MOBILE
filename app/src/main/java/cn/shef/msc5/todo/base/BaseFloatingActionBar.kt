@@ -43,8 +43,9 @@ fun BaseFloatingActionBar() {
 
     FloatingActionButton(
         onClick = {
-            AppDatabase.INSTANCE.getTaskDAO().insert(Task(0,"title","description",1,
-                0.11f, 0.22f, "123445", Date(System.currentTimeMillis()), "123"))
+            AppDatabase.INSTANCE.getTaskDAO().insert(Task(0,"title",1,"description",1,
+                0.11f, 0.22f, "123445", Date(System.currentTimeMillis()), 1,"123"))
+
             isClick = true
         },
         contentColor = Color.White,

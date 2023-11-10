@@ -17,12 +17,14 @@ class TaskDTOMapper : DomainMapper<TaskDTO, Task> {
         return Task(
             id = model.id,
             title = model.title,
+            userId = model.userId,
             description = model.description,
             level =  model.level,
             longitude =  model.longitude,
             latitude =  model.latitude,
             imageUrl =  model.imageUrl,
             gmtCreate =  model.gmtCreate,
+            isDelete =  model.isDelete,
             remark = model.remark
         )
     }
@@ -31,12 +33,14 @@ class TaskDTOMapper : DomainMapper<TaskDTO, Task> {
         return TaskDTO(
             id = domainModel.id,
             title = domainModel.title,
+            userId = domainModel.userId,
             description = domainModel.description,
             level =  domainModel.level,
             longitude =  domainModel.longitude,
             latitude =  domainModel.latitude,
             imageUrl =  domainModel.imageUrl,
             gmtCreate =  domainModel.gmtCreate,
+            isDelete =  domainModel.isDelete,
             remark = domainModel.remark
         )
     }
