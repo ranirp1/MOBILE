@@ -4,23 +4,25 @@ import android.content.res.Configuration
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import cn.shef.msc5.todo.base.BaseFloatingActionBar
 import cn.shef.msc5.todo.base.BaseScaffold
 import cn.shef.msc5.todo.demos.ui.navigation.getIconForScreen
-import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
 import cn.shef.msc5.todo.utilities.Constants
-import java.sql.Date
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * @author Zhecheng Zhao
@@ -43,8 +45,8 @@ fun MainScreen() {
     )
 
     var selectedItem by remember { mutableStateOf(items.first()) }
-//    val scope: CoroutineScope = rememberCoroutineScope()
-//    val snackbarHostState = remember { SnackbarHostState() }
+    val scope: CoroutineScope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
     BaseScaffold(
         showTopBar = false,
         bottomBar = {
@@ -65,14 +67,17 @@ fun MainScreen() {
         floatingActionButton = {
             BaseFloatingActionBar(
                 onClick = {
-                    AppDatabase.INSTANCE.getTaskDAO().insert(
-                        Task(0,"title",1,"description",1,
-                        0.11f, 0.22f, "123445", Date(System.currentTimeMillis()), 1,"123")
-                    )
-
+                    scope.launch {
+                        snackbarHostState.showSnackbar("Snackbar")
+                    }
                 }
             )
-        }
+        },
+        hostState = snackbarHostState,
+//        snackBarHost = {
+//            SnackbarHost(hostState = snackbarHostState)
+////            BaseSnackBar(hostState = snackbarHostState)
+//        },
     ) {
         when (selectedItem) {
             Constants.NAVIGATION_HOME -> HomeScreen(LocalContext.current, mainViewModel)

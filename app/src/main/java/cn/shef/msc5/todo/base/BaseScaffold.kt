@@ -20,12 +20,13 @@ import cn.shef.msc5.todo.base.component.SmallTopAppBar
 fun BaseScaffold(
     modifier: Modifier = Modifier,
     topBarSize: TopBarSize = TopBarSize.SMALL,
+    hostState: SnackbarHostState,
     showTopBar: Boolean = false,
     showNavigationIcon: Boolean = false,
     title: String = Constants.APP_NAME,
     bottomBar: @Composable () -> Unit = {},
     //currently scaffold do not manage the state of the snackbar's state
-    snackBarHost: @Composable () -> Unit = {},
+//    snackBarHost: @Composable () -> Unit = {},
 //    snackBarHost: @Composable () -> Unit = {
 //        BaseSnackBar(
 //            snackBarEnum = SnackBarColorEnum.SUCCESS
@@ -49,7 +50,9 @@ fun BaseScaffold(
             }
         },
         bottomBar = bottomBar,
-        snackbarHost = snackBarHost,
+        snackbarHost = {
+            SnackbarHost(hostState = hostState)
+        },
         floatingActionButton = floatingActionButton,
         floatingActionButtonPosition = FabPosition.End,
         containerColor = containerColor,
