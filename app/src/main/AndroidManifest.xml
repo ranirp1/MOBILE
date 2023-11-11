@@ -35,10 +35,10 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:exported="false"></activity>
-<!--        <activity-->
-<!--            android:name=".activity.DetailActivity"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:exported="false"></activity>-->
+        <activity
+            android:name=".activity.DetailActivity"
+            android:screenOrientation="portrait"
+            android:exported="false"></activity>
         <activity
             android:name=".demos.ui.navigation.NavigationBarActivity"
             android:screenOrientation="portrait"
