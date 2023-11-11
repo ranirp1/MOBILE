@@ -19,6 +19,7 @@ import cn.shef.msc5.todo.R
 fun BaseSnackBar(
     snackBarEnum: SnackBarColorEnum
 ) {
+//    rememberScrollState()
     val snackbarHostState = remember { SnackbarHostState() }
     SnackbarHost(snackbarHostState) { data ->
         Snackbar(
@@ -29,6 +30,10 @@ fun BaseSnackBar(
         )
     }
 }
+
+
+//@Composable
+//fun rememberSnackBarState() = remember { SnackbarHostState() }
 
 sealed class SnackBarColorEnum(val backgroundColor: Int) {
     object SUCCESS : SnackBarColorEnum(R.color.purple_200)

@@ -16,13 +16,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.model.Task
-import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.utilities.AnimationUtility.getAnimate
-import cn.shef.msc5.todo.utilities.DateConverter
 import kotlinx.coroutines.delay
-import java.sql.Date
-import java.time.LocalDateTime
 
 /**
  * @author Zhecheng Zhao
@@ -30,7 +25,9 @@ import java.time.LocalDateTime
  * @date Created in 04/11/2023 11:58
  */
 @Composable
-fun BaseFloatingActionBar() {
+fun BaseFloatingActionBar(
+    onClick: () -> Unit = {}
+    ) {
 
     var isClick by remember { mutableStateOf(false) }
 
@@ -42,12 +39,12 @@ fun BaseFloatingActionBar() {
     }
 
     FloatingActionButton(
-        onClick = {
-            AppDatabase.INSTANCE.getTaskDAO().insert(Task(0,"title",1,"description",1,
-                0.11f, 0.22f, "123445", Date(System.currentTimeMillis()), 1,"123"))
-
-            isClick = true
-        },
+        onClick = onClick,
+//        onClick = {
+//            AppDatabase.INSTANCE.getTaskDAO().insert(Task(0,"title",1,"description",1,
+//                0.11f, 0.22f, "123445", Date(System.currentTimeMillis()), 1,"123"))
+//            isClick = true
+//        },
         contentColor = Color.White,
         containerColor = Color.White,
         shape = CircleShape,

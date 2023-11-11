@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import cn.shef.msc5.todo.base.BaseActivity
 import cn.shef.msc5.todo.ui.screen.MainScreen
 
@@ -30,7 +29,7 @@ class MainActivity : BaseActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(LocalContext.current)
+                    MainScreen()
                 }
             }
         }

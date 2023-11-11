@@ -35,10 +35,10 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:exported="false"></activity>
-        <activity
-            android:name=".activity.DetailActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
+<!--        <activity-->
+<!--            android:name=".activity.DetailActivity"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:exported="false"></activity>-->
         <activity
             android:name=".demos.ui.navigation.NavigationBarActivity"
             android:screenOrientation="portrait"
@@ -61,10 +61,6 @@
             android:exported="false"></activity>
         <activity
             android:name=".demos.ui.cards.CardsActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
-        <activity
-            android:name=".demos.dao.RoomActivity"
             android:screenOrientation="portrait"
             android:exported="false"></activity>
         <!-- location service -->
@@ -91,4 +87,6 @@
     <uses-feature android:name="android.hardware.camera.any"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 </manifest>

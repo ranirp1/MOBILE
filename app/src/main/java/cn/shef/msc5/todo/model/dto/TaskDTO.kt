@@ -1,10 +1,6 @@
 package cn.shef.msc5.todo.model.dto
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import cn.shef.msc5.todo.utilities.Constants.Companion.TABLE_TASK
 import kotlinx.android.parcel.Parcelize
 import java.sql.Date
 

@@ -14,6 +14,8 @@ class Constants {
 //        const val MODE: String = R.string.mode.toString() // Debug, Release .....
 
         //navigation bar name
+        const val APP_NAME = "ToDos"
+
         const val NAVIGATION_HOME = "Home"
 
         const val NAVIGATION_SEARCH = "Search"

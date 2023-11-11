@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
-import cn.shef.msc5.todo.activity.DetailActivity
+import cn.shef.msc5.todo.activity.MainActivity
 
 /**
  * @author Zhecheng Zhao
@@ -48,7 +48,7 @@ fun EmptyScreen(context : Context) {
         )
         Button(
             onClick = {
-                context.startActivity(Intent(context, DetailActivity::class.java))
+                context.startActivity(Intent(context, MainActivity::class.java))
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
