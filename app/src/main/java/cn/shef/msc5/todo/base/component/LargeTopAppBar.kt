@@ -1,14 +1,12 @@
-package cn.shef.msc5.todo.base
+package cn.shef.msc5.todo.base.component
 
-import androidx.activity.ComponentActivity
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -16,24 +14,29 @@ import androidx.compose.runtime.Composable
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
- * @date Created in 02/11/2023 11:22
+ * @date Created in 11/11/2023 00:40
  */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BaseTopBar(activity: ComponentActivity){
-    MediumTopAppBar(
+fun LargeTopAppBar(
+    title: String,
+    topAppBarBack: () -> Unit = {},
+    showNavigationIcon: Boolean = false
+) {
+    androidx.compose.material3.LargeTopAppBar(
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
         title = {
-            Text(text = "ToDos")
+            Text(text = title)
         },
         navigationIcon = {
-            IconButton(onClick = {
-                activity.finish()
-            }) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Go back"
-                )
+            if (showNavigationIcon) {
+                IconButton(onClick = topAppBarBack) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "",
+                    )
+                }
             }
         },
         actions = {
@@ -41,16 +44,16 @@ fun BaseTopBar(activity: ComponentActivity){
 
             }) {
                 Icon(
-                    imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = "Mark as favorite"
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit ToDos"
                 )
             }
             IconButton(onClick = {
 
             }) {
                 Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit notes"
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete ToDos"
                 )
             }
         }

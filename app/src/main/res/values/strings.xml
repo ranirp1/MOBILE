@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Todo</string>
 
+    <string name="todo_list">Todo List</string>
+
     <string name="mode">Debug</string>
 </resources>
