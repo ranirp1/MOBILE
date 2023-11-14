@@ -2,6 +2,7 @@ package cn.shef.msc5.todo.ui.view
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.BottomActionBar
+import cn.shef.msc5.todo.base.component.BottomConfirmBar
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -37,23 +39,8 @@ fun DetailScreen() {
         title = stringResource(R.string.todo_new_task),
         hostState = snackbarHostState,
         bottomBar = {
-            BottomActionBar(modifier = Modifier.height(70.dp),
+            BottomConfirmBar(modifier = Modifier.height(70.dp),
                 title = "Save",
-                onCamera = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar("onCamera")
-                    }
-                },
-                onLocation = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar("onLocation")
-                    }
-                },
-                onSubTask = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar("onSubTask")
-                    }
-                },
                 addClick = {
                     scope.launch {
                         snackbarHostState.showSnackbar("Add task success",
@@ -61,7 +48,33 @@ fun DetailScreen() {
                         GeneralUtil.finishActivity(context)
                     }
                 })
-        },
+        }
+//        bottomBar = {
+//            BottomActionBar(modifier = Modifier.height(70.dp),
+//                title = "Save",
+//                onCamera = {
+//                    scope.launch {
+//                        snackbarHostState.showSnackbar("onCamera")
+//                    }
+//                },
+//                onLocation = {
+//                    scope.launch {
+//                        snackbarHostState.showSnackbar("onLocation")
+//                    }
+//                },
+//                onSubTask = {
+//                    scope.launch {
+//                        snackbarHostState.showSnackbar("onSubTask")
+//                    }
+//                },
+//                addClick = {
+//                    scope.launch {
+//                        snackbarHostState.showSnackbar("Add task success",
+//                            duration = SnackbarDuration.Short)
+//                        GeneralUtil.finishActivity(context)
+//                    }
+//                })
+//        },
     ) {
 
     }
