@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.base.component.BaseScaffold
+import cn.shef.msc5.todo.base.component.AppScaffold
 import cn.shef.msc5.todo.demos.ui.navigation.getIconForScreen
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
@@ -47,7 +47,7 @@ fun MainScreen() {
     var selectedItem by remember { mutableStateOf(items.first()) }
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
-    BaseScaffold(
+    AppScaffold(
         showTopBar = false,
         bottomBar = {
             NavigationBar(

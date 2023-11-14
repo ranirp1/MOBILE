@@ -12,4 +12,15 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
     </style>
 
+<!--    <style name="Theme.SplashScreen.Starting" parent="Theme.SplashScreen">-->
+<!--        <item name="windowSplashScreenBackground">@color/white</item>-->
+<!--        <item name="windowSplashScreenAnimatedIcon">@mipmap/logo</item>-->
+<!--        <item name="windowSplashScreenAnimationDuration">3000</item>-->
+<!--        <item name="postSplashScreenTheme">@style/Theme.SplashScreen.Launcher</item>-->
+<!--    </style>-->
+
+<!--    <style name="Theme.SplashScreen.Launcher" parent="android:Theme.Material.Light.NoActionBar">-->
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+<!--    </style>-->
 </resources>

@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import cn.shef.msc5.todo.R
-import cn.shef.msc5.todo.base.component.AppScaffold
+import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 
 /**
@@ -19,10 +19,12 @@ import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 fun DashBoardScreen(context: Context, mainViewModel: MainViewModel) {
 
     val snackbarHostState = remember { SnackbarHostState() }
-    AppScaffold(
+    BaseScaffold(
         showTopBar = true,
         title = stringResource(R.string.todo_dashboard),
         hostState = snackbarHostState) {
+//        DatePicker()
+//        TimeInputSample()
     }
 
 }

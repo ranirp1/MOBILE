@@ -22,8 +22,12 @@ import cn.shef.msc5.todo.utilities.Constants
  *      splash view to show some ads or app logo
  */
 class SplashActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        val splashScreen = installSplashScreen()
+
         setContent {
             //Using Material theme
             MaterialTheme {
@@ -33,10 +37,13 @@ class SplashActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     SplashScreen()
-                    loadMainActivity()
                 }
             }
         }
+//        splashScreen.setKeepOnScreenCondition {
+//            !viewModel.isDataReady()
+//        }
+        loadMainActivity()
     }
 
     /**

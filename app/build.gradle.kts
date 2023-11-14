@@ -54,6 +54,7 @@ android {
 dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
+
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.7.0")
 //    implementation("androidx.fragment:fragment-ktx:1.7.0")
@@ -85,4 +86,12 @@ dependencies {
     implementation("androidx.room:room-common:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
+
+    // https://developer.android.com/jetpack/androidx/releases/core
+    // To use the Animator APIs
+    val animation_version = "1.0.0-beta01"
+    implementation("androidx.core:core-animation:$animation_version")
+    // Optional - APIs for SplashScreen, including compatibility helpers on devices prior Android 12
+//    val splashscreen_version = "1.1.0-alpha02"
+//    implementation("androidx.core:core-splashscreen:$splashscreen_version")
 }

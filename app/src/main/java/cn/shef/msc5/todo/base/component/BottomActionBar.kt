@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.rounded.AddCircle
@@ -88,7 +89,7 @@ fun BottomActionBar(
                     )
                 ) {
                     androidx.compose.material.Icon(
-                        Icons.Filled.Add,
+                        Icons.Filled.Check,
 //                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
                         contentDescription = title,
                         tint = Color.White

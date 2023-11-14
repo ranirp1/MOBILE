@@ -2,6 +2,7 @@ package cn.shef.msc5.todo.ui.view
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -14,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.BottomActionBar
+import cn.shef.msc5.todo.utilities.GeneralUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -36,7 +38,7 @@ fun DetailScreen() {
         hostState = snackbarHostState,
         bottomBar = {
             BottomActionBar(modifier = Modifier.height(70.dp),
-                title = "Add",
+                title = "Save",
                 onCamera = {
                     scope.launch {
                         snackbarHostState.showSnackbar("onCamera")
@@ -54,7 +56,9 @@ fun DetailScreen() {
                 },
                 addClick = {
                     scope.launch {
-                        snackbarHostState.showSnackbar("addClick")
+                        snackbarHostState.showSnackbar("Add task success",
+                            duration = SnackbarDuration.Short)
+                        GeneralUtil.finishActivity(context)
                     }
                 })
         },

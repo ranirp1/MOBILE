@@ -10,6 +10,7 @@ import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.base.component.AppScaffold
 import cn.shef.msc5.todo.base.component.BaseFloatingActionBar
+import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
 
@@ -23,7 +24,7 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 fun TasksScreen(context: Context, mainViewModel: MainViewModel) {
 
     val snackbarHostState = remember { SnackbarHostState() }
-    AppScaffold(
+    BaseScaffold(
         showTopBar = true,
         title = stringResource(R.string.todo_tasks),
         floatingActionButton = {
