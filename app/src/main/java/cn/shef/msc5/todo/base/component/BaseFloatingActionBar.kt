@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.base
+package cn.shef.msc5.todo.base.component
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape

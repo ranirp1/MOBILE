@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.ui.screen
+package cn.shef.msc5.todo.ui.view
 
 import android.content.Context
 import android.content.Intent

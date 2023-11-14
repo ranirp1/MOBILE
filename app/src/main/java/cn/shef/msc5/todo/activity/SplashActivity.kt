@@ -10,10 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import cn.shef.msc5.todo.base.BaseActivity
-import cn.shef.msc5.todo.ui.screen.SplashScreen
+import cn.shef.msc5.todo.ui.view.SplashScreen
 import cn.shef.msc5.todo.utilities.Constants
-import cn.shef.msc5.todo.utilities.GeneralUtil
 
 
 /**

@@ -1,6 +1,8 @@
-package cn.shef.msc5.todo.ui.screen
+package cn.shef.msc5.todo.ui.view
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -11,9 +13,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import cn.shef.msc5.todo.base.BaseScaffold
+import androidx.compose.ui.unit.dp
+import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.demos.ui.navigation.getIconForScreen
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
@@ -46,7 +50,9 @@ fun MainScreen() {
     BaseScaffold(
         showTopBar = false,
         bottomBar = {
-            NavigationBar {
+            NavigationBar(
+                modifier = Modifier.height(75.dp)
+            ) {
                 items.forEachIndexed { index, item ->
                     NavigationBarItem(
                         icon = { Icon(getIconForScreen(item), contentDescription = null) },

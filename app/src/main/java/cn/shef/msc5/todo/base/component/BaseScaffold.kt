@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.base
+package cn.shef.msc5.todo.base.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,9 +8,8 @@ import androidx.compose.material3.ScaffoldDefaults.contentWindowInsets
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import cn.shef.msc5.todo.base.component.CenterTopAppBar
-import cn.shef.msc5.todo.utilities.Constants
-import cn.shef.msc5.todo.base.component.NormalTopAppBar
+import androidx.compose.ui.res.stringResource
+import cn.shef.msc5.todo.R
 
 /**
  * @author Zhecheng Zhao
@@ -18,7 +17,7 @@ import cn.shef.msc5.todo.base.component.NormalTopAppBar
  * @date Created in 02/11/2023 08:07
  */
 @Composable
-fun AppScaffold(
+fun BaseScaffold(
     modifier: Modifier = Modifier,
     topBarSize: TopBarSize = TopBarSize.CENTER,
     hostState: SnackbarHostState,
@@ -26,7 +25,7 @@ fun AppScaffold(
     showNavigationIcon: Boolean = false,
     showEditIcon: Boolean = false,
     showDeleteIcon: Boolean = false,
-    title: String = Constants.APP_NAME,
+    title: String = stringResource(R.string.app_name),
     bottomBar: @Composable () -> Unit = {},
     editOnClick: () -> Unit = {},
     deleteOnClick: () -> Unit = {},
@@ -41,9 +40,9 @@ fun AppScaffold(
             if (showTopBar) {
                 when (topBarSize) {
                     is TopBarSize.CENTER -> CenterTopAppBar(title, editOnClick, deleteOnClick,
-                        showNavigationIcon, showEditIcon, showDeleteIcon);
+                        showNavigationIcon, showEditIcon, showDeleteIcon)
                     is TopBarSize.NORMAL -> NormalTopAppBar(title, editOnClick, deleteOnClick,
-                        showNavigationIcon, showEditIcon, showDeleteIcon);
+                        showNavigationIcon, showEditIcon, showDeleteIcon)
                 }
             }
         },
@@ -62,3 +61,4 @@ fun AppScaffold(
         }
     }
 }
+

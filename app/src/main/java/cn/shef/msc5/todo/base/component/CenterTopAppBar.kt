@@ -1,16 +1,24 @@
 package cn.shef.msc5.todo.base.component
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.AlertDialogDefaults.containerColor
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.utilities.GeneralUtil
 
 /**
@@ -30,7 +38,9 @@ fun CenterTopAppBar(
     showDeleteIcon: Boolean = false
 ) {
     val context = LocalContext.current
-    androidx.compose.material3.CenterAlignedTopAppBar(
+    CenterAlignedTopAppBar(
+//        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+//            containerColor =  MaterialTheme.colorScheme.primary),
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
         title = {
             Text(

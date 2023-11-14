@@ -7,6 +7,8 @@
 
     <string name="todo_title">Tasks</string>
 
+    <string name="todo_new_task">New Task</string>
+
     <string name="todo_dashboard">DashBoard</string>
 
     <string name="todo_tasks">All Tasks</string>

@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.ui.screen
+package cn.shef.msc5.todo.ui.view
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Divider
@@ -25,8 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.DetailActivity
-import cn.shef.msc5.todo.base.AppScaffold
-import cn.shef.msc5.todo.base.BaseFloatingActionBar
+import cn.shef.msc5.todo.base.component.AppScaffold
+import cn.shef.msc5.todo.base.component.BaseFloatingActionBar
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
 

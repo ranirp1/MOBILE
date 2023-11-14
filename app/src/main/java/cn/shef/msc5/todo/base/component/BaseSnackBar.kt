@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.base
+package cn.shef.msc5.todo.base.component
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Snackbar
