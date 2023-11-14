@@ -40,6 +40,10 @@
             android:screenOrientation="portrait"
             android:exported="false"></activity>
         <activity
+            android:name=".demos.activity.PullRefreshActivity"
+            android:screenOrientation="portrait"
+            android:exported="false"></activity>
+        <activity
             android:name=".demos.ui.navigation.NavigationBarActivity"
             android:screenOrientation="portrait"
             android:exported="false"></activity>

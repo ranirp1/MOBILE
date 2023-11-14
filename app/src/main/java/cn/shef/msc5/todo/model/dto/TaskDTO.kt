@@ -1,6 +1,7 @@
 package cn.shef.msc5.todo.model.dto
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
 import kotlinx.android.parcel.Parcelize
 import java.sql.Date
 
@@ -28,15 +29,21 @@ data class TaskDTO(
 
     var imageUrl: String,
 
-    var gmtCreate: Date,
+    var dueTime: Date,
 
-    var isDelete: Int,
+    var parentId: Int,
+
+    var gmtCreated: Date,
+
+    var gmtModified: Date,
+
+    var isDeleted: Int,
 
     var remark: String
 
 
 ) : Parcelable{
     override fun toString(): String {
-        return "TaskDTO(id=$id, title=$title, description=$description, level=$level, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, gmtCreate=$gmtCreate, isDelete=$isDelete, remark='$remark)"
+        return "TaskDTO(id=$id, title=$title, description=$description, level=$level, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, remark='$remark)"
     }
 }

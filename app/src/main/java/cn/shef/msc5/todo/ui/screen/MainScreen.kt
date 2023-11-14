@@ -10,19 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import cn.shef.msc5.todo.base.BaseFloatingActionBar
 import cn.shef.msc5.todo.base.BaseScaffold
 import cn.shef.msc5.todo.demos.ui.navigation.getIconForScreen
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
 import cn.shef.msc5.todo.utilities.Constants
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 /**
  * @author Zhecheng Zhao
@@ -45,8 +41,8 @@ fun MainScreen() {
     )
 
     var selectedItem by remember { mutableStateOf(items.first()) }
-    val scope: CoroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
     BaseScaffold(
         showTopBar = false,
         bottomBar = {
@@ -64,25 +60,12 @@ fun MainScreen() {
                 }
             }
         },
-        floatingActionButton = {
-            BaseFloatingActionBar(
-                onClick = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar("Snackbar")
-                    }
-                }
-            )
-        },
         hostState = snackbarHostState,
-//        snackBarHost = {
-//            SnackbarHost(hostState = snackbarHostState)
-////            BaseSnackBar(hostState = snackbarHostState)
-//        },
     ) {
         when (selectedItem) {
-            Constants.NAVIGATION_HOME -> HomeScreen(LocalContext.current, mainViewModel)
-            Constants.NAVIGATION_SEARCH -> EmptyScreen(LocalContext.current)
-            Constants.NAVIGATION_PROFILE -> EmptyScreen(LocalContext.current)
+            Constants.NAVIGATION_HOME -> HomeScreen(context, mainViewModel)
+            Constants.NAVIGATION_SEARCH -> EmptyScreen(context)
+            Constants.NAVIGATION_PROFILE -> EmptyScreen(context)
         }
     }
 }

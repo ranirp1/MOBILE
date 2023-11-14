@@ -23,8 +23,11 @@ class TaskDTOMapper : DomainMapper<TaskDTO, Task> {
             longitude =  model.longitude,
             latitude =  model.latitude,
             imageUrl =  model.imageUrl,
-            gmtCreate =  model.gmtCreate,
-            isDelete =  model.isDelete,
+            dueTime =  model.dueTime,
+            parentId =  model.parentId,
+            gmtModified =  model.gmtModified,
+            gmtCreated =  model.gmtCreated,
+            isDeleted =  model.isDeleted,
             remark = model.remark
         )
     }
@@ -39,8 +42,11 @@ class TaskDTOMapper : DomainMapper<TaskDTO, Task> {
             longitude =  domainModel.longitude,
             latitude =  domainModel.latitude,
             imageUrl =  domainModel.imageUrl,
-            gmtCreate =  domainModel.gmtCreate,
-            isDelete =  domainModel.isDelete,
+            dueTime =  domainModel.dueTime,
+            parentId =  domainModel.parentId,
+            gmtModified =  domainModel.gmtModified,
+            gmtCreated =  domainModel.gmtCreated,
+            isDeleted =  domainModel.isDeleted,
             remark = domainModel.remark
         )
     }

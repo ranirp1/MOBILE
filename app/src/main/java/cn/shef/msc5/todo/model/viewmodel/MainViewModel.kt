@@ -49,10 +49,10 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
     }
 
     fun addTask(title: String, description: String, level: Int, longitude: Float, latitude: Float,
-                imageUrl: String, gmtCreate: Date, remark: String, postInsert: (() -> Unit)? = null) {
+                imageUrl: String, gmtCreated: Date, gmtModified: Date, dueTime: Date, parentId: Int, remark: String, postInsert: (() -> Unit)? = null) {
         val id = taskList.lastOrNull()?.id ?: -1
         val todoItem = Task(id + 1, title, 1, description, level, longitude, latitude,
-             imageUrl, gmtCreate, 1, remark)
+             imageUrl, dueTime, parentId, gmtCreated, gmtModified, 1, remark)
         viewModelScope.launch(Dispatchers.IO) {
             taskDAO.insert(todoItem)
             postExecute = postInsert

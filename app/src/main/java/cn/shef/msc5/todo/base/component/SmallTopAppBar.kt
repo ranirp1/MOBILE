@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import cn.shef.msc5.todo.utilities.GeneralUtil
 
 /**
  * @author Zhecheng Zhao
@@ -22,9 +24,13 @@ import androidx.compose.runtime.Composable
 @Composable
 fun SmallTopAppBar(
     title: String,
-    topAppBarBack: () -> Unit = {},
-    showNavigationIcon: Boolean = false
+    editOnClick: () -> Unit = {},
+    deleteOnClick: () -> Unit = {},
+    showNavigationIcon: Boolean = false,
+    showEditIcon: Boolean = false,
+    showDeleteIcon: Boolean = false
 ) {
+    val context = LocalContext.current
     TopAppBar(
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
         title = {
@@ -32,7 +38,9 @@ fun SmallTopAppBar(
         },
         navigationIcon = {
             if (showNavigationIcon) {
-                IconButton(onClick = topAppBarBack) {
+                IconButton(onClick = {
+                    GeneralUtil.finishActivity(context)
+                }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         contentDescription = "",
@@ -41,21 +49,21 @@ fun SmallTopAppBar(
             }
         },
         actions = {
-            IconButton(onClick = {
-
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit ToDos"
-                )
+            if (showEditIcon) {
+                IconButton(onClick = editOnClick) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Edit ToDos"
+                    )
+                }
             }
-            IconButton(onClick = {
-
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete ToDos"
-                )
+            if(showDeleteIcon) {
+                IconButton(onClick = deleteOnClick) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete ToDos"
+                    )
+                }
             }
         }
     )

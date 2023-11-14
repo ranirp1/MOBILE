@@ -19,7 +19,7 @@ import cn.shef.msc5.todo.base.component.SmallTopAppBar
  * @date Created in 02/11/2023 08:07
  */
 @Composable
-fun BaseScaffold(
+fun AppScaffold(
     modifier: Modifier = Modifier,
     topBarSize: TopBarSize = TopBarSize.SMALL,
     hostState: SnackbarHostState,
@@ -59,15 +59,9 @@ fun BaseScaffold(
         containerColor = containerColor,
         contentColor = contentColor,
         contentWindowInsets = contentWindowInsets,
-    ){
+    ) {
         Box(modifier = Modifier.padding(it)) {
             content(it)
         }
     }
-}
-
-sealed class TopBarSize {
-    object SMALL : TopBarSize()
-    object MEDIUM : TopBarSize()
-    object LARGE : TopBarSize()
 }

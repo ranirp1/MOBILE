@@ -43,17 +43,26 @@ data class Task(
     @ColumnInfo(name = "imageUrl", typeAffinity = ColumnInfo.TEXT)
     var imageUrl: String,
 
-    @ColumnInfo(name = "gmtCreate")
-    var gmtCreate: Date,
+    @ColumnInfo(name = "dueTime")
+    var dueTime: Date,
 
-    @ColumnInfo(name = "isDelete", typeAffinity = ColumnInfo.INTEGER)
-    var isDelete: Int,
+    @ColumnInfo(name = "parentId", typeAffinity = ColumnInfo.INTEGER)
+    var parentId: Int,
+
+    @ColumnInfo(name = "gmtCreate")
+    var gmtCreated: Date,
+
+    @ColumnInfo(name = "gmtModified")
+    var gmtModified: Date,
+
+    @ColumnInfo(name = "isDeleted", typeAffinity = ColumnInfo.INTEGER)
+    var isDeleted: Int,
 
     @ColumnInfo(name = "remark", typeAffinity = ColumnInfo.TEXT)
     var remark: String
 
 ){
     override fun toString(): String {
-        return "Task(id=$id, title=$title, description=$description, level=$level, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, gmtCreate=$gmtCreate, isDelete=$isDelete, remark='$remark)"
+        return "Task(id=$id, title=$title, description=$description, level=$level, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, remark='$remark)"
     }
 }
