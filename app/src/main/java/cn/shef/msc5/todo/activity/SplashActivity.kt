@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -12,6 +13,7 @@ import androidx.compose.ui.Modifier
 import cn.shef.msc5.todo.base.BaseActivity
 import cn.shef.msc5.todo.ui.screen.SplashScreen
 import cn.shef.msc5.todo.utilities.Constants
+import cn.shef.msc5.todo.utilities.GeneralUtil
 
 
 /**
@@ -21,7 +23,7 @@ import cn.shef.msc5.todo.utilities.Constants
  *
  *      splash view to show some ads or app logo
  */
-class SplashActivity : BaseActivity() {
+class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -47,8 +49,7 @@ class SplashActivity : BaseActivity() {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             val intent = Intent(this, MainActivity::class.java)
-//            val intent = Intent(this, DetailActivity::class.java)
-            startActivity(intent)
+            startActivity( intent)
             finish()
         }, Constants.DELAY_TIME)
     }

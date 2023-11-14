@@ -92,7 +92,7 @@ fun PullRefreshScreen(
             refreshing = detailViewModel.isRefreshing,
             state = pullRefreshState,
             Modifier.align(Alignment.TopCenter),
-            contentColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
         )
     }
 }

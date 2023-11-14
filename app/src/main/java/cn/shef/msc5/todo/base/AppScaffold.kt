@@ -8,10 +8,9 @@ import androidx.compose.material3.ScaffoldDefaults.contentWindowInsets
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import cn.shef.msc5.todo.base.component.CenterTopAppBar
 import cn.shef.msc5.todo.utilities.Constants
-import cn.shef.msc5.todo.base.component.LargeTopAppBar
-import cn.shef.msc5.todo.base.component.MediumTopAppBar
-import cn.shef.msc5.todo.base.component.SmallTopAppBar
+import cn.shef.msc5.todo.base.component.NormalTopAppBar
 
 /**
  * @author Zhecheng Zhao
@@ -21,7 +20,7 @@ import cn.shef.msc5.todo.base.component.SmallTopAppBar
 @Composable
 fun AppScaffold(
     modifier: Modifier = Modifier,
-    topBarSize: TopBarSize = TopBarSize.SMALL,
+    topBarSize: TopBarSize = TopBarSize.CENTER,
     hostState: SnackbarHostState,
     showTopBar: Boolean = false,
     showNavigationIcon: Boolean = false,
@@ -41,11 +40,9 @@ fun AppScaffold(
         topBar = {
             if (showTopBar) {
                 when (topBarSize) {
-                    is TopBarSize.LARGE -> LargeTopAppBar(title, editOnClick, deleteOnClick,
+                    is TopBarSize.CENTER -> CenterTopAppBar(title, editOnClick, deleteOnClick,
                         showNavigationIcon, showEditIcon, showDeleteIcon);
-                    is TopBarSize.MEDIUM -> MediumTopAppBar(title, editOnClick, deleteOnClick,
-                        showNavigationIcon, showEditIcon, showDeleteIcon);
-                    is TopBarSize.SMALL -> SmallTopAppBar(title, editOnClick, deleteOnClick,
+                    is TopBarSize.NORMAL -> NormalTopAppBar(title, editOnClick, deleteOnClick,
                         showNavigationIcon, showEditIcon, showDeleteIcon);
                 }
             }

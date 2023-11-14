@@ -2,18 +2,25 @@ package cn.shef.msc5.todo.ui.screen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFrom
+import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 
 /**
@@ -32,10 +39,13 @@ fun SplashScreen() {
     ) {
         //Use Box to put elements on top of another.
         //https://developer.android.com/jetpack/compose/layouts/basics
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier
+            .background(MaterialTheme.colorScheme.primary)
+            .fillMaxSize()
+            .padding(horizontal = 30.dp)) {
             Image(
                 //loading image resource
-                painter = painterResource(R.mipmap.splash),
+                painter = painterResource(R.mipmap.logo),
                 contentDescription = null,
                 //shape of the image
                 contentScale = ContentScale.Crop,

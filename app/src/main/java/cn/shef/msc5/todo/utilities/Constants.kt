@@ -18,9 +18,9 @@ class Constants {
 
         const val NAVIGATION_HOME = "Home"
 
-        const val NAVIGATION_SEARCH = "Search"
+        const val NAVIGATION_TASKS = "Tasks"
 
-        const val NAVIGATION_PROFILE = "Profile"
+        const val NAVIGATION_DASHBOARD = "Dashboard"
 
         //delay times
         const val DELAY_TIME = 4000L

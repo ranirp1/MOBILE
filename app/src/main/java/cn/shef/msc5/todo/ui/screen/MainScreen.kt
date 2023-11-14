@@ -36,8 +36,8 @@ fun MainScreen() {
     //get context
     val items = listOf(
         Constants.NAVIGATION_HOME,
-        Constants.NAVIGATION_SEARCH,
-        Constants.NAVIGATION_PROFILE
+        Constants.NAVIGATION_TASKS,
+        Constants.NAVIGATION_DASHBOARD
     )
 
     var selectedItem by remember { mutableStateOf(items.first()) }
@@ -55,7 +55,7 @@ fun MainScreen() {
                         onClick = {
                             selectedItem = item
                         },
-                        alwaysShowLabel = false
+                        alwaysShowLabel = true
                     )
                 }
             }
@@ -64,8 +64,8 @@ fun MainScreen() {
     ) {
         when (selectedItem) {
             Constants.NAVIGATION_HOME -> HomeScreen(context, mainViewModel)
-            Constants.NAVIGATION_SEARCH -> EmptyScreen(context)
-            Constants.NAVIGATION_PROFILE -> EmptyScreen(context)
+            Constants.NAVIGATION_TASKS -> TasksScreen(context, mainViewModel)
+            Constants.NAVIGATION_DASHBOARD -> DashBoardScreen(context, mainViewModel)
         }
     }
 }

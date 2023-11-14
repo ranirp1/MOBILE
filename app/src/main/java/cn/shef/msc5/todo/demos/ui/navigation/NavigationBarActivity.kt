@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -25,8 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_HOME
-import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_PROFILE
-import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_SEARCH
+import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_DASHBOARD
+import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_TASKS
 
 
 /**
@@ -55,7 +56,7 @@ class NavigationBarActivity : ComponentActivity() {
 @Composable
 fun BottomNavigation() {
 
-    val items = listOf(NAVIGATION_HOME, NAVIGATION_SEARCH, NAVIGATION_PROFILE)
+    val items = listOf(NAVIGATION_HOME, NAVIGATION_TASKS, NAVIGATION_DASHBOARD)
     var selectedItem by remember { mutableStateOf(items.first()) }
 
     NavigationBar {
@@ -77,7 +78,7 @@ fun BottomNavigation() {
 @Composable
 fun NavigationBarWithOnlySelected() {
 
-    val items = listOf(NAVIGATION_HOME, NAVIGATION_SEARCH, NAVIGATION_PROFILE)
+    val items = listOf(NAVIGATION_HOME, NAVIGATION_TASKS, NAVIGATION_DASHBOARD)
     var selectedItem by remember { mutableStateOf(items.first()) }
 
     NavigationBar {
@@ -101,8 +102,8 @@ fun NavigationBarWithOnlySelected() {
 fun getIconForScreen(items: String): ImageVector {
     return when (items) {
         NAVIGATION_HOME -> Icons.Default.Home
-        NAVIGATION_SEARCH -> Icons.Default.Search
-        NAVIGATION_PROFILE -> Icons.Default.Person
+        NAVIGATION_TASKS -> Icons.Default.List
+        NAVIGATION_DASHBOARD -> Icons.Default.Person
         else -> Icons.Default.Home
     }
 }

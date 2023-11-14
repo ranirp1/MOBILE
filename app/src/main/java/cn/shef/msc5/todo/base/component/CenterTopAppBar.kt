@@ -8,7 +8,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -17,12 +16,12 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
- * @date Created in 11/11/2023 00:41
+ * @date Created in 11/11/2023 00:40
  */
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SmallTopAppBar(
+fun CenterTopAppBar(
     title: String,
     editOnClick: () -> Unit = {},
     deleteOnClick: () -> Unit = {},
@@ -31,10 +30,12 @@ fun SmallTopAppBar(
     showDeleteIcon: Boolean = false
 ) {
     val context = LocalContext.current
-    TopAppBar(
+    androidx.compose.material3.CenterAlignedTopAppBar(
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
         title = {
-            Text(text = title)
+            Text(
+                text = title
+            )
         },
         navigationIcon = {
             if (showNavigationIcon) {

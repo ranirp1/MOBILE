@@ -37,46 +37,13 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
  */
 
 @Composable
-fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
-
-    val taskListState = mainViewModel.taskListFlow.collectAsState(listOf())
+fun DashBoardScreen(context: Context, mainViewModel: MainViewModel) {
 
     val snackbarHostState = remember { SnackbarHostState() }
     AppScaffold(
         showTopBar = true,
-        title = stringResource(R.string.todo_title),
-        floatingActionButton = {
-            BaseFloatingActionBar(
-                onClick = {
-                    val intent = Intent(context, DetailActivity::class.java)
-                    GeneralUtil.startActivity(context, intent)
-                }
-            )
-        },
+        title = stringResource(R.string.todo_dashboard),
         hostState = snackbarHostState) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(MaterialTheme.colorScheme.background),
-        ) {
-            items(
-                items = taskListState.value,
-                key = { taskItem -> taskItem.id },
-                itemContent = { item ->
-                    val currentItem by rememberUpdatedState(item)
-                    Text(text = "title: ${item.title}")
-                    Text(text = "level: ${item.level}")
-                    Text(text = "remark: ${item.remark}")
-                    Divider(color = Color.Blue)
-                }
-            )
-            // Avoid over-lapping with bottom navigation bar
-            item {
-                Spacer(modifier = Modifier.height(50.dp))
-            }
-
-        }
     }
 
 }
