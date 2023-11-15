@@ -54,6 +54,7 @@ fun BaseScaffold(
                         showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon)
                     is TopBarType.CANCEL -> CancelTopAppBar(title, firstOnClick, secondOnClick,
                         showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon)
+                    else -> {}
                 }
             }
         },

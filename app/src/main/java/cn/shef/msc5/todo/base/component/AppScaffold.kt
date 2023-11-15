@@ -60,6 +60,7 @@ fun AppScaffold(
                         title, firstOnClick, secondOnClick,
                         showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon
                     )
+                    else -> {}
                 }
             }
         },
