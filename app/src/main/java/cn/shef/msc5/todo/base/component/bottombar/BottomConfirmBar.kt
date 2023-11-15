@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.base.component
+package cn.shef.msc5.todo.base.component.bottombar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,12 +12,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.rounded.AddCircle
-import androidx.compose.material.icons.rounded.Face
-import androidx.compose.material.icons.rounded.LocationOn
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -26,10 +22,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.R
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -38,12 +32,9 @@ import kotlinx.coroutines.CoroutineScope
  * @date Created in 14/11/2023 04:24
  */
 @Composable
-fun BottomActionBar(
+fun BottomConfirmBar(
     modifier: Modifier = Modifier,
     title: String,
-    onLocation: () -> Unit = {},
-    onCamera: () -> Unit = {},
-    onSubTask: () -> Unit = {},
     addClick: () -> Unit = {},
 ) {
     val scope: CoroutineScope = rememberCoroutineScope()
@@ -52,7 +43,7 @@ fun BottomActionBar(
         modifier = modifier
             .fillMaxWidth()
             .height(75.dp)
-            .background(MaterialTheme.colorScheme.primary),
+            .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -65,14 +56,9 @@ fun BottomActionBar(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ActionIcons(
-                onLocation = onLocation,
-                onCamera = onCamera,
-                onSubTask = onSubTask
-            )
-            Spacer(modifier = modifier.width(16.dp))
-            Row(modifier = modifier.fillMaxWidth(), Arrangement.End) {
+            Row(modifier = modifier.fillMaxWidth(), Arrangement.Center) {
                 androidx.compose.material.Button(
+                    modifier = modifier.fillMaxWidth(),
                     onClick = addClick,
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = MaterialTheme.colorScheme.primary,
@@ -93,38 +79,6 @@ fun BottomActionBar(
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun ActionIcons(
-    onLocation: () -> Unit,
-    onCamera: () -> Unit,
-    onSubTask: () -> Unit) {
-    Row(modifier = Modifier.wrapContentWidth(), horizontalArrangement = Arrangement.SpaceAround) {
-        IconButton(onClick = { onLocation.invoke() }) {
-            Icon(
-                Icons.Rounded.LocationOn,
-                contentDescription = stringResource(R.string.todo_new_task),
-                tint = Color.White
-            )
-        }
-
-        IconButton(onClick = { onCamera.invoke() }) {
-            Icon(
-                Icons.Rounded.Face,
-                contentDescription = stringResource(R.string.todo_new_task),
-                tint = Color.White
-            )
-        }
-
-        IconButton(onClick = { onSubTask.invoke() }) {
-            Icon(
-                Icons.Rounded.AddCircle,
-                contentDescription = stringResource(R.string.todo_new_task),
-                tint = Color.White
-            )
         }
     }
 }

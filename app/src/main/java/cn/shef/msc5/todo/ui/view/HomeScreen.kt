@@ -16,17 +16,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.DetailActivity
-import cn.shef.msc5.todo.base.component.AppScaffold
 import cn.shef.msc5.todo.base.component.BaseFloatingActionBar
 import cn.shef.msc5.todo.base.component.BaseScaffold
+import cn.shef.msc5.todo.base.component.TopBarType
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
 
@@ -40,16 +42,18 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
 
     val taskListState = mainViewModel.taskListFlow.collectAsState(listOf())
-
+    var fabVisible by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     BaseScaffold(
         showTopBar = true,
+        topBarType = TopBarType.CENTER,
         title = stringResource(R.string.todo_title),
         floatingActionButton = {
             BaseFloatingActionBar(
+                fabVisible = fabVisible,
                 onClick = {
                     val intent = Intent(context, DetailActivity::class.java)
-                    GeneralUtil.startActivity(context, intent)
+                    GeneralUtil.startActivity2(context, intent)
                 }
             )
         },

@@ -22,17 +22,19 @@ interface TaskDAO : BaseDAO<Task> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(task: Task)
 
-    @Query("select * from $TABLE_TASK where id =:id")
+    @Query("select * from $TABLE_TASK where id =:id & isDeleted = 0")
     fun findByPrimaryKey(id: Int): Task?
 
-    @Query("select * from $TABLE_TASK")
+    @Query("select * from $TABLE_TASK where isDeleted = 0")
     fun getAllTasks(): Flow<List<Task>> //List<Task>?
 
-    @Query("select count(*) from $TABLE_TASK")
+    @Query("select count(*) from $TABLE_TASK where isDeleted = 0")
     suspend fun getCount(): Int
 
     override fun delete(task: Task) {
         TODO("Not yet implemented")
+        task.isDeleted = 1
+        insert(task)
     }
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(task : Task)

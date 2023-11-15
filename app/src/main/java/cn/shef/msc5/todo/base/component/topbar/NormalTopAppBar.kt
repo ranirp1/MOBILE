@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.base.component
+package cn.shef.msc5.todo.base.component.topbar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import cn.shef.msc5.todo.utilities.GeneralUtil
 
@@ -27,8 +28,10 @@ fun NormalTopAppBar(
     editOnClick: () -> Unit = {},
     deleteOnClick: () -> Unit = {},
     showNavigationIcon: Boolean = false,
-    showEditIcon: Boolean = false,
-    showDeleteIcon: Boolean = false
+    showFirstIcon: Boolean = false,
+    showSecondIcon: Boolean = false,
+    firstIcon: ImageVector = Icons.Default.Edit,
+    secondIcon: ImageVector = Icons.Default.Delete
 ) {
     val context = LocalContext.current
     TopAppBar(
@@ -49,18 +52,18 @@ fun NormalTopAppBar(
             }
         },
         actions = {
-            if (showEditIcon) {
+            if (showFirstIcon) {
                 IconButton(onClick = editOnClick) {
                     Icon(
-                        imageVector = Icons.Default.Edit,
+                        imageVector = firstIcon,
                         contentDescription = "Edit ToDos"
                     )
                 }
             }
-            if(showDeleteIcon) {
+            if(showSecondIcon) {
                 IconButton(onClick = deleteOnClick) {
                     Icon(
-                        imageVector = Icons.Default.Delete,
+                        imageVector = secondIcon,
                         contentDescription = "Delete ToDos"
                     )
                 }

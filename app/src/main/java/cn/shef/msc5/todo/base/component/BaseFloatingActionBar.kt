@@ -1,59 +1,66 @@
 package cn.shef.msc5.todo.base.component
 
-import androidx.compose.foundation.layout.size
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddTask
+import androidx.compose.material.icons.rounded.AddTask
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.utilities.AnimationUtility.getAnimate
-import kotlinx.coroutines.delay
 
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 11:58
  */
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BaseFloatingActionBar(
-    onClick: () -> Unit = {}
-    ) {
-
-    var isClick by remember { mutableStateOf(false) }
-
-    LaunchedEffect(isClick) {
-        if (isClick) {
-            delay(1000)
-            isClick = false
-        }
-    }
-
+    fabVisible: Boolean = false,
+    onClick: () -> Unit = {},
+) {
     FloatingActionButton(
         onClick = onClick,
-//        onClick = {
-//            AppDatabase.INSTANCE.getTaskDAO().insert(Task(0,"title",1,"description",1,
-//                0.11f, 0.22f, "123445", Date(System.currentTimeMillis()), 1,"123"))
-//            isClick = true
-//        },
-        contentColor = Color.White,
-        containerColor = Color.White,
+//        contentColor = Color.White,
+//        containerColor = Color.White,
         shape = CircleShape,
     ) {
-        Icon(
-            Icons.Filled.Add,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(if (isClick) getAnimate().value.dp else 24.dp)
-        )
+        Row(Modifier.padding(start = 12.dp, end = 12.dp)) {
+            Icon(
+                Icons.Filled.AddTask,
+                contentDescription = "Add",
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            AnimatedVisibility(
+                fabVisible,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            ) {
+                Text(modifier = Modifier.padding(start = 12.dp), text = "Add")
+            }
+        }
     }
+//
+//    FloatingActionButton(
+//        onClick = onClick,
+//
+//        contentColor = Color.White,
+//        containerColor = Color.White,
+//        shape = CircleShape,
+//    ) {
+//        Icon(
+//            Icons.Filled.Add,
+//            contentDescription = null,
+//            tint = MaterialTheme.colorScheme.primary,
+//            modifier = Modifier.size(getAnimate().value.dp)
+//        )
+//    }
 }

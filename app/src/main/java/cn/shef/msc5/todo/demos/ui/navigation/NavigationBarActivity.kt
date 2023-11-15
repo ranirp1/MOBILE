@@ -6,11 +6,6 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -23,8 +18,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import cn.shef.msc5.todo.ui.view.getIconForScreen
 import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_HOME
 import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_DASHBOARD
 import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_TASKS
@@ -94,17 +89,6 @@ fun NavigationBarWithOnlySelected() {
                 alwaysShowLabel = false
             )
         }
-    }
-}
-
-
-@Composable
-fun getIconForScreen(items: String): ImageVector {
-    return when (items) {
-        NAVIGATION_HOME -> Icons.Default.Home
-        NAVIGATION_TASKS -> Icons.Default.List
-        NAVIGATION_DASHBOARD -> Icons.Default.Person
-        else -> Icons.Default.Home
     }
 }
 

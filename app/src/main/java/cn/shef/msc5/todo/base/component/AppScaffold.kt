@@ -3,13 +3,20 @@ package cn.shef.msc5.todo.base.component
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.material3.ScaffoldDefaults.contentWindowInsets
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import cn.shef.msc5.todo.R
+import cn.shef.msc5.todo.base.component.topbar.CancelTopAppBar
+import cn.shef.msc5.todo.base.component.topbar.CenterTopAppBar
+import cn.shef.msc5.todo.base.component.topbar.NormalTopAppBar
 
 /**
  * @author Zhecheng Zhao
@@ -19,16 +26,18 @@ import cn.shef.msc5.todo.R
 @Composable
 fun AppScaffold(
     modifier: Modifier = Modifier,
-    topBarSize: TopBarSize = TopBarSize.NORMAL,
+    topBarType: TopBarType = TopBarType.NORMAL,
     hostState: SnackbarHostState,
     showTopBar: Boolean = false,
     showNavigationIcon: Boolean = false,
-    showEditIcon: Boolean = false,
-    showDeleteIcon: Boolean = false,
+    showFirstIcon: Boolean = false,
+    showSecondIcon: Boolean = false,
     title: String = stringResource(R.string.app_name),
     bottomBar: @Composable () -> Unit = {},
-    editOnClick: () -> Unit = {},
-    deleteOnClick: () -> Unit = {},
+    firstOnClick: () -> Unit = {},
+    secondOnClick: () -> Unit = {},
+    firstIcon: ImageVector = Icons.Default.Edit,
+    secondIcon: ImageVector = Icons.Default.Delete,
     floatingActionButton: @Composable (() -> Unit) = {},
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(containerColor),
@@ -38,15 +47,19 @@ fun AppScaffold(
         modifier = modifier,
         topBar = {
             if (showTopBar) {
-                when (topBarSize) {
-                    is TopBarSize.CENTER -> CenterTopAppBar(
-                        title, editOnClick, deleteOnClick,
-                        showNavigationIcon, showEditIcon, showDeleteIcon
-                    );
-                    is TopBarSize.NORMAL -> NormalTopAppBar(
-                        title, editOnClick, deleteOnClick,
-                        showNavigationIcon, showEditIcon, showDeleteIcon
-                    );
+                when (topBarType) {
+                    is TopBarType.CENTER -> CenterTopAppBar(
+                        title, firstOnClick, secondOnClick,
+                        showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon
+                    )
+                    is TopBarType.NORMAL -> NormalTopAppBar(
+                        title, firstOnClick, secondOnClick,
+                        showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon
+                    )
+                    is TopBarType.CANCEL -> CancelTopAppBar(
+                        title, firstOnClick, secondOnClick,
+                        showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon
+                    )
                 }
             }
         },
@@ -66,7 +79,8 @@ fun AppScaffold(
     }
 }
 
-sealed class TopBarSize {
-    object NORMAL : TopBarSize()
-    object CENTER : TopBarSize()
+sealed class TopBarType {
+    object NORMAL : TopBarType()
+    object CENTER : TopBarType()
+    object CANCEL : TopBarType()
 }

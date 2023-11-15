@@ -3,6 +3,7 @@ package cn.shef.msc5.todo.activity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -15,10 +16,11 @@ import cn.shef.msc5.todo.ui.view.DetailScreen
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 13/11/2023 13:22
  */
+
 class DetailActivity : BaseActivity() {
 
     private val TAG = "DetailActivity"
-
+    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

@@ -1,7 +1,13 @@
 package cn.shef.msc5.todo.ui.view
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Task
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -13,11 +19,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.base.component.AppScaffold
-import cn.shef.msc5.todo.demos.ui.navigation.getIconForScreen
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
@@ -49,20 +55,23 @@ fun MainScreen() {
     AppScaffold(
         showTopBar = false,
         bottomBar = {
-            NavigationBar(
-                modifier = Modifier.height(75.dp)
-            ) {
-                items.forEachIndexed { index, item ->
-                    NavigationBarItem(
-                        icon = { Icon(getIconForScreen(item), contentDescription = null) },
-                        label = { Text(item) },
-                        selected = item == selectedItem,
-                        onClick = {
-                            selectedItem = item
-                        },
-                        alwaysShowLabel = true
-                    )
+            AnimatedVisibility(visible = true) {
+                NavigationBar(
+                    modifier = Modifier.height(75.dp)
+                ) {
+                    items.forEachIndexed { index, item ->
+                        NavigationBarItem(
+                            icon = { Icon(getIconForScreen(item), contentDescription = null) },
+                            label = { Text(item) },
+                            selected = item == selectedItem,
+                            onClick = {
+                                selectedItem = item
+                            },
+                            alwaysShowLabel = true
+                        )
+                    }
                 }
+
             }
         },
         hostState = snackbarHostState,
@@ -72,6 +81,17 @@ fun MainScreen() {
             Constants.NAVIGATION_TASKS -> TasksScreen(context, mainViewModel)
             Constants.NAVIGATION_DASHBOARD -> DashBoardScreen(context, mainViewModel)
         }
+    }
+}
+
+
+@Composable
+fun getIconForScreen(items: String): ImageVector {
+    return when (items) {
+        Constants.NAVIGATION_HOME -> Icons.Default.Home
+        Constants.NAVIGATION_TASKS -> Icons.Default.Task
+        Constants.NAVIGATION_DASHBOARD -> Icons.Default.Dashboard
+        else -> Icons.Default.Home
     }
 }
 

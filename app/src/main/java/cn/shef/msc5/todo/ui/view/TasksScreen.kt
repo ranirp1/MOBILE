@@ -2,15 +2,22 @@ package cn.shef.msc5.todo.ui.view
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.DetailActivity
-import cn.shef.msc5.todo.base.component.AppScaffold
 import cn.shef.msc5.todo.base.component.BaseFloatingActionBar
 import cn.shef.msc5.todo.base.component.BaseScaffold
+import cn.shef.msc5.todo.base.component.TopBarType
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
 
@@ -23,15 +30,21 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 @Composable
 fun TasksScreen(context: Context, mainViewModel: MainViewModel) {
 
+    var fabVisible by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     BaseScaffold(
         showTopBar = true,
+        showNavigationIcon = false,
+        showSecondIcon = true,
+        topBarType = TopBarType.NORMAL,
+        secondIcon = Icons.Default.Sort,
         title = stringResource(R.string.todo_tasks),
         floatingActionButton = {
             BaseFloatingActionBar(
+                fabVisible = fabVisible,
                 onClick = {
                     val intent = Intent(context, DetailActivity::class.java)
-                    GeneralUtil.startActivity(context, intent)
+                    GeneralUtil.startActivity2(context, intent)
                 }
             )
         },

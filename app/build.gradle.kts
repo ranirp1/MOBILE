@@ -73,12 +73,16 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     val nav_version = "2.5.3"
-    debugImplementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
     val material3_version = "1.1.2"
     implementation("androidx.compose.material3:material3:$material3_version")
     val material = "1.1.2"
 //    implementation("androidx.compose.material:material:$material")
     implementation("androidx.compose.material:material")
+    implementation("androidx.compose.material:material-icons-extended")
     val swiperefreshlayout_version = "1.1.0"
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version")
 

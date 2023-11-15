@@ -1,24 +1,19 @@
-package cn.shef.msc5.todo.base.component
+package cn.shef.msc5.todo.base.component.topbar
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import android.util.Log
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.utilities.GeneralUtil
 
 /**
@@ -29,18 +24,19 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CenterTopAppBar(
+fun CancelTopAppBar(
     title: String,
     editOnClick: () -> Unit = {},
     deleteOnClick: () -> Unit = {},
     showNavigationIcon: Boolean = false,
-    showEditIcon: Boolean = false,
-    showDeleteIcon: Boolean = false
+    showFirstIcon: Boolean = false,
+    showSecondIcon: Boolean = false,
+    firstIcon: ImageVector = Icons.Default.Edit,
+    secondIcon: ImageVector = Icons.Default.Delete
 ) {
+    Log.d("CancelTopAppBar", "CancelTopAppBar: ")
     val context = LocalContext.current
     CenterAlignedTopAppBar(
-//        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-//            containerColor =  MaterialTheme.colorScheme.primary),
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
         title = {
             Text(
@@ -50,28 +46,28 @@ fun CenterTopAppBar(
         navigationIcon = {
             if (showNavigationIcon) {
                 IconButton(onClick = {
-                    GeneralUtil.finishActivity(context)
+                    GeneralUtil.finishActivity2(context)
                 }) {
                     Icon(
-                        imageVector = Icons.Filled.ArrowBack,
+                        imageVector = Icons.Filled.Close,
                         contentDescription = "",
                     )
                 }
             }
         },
         actions = {
-            if (showEditIcon) {
+            if (showFirstIcon) {
                 IconButton(onClick = editOnClick) {
                     Icon(
-                        imageVector = Icons.Default.Edit,
+                        imageVector = firstIcon,
                         contentDescription = "Edit ToDos"
                     )
                 }
             }
-            if(showDeleteIcon) {
+            if(showSecondIcon) {
                 IconButton(onClick = deleteOnClick) {
                     Icon(
-                        imageVector = Icons.Default.Delete,
+                        imageVector = secondIcon,
                         contentDescription = "Delete ToDos"
                     )
                 }
