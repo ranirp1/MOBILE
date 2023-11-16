@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -30,11 +32,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -52,6 +54,7 @@ android {
 dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
+
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.7.0")
 //    implementation("androidx.fragment:fragment-ktx:1.7.0")
@@ -59,9 +62,8 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-text-android:1.5.4")
-    implementation("androidx.room:room-common:2.6.0")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -71,10 +73,29 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     val nav_version = "2.5.3"
-    debugImplementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
     val material3_version = "1.1.2"
     implementation("androidx.compose.material3:material3:$material3_version")
+    val material = "1.1.2"
+//    implementation("androidx.compose.material:material:$material")
+    implementation("androidx.compose.material:material")
+    implementation("androidx.compose.material:material-icons-extended")
     val swiperefreshlayout_version = "1.1.0"
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version")
 
+    val room_version = "2.6.0"
+    implementation("androidx.room:room-common:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
+    // https://developer.android.com/jetpack/androidx/releases/core
+    // To use the Animator APIs
+    val animation_version = "1.0.0-beta01"
+    implementation("androidx.core:core-animation:$animation_version")
+    // Optional - APIs for SplashScreen, including compatibility helpers on devices prior Android 12
+//    val splashscreen_version = "1.1.0-alpha02"
+//    implementation("androidx.core:core-splashscreen:$splashscreen_version")
 }

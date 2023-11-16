@@ -136,16 +136,16 @@ fun TopAppBar() {
         title = {
             Text(text = "ToDos")
         },
-        navigationIcon = {
-            IconButton(onClick = {
-
-            }) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Go back"
-                )
-            }
-        },
+//        navigationIcon = {
+//            IconButton(onClick = {
+//
+//            }) {
+//                Icon(
+//                    imageVector = Icons.Default.ArrowBack,
+//                    contentDescription = "Go back"
+//                )
+//            }
+//        },
         actions = {
             IconButton(onClick = {
 
