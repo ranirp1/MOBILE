@@ -55,23 +55,20 @@ fun MainScreen() {
     AppScaffold(
         showTopBar = false,
         bottomBar = {
-            AnimatedVisibility(visible = true) {
-                NavigationBar(
-                    modifier = Modifier.height(75.dp)
-                ) {
-                    items.forEachIndexed { index, item ->
-                        NavigationBarItem(
-                            icon = { Icon(getIconForScreen(item), contentDescription = null) },
-                            label = { Text(item) },
-                            selected = item == selectedItem,
-                            onClick = {
-                                selectedItem = item
-                            },
-                            alwaysShowLabel = true
-                        )
-                    }
+            NavigationBar(
+                modifier = Modifier.height(75.dp)
+            ) {
+                items.forEachIndexed { index, item ->
+                    NavigationBarItem(
+                        icon = { Icon(getIconForScreen(item), contentDescription = null) },
+                        label = { Text(item) },
+                        selected = item == selectedItem,
+                        onClick = {
+                            selectedItem = item
+                        },
+                        alwaysShowLabel = true
+                    )
                 }
-
             }
         },
         hostState = snackbarHostState,
@@ -79,6 +76,7 @@ fun MainScreen() {
         when (selectedItem) {
             Constants.NAVIGATION_HOME -> HomeScreen(context, mainViewModel)
             Constants.NAVIGATION_TASKS -> TasksScreen(context, mainViewModel)
+//            Constants.NAVIGATION_TASKS -> EmptyScreen(context)
             Constants.NAVIGATION_DASHBOARD -> DashBoardScreen(context, mainViewModel)
         }
     }

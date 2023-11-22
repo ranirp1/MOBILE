@@ -59,7 +59,8 @@ fun SplashScreen() {
             .background(color = colorResource(id = R.color.white))
             .fillMaxSize(),
             contentAlignment = Alignment.Center) {
-            this@Column.AnimatedVisibility(visible = imageVisible.value, modifier = Modifier.align(Alignment.Center)) {
+            this@Column.AnimatedVisibility(visible = imageVisible.value,
+                modifier = Modifier.align(Alignment.Center)) {
                 Image(
                     //loading image resource
                     painter = painterResource(R.mipmap.logo),

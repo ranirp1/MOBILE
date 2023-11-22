@@ -22,7 +22,7 @@ interface TaskDAO : BaseDAO<Task> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(task: Task)
 
-    @Query("select * from $TABLE_TASK where id =:id & isDeleted = 0")
+    @Query("select * from $TABLE_TASK where id =:id and isDeleted = 0")
     fun findByPrimaryKey(id: Int): Task?
 
     @Query("select * from $TABLE_TASK where isDeleted = 0")
