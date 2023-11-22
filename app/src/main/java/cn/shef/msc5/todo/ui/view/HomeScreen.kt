@@ -2,6 +2,7 @@ package cn.shef.msc5.todo.ui.view
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -28,6 +29,8 @@ import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.base.component.BaseFloatingActionBar
 import cn.shef.msc5.todo.base.component.BaseScaffold
+import cn.shef.msc5.todo.base.component.DatePickerBar
+import cn.shef.msc5.todo.base.component.FilterMenu
 import cn.shef.msc5.todo.base.component.TopBarType
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
@@ -38,6 +41,7 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
  * @date Created in 04/11/2023 15:57
  */
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
 
@@ -46,7 +50,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
     val snackbarHostState = remember { SnackbarHostState() }
     BaseScaffold(
         showTopBar = true,
-        topBarType = TopBarType.CENTER,
+        topBarType = TopBarType.SEARCH,
         title = stringResource(R.string.todo_title),
         floatingActionButton = {
             BaseFloatingActionBar(
@@ -64,6 +68,15 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                 .fillMaxHeight()
                 .background(MaterialTheme.colorScheme.background),
         ) {
+            stickyHeader {
+                DatePickerBar()
+            }
+            
+            item{
+                // TODO add filter menu
+                FilterMenu()
+            }
+
             items(
                 items = taskListState.value,
                 key = { taskItem -> taskItem.id },
@@ -79,8 +92,6 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
             item {
                 Spacer(modifier = Modifier.height(50.dp))
             }
-
         }
     }
-
 }

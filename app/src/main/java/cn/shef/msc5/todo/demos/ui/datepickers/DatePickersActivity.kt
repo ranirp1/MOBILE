@@ -199,3 +199,15 @@ fun DateTimePickerPreview() {
     DatePicker()
 }
 
+@Preview
+@Composable
+fun DateTimePickerPreview2() {
+    DatePicker2()
+}
+
+@Preview
+@Composable
+fun DateTimePickerPreview3() {
+    DateTimePickerExample()
+}
+

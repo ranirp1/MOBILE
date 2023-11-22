@@ -17,6 +17,7 @@ import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.base.component.topbar.CancelTopAppBar
 import cn.shef.msc5.todo.base.component.topbar.CenterTopAppBar
 import cn.shef.msc5.todo.base.component.topbar.NormalTopAppBar
+import cn.shef.msc5.todo.base.component.topbar.SearchTopAppBar
 
 /**
  * @author Zhecheng Zhao
@@ -60,6 +61,7 @@ fun AppScaffold(
                         title, firstOnClick, secondOnClick,
                         showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon
                     )
+                    is TopBarType.SEARCH -> SearchTopAppBar(title)
                     else -> {}
                 }
             }
@@ -81,7 +83,9 @@ fun AppScaffold(
 }
 
 sealed class TopBarType {
+
     object NORMAL : TopBarType()
     object CENTER : TopBarType()
     object CANCEL : TopBarType()
+    object SEARCH : TopBarType()
 }
