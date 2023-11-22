@@ -1,11 +1,18 @@
 package cn.shef.msc5.todo.ui.view
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.SnackbarResult
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.TimePicker
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -16,9 +23,13 @@ import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
+import cn.shef.msc5.todo.demos.ui.timepickers.TimePickerDialog
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 /**
  * @author Zhecheng Zhao
@@ -26,11 +37,13 @@ import kotlinx.coroutines.launch
  * @date Created in 13/11/2023 13:28
  */
 @ExperimentalAnimationApi
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailScreen() {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
+
     BaseScaffold(
         showTopBar = true,
         showNavigationIcon = true,
@@ -53,7 +66,12 @@ fun DetailScreen() {
                 },
                 onSubTask = {
                     scope.launch {
-                        snackbarHostState.showSnackbar("onSubTask")
+                        val result = snackbarHostState.showSnackbar(
+                            message = "onSubTask",
+                            actionLabel = "back")
+                        if(result == androidx.compose.material3.SnackbarResult.ActionPerformed) {
+                            Log.d("123", "DetailScreen: aaa");
+                        }
                     }
                 },
                 addClick = {

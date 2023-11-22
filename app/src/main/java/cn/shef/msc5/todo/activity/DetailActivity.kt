@@ -20,6 +20,7 @@ import cn.shef.msc5.todo.ui.view.DetailScreen
 class DetailActivity : BaseActivity() {
 
     private val TAG = "DetailActivity"
+
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

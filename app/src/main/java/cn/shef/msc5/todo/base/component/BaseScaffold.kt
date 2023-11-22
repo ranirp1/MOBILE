@@ -63,11 +63,6 @@ fun BaseScaffold(
         bottomBar = bottomBar,
         snackbarHost = {
             SnackbarHost(hostState = hostState)
-//            SnackbarHost(hostState = hostState,
-//                snackbar = {
-//                    BaseSnackBar(hostState = hostState,
-//                        snackBarEnum = SnackBarColorEnum.SUCCESS)
-//                })
         },
         floatingActionButton = floatingActionButton,
         floatingActionButtonPosition = FabPosition.End,

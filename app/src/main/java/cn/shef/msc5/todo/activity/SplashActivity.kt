@@ -28,7 +28,6 @@ class SplashActivity : ComponentActivity() {
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val splashScreen = installSplashScreen()
 
         setContent {
             //Using Material theme
@@ -42,9 +41,6 @@ class SplashActivity : ComponentActivity() {
                 }
             }
         }
-//        splashScreen.setKeepOnScreenCondition {
-//            !viewModel.isDataReady()
-//        }
         loadMainActivity()
     }
 
@@ -56,7 +52,7 @@ class SplashActivity : ComponentActivity() {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
             val intent = Intent(this, MainActivity::class.java)
-            startActivity( intent)
+            startActivity(intent)
             finish()
         }, Constants.DELAY_TIME)
     }
