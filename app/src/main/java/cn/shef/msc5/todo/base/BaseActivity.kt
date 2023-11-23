@@ -20,8 +20,10 @@ open class BaseActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         Log.v(this.localClassName, "onStart")
-        //TODO request permissions
-
     }
 
+    override fun finish() {
+        super.finish()
+        Log.v(this.localClassName, "finish")
+    }
 }
