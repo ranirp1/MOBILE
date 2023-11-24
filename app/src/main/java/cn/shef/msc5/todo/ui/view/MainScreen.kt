@@ -77,7 +77,7 @@ fun MainScreen() {
             Constants.NAVIGATION_HOME -> HomeScreen(context, mainViewModel)
             Constants.NAVIGATION_TASKS -> TasksScreen(context, mainViewModel)
 //            Constants.NAVIGATION_TASKS -> EmptyScreen(context)
-            Constants.NAVIGATION_DASHBOARD -> DashBoardScreen(context, mainViewModel)
+            Constants.NAVIGATION_DASHBOARD -> SettingScreen(context, mainViewModel)
         }
     }
 }
