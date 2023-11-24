@@ -3,14 +3,15 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("kotlin-kapt")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
-    namespace = "cn.shef.msc5.todo"
+    namespace = "uk.shef.msc5.todo"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "cn.shef.msc5.todo"
+        applicationId = "uk.shef.msc5.todo"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
@@ -79,8 +80,7 @@ dependencies {
 
     val material3_version = "1.1.2"
     implementation("androidx.compose.material3:material3:$material3_version")
-    val material = "1.1.2"
-//    implementation("androidx.compose.material:material:$material")
+
     implementation("androidx.compose.material:material")
     implementation("androidx.compose.material:material-icons-extended")
     val swiperefreshlayout_version = "1.1.0"
@@ -91,11 +91,14 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
 
+    val google_gms_location = "21.0.1"
+    val google_gms_map = "18.1.0"
+    implementation("com.google.android.gms:play-services-location:$google_gms_location")
+    implementation("com.google.android.gms:play-services-maps:$google_gms_map")
+
     // https://developer.android.com/jetpack/androidx/releases/core
     // To use the Animator APIs
     val animation_version = "1.0.0-beta01"
     implementation("androidx.core:core-animation:$animation_version")
-    // Optional - APIs for SplashScreen, including compatibility helpers on devices prior Android 12
-//    val splashscreen_version = "1.1.0-alpha02"
-//    implementation("androidx.core:core-splashscreen:$splashscreen_version")
+
 }
