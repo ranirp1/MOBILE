@@ -1,10 +1,14 @@
 package uk.shef.msc5.todo.ui.view
 
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -19,6 +23,7 @@ import uk.shef.msc5.todo.base.component.bottombar.BottomActionBar
 import uk.shef.msc5.todo.utilities.GeneralUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import uk.shef.msc5.todo.activity.MapsActivity
 
 /**
  * @author Zhecheng Zhao
@@ -47,9 +52,8 @@ fun DetailScreen() {
                     }
                 },
                 onLocation = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar("onLocation")
-                    }
+                    val intent = Intent(context, MapsActivity::class.java)
+                    GeneralUtil.startActivity2(context, intent)
                 },
                 onSubTask = {
                     scope.launch {
@@ -64,9 +68,14 @@ fun DetailScreen() {
                     }
                 })
         },
-    ) {
+        content = { padding ->
+            Column(
+                modifier = Modifier
+                    .padding(padding)){
 
-    }
+            }
+        }
+    )
 }
 
 

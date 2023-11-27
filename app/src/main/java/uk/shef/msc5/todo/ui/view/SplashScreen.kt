@@ -62,7 +62,7 @@ fun SplashScreen() {
             this@Column.AnimatedVisibility(visible = imageVisible.value, modifier = Modifier.align(Alignment.Center)) {
                 Image(
                     //loading image resource
-                    painter = painterResource(R.mipmap.logo),
+                    painter = painterResource(R.drawable.logo),
                     contentDescription = null,
                     //shape of the image
                     contentScale = ContentScale.Crop,

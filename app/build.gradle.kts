@@ -93,8 +93,28 @@ dependencies {
 
     val google_gms_location = "21.0.1"
     val google_gms_map = "18.1.0"
+    val google_map_compose = "2.8.0"
+    // google maps
     implementation("com.google.android.gms:play-services-location:$google_gms_location")
     implementation("com.google.android.gms:play-services-maps:$google_gms_map")
+    // google maps for compose
+    implementation("com.google.maps.android:maps-compose:$google_map_compose")
+
+    val google_map_ktx = "3.2.1"
+    // KTX for the Maps SDK for Android
+    implementation("com.google.maps.android:maps-ktx:$google_map_ktx")
+    // KTX for the Maps SDK for Android Utility Library
+    implementation("com.google.maps.android:maps-utils-ktx:$google_map_ktx")
+
+    val camerax_version = "1.1.0"
+    // camera
+    implementation("androidx.camera:camera-core:${camerax_version}")
+    implementation("androidx.camera:camera-camera2:${camerax_version}")
+    implementation("androidx.camera:camera-lifecycle:${camerax_version}")
+    implementation("androidx.camera:camera-video:${camerax_version}")
+
+    implementation("androidx.camera:camera-view:${camerax_version}")
+    implementation("androidx.camera:camera-extensions:${camerax_version}")
 
     // https://developer.android.com/jetpack/androidx/releases/core
     // To use the Animator APIs

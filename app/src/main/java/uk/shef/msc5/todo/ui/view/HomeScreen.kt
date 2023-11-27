@@ -52,6 +52,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                 fabVisible = fabVisible,
                 onClick = {
                     val intent = Intent(context, uk.shef.msc5.todo.activity.DetailActivity::class.java)
+//                    val intent = Intent(context, uk.shef.msc5.todo.activity.MapsActivity::class.java)
                     GeneralUtil.startActivity2(context, intent)
                 }
             )
