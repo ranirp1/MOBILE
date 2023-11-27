@@ -15,11 +15,11 @@ interface BaseDAO<in T> {
 
     @Insert
     @Throws(SQLException::class)
-    fun insert(vararg product: T)
+    fun insert(vararg obj: T)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Throws(SQLException::class)
-    fun replaceInsert(vararg product: T)
+    fun replaceInsert(vararg obj: T)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(vararg obj: T): Int

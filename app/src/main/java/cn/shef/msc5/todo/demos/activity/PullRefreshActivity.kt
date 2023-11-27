@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo
+package cn.shef.msc5.todo.demos.activity
 
 import android.os.Bundle
 import android.util.Log
@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -16,36 +15,33 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.base.BaseScaffold
+import androidx.lifecycle.viewmodel.compose.viewModel
 import cn.shef.msc5.todo.base.BaseActivity
-import com.msc5.todos.domain.UserDTO
+import cn.shef.msc5.todo.model.viewmodel.DetailViewModel
 
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 02/11/2023 06:45
  */
-class DetailActivity : BaseActivity() {
+class PullRefreshActivity : BaseActivity() {
 
     val TAG = "DetailActivity"
 
@@ -58,7 +54,7 @@ class DetailActivity : BaseActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DetailScreen(this)
+                    PullRefreshScreen()
                 }
             }
         }
@@ -72,57 +68,73 @@ class DetailActivity : BaseActivity() {
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DetailScreen(detailActivity: DetailActivity) {
+fun PullRefreshScreen(
+    modifier: Modifier = Modifier,
+    detailViewModel : DetailViewModel = viewModel()
+) {
     //get context
-    val context = LocalContext.current
-    BaseScaffold(
-        bottomBar = {
-        },
-        topBar = {
-            TopAppBar(
-                scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
-                title = {
-                    Text(text = "ToDos")
-                },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        detailActivity.finish()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Go back"
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = detailViewModel.isRefreshing,
+        onRefresh = {
+            detailViewModel.getItems()
+        })
+//    val items by detailViewModel.items.collectAsStateWithLifecycle(initialValue = emptyList())
+    val items by detailViewModel.items.collectAsState(initial = emptyList())
 
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.FavoriteBorder,
-                            contentDescription = "Mark as favorite"
-                        )
-                    }
-                    IconButton(onClick = {
-
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = "Edit notes"
-                        )
-                    }
-                }
-            )
-        },
-        content = {
-            Content()
-        }
-    )
-
-
+    // Box is used to place the pull to refresh indicator on top of the content
+    Box(modifier.pullRefresh(pullRefreshState)) {
+        // Your list or content
+        ItemsList(data = items, modifier = Modifier.fillMaxSize())
+        // the pull to refresh indicator
+        PullRefreshIndicator(
+            refreshing = detailViewModel.isRefreshing,
+            state = pullRefreshState,
+            Modifier.align(Alignment.TopCenter),
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+        )
+    }
 }
+
+@Composable
+fun ItemsList(data: List<String>, modifier: Modifier = Modifier) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(data) {
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Text(text = it, modifier = Modifier.padding(16.dp))
+            }
+        }
+    }
+}
+
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun DetailScreen() {
+//    //get context
+//    val scope = rememberCoroutineScope()
+//    val snackbarHostState = remember { SnackbarHostState() }
+//    BaseScaffold(
+//        showTopBar = false,
+//        floatingActionButton = {
+//            BaseFloatingActionBar(
+//                onClick = {
+//                    scope.launch {
+//                        snackbarHostState.showSnackbar("Snackbar")
+//                    }
+//                }
+//            )
+//        },
+//        hostState = snackbarHostState,
+//    ) {
+//
+//    }
+//
+//}
 
 @Composable
 fun Content() {
@@ -137,14 +149,9 @@ fun Content() {
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
 //            ContentShimmer()
-
         }
     }
 }
-@Composable
-fun ContentCard() {
-}
-
 
 @Composable
 fun ContentShimmer(
