@@ -2,6 +2,7 @@ package cn.shef.msc5.todo.ui.view
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,24 +12,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -37,29 +33,34 @@ import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.base.component.BaseFloatingActionBar
 import cn.shef.msc5.todo.base.component.BaseScaffold
+import cn.shef.msc5.todo.base.component.DatePickerBar
+import cn.shef.msc5.todo.base.component.ItemHolder
+import cn.shef.msc5.todo.base.component.SortingMenu
 import cn.shef.msc5.todo.base.component.TopBarType
-import cn.shef.msc5.todo.base.component.dialog.DatePicker
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
-import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.Date
 
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 15:57
  */
+
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
 
     val taskListState = mainViewModel.taskListFlow.collectAsState(listOf())
+    val sortType = mainViewModel.sortType
 
     var fabVisible by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
+    var date by remember { mutableStateOf(Date()) }
 
     BaseScaffold(
         showTopBar = true,
-        topBarType = TopBarType.CENTER,
+        topBarType = TopBarType.SEARCH,
         title = stringResource(R.string.todo_title),
         floatingActionButton = {
             BaseFloatingActionBar(
@@ -70,20 +71,49 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                 }
             )
         },
-        hostState = snackbarHostState) {
+        hostState = snackbarHostState
+    ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .background(MaterialTheme.colorScheme.background),
         ) {
+            stickyHeader{
+                DatePickerBar(
+                    onDateSelected = { date = it }
+                )
+            }
+
+            item {
+                SortingMenu(sortType) {
+                    // TODO change to date specific getAllTask
+                    mainViewModel.sortAllTasks(it)
+                }
+            }
+
+            // TODO try some sample items
+            item {
+                Column(
+                    modifier = Modifier.padding(25.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    (1..10).forEach {
+                        ItemHolder()
+                        Spacer(modifier = Modifier.height(25.dp))
+                    }
+                }
+            }
+
+
+
             items(
                 items = taskListState.value,
                 key = { taskItem -> taskItem.id },
                 itemContent = { item ->
                     val currentItem by rememberUpdatedState(item)
                     Text(text = "title: ${item.title}")
-                    Text(text = "level: ${item.level}")
+                    Text(text = "level: ${item.priority}")
                     Text(text = "remark: ${item.remark}")
                     Divider(color = Color.Blue)
                 }
@@ -92,8 +122,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
             item {
                 Spacer(modifier = Modifier.height(50.dp))
             }
-
         }
     }
-
 }
+

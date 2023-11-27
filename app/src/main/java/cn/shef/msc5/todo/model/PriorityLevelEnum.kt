@@ -5,6 +5,6 @@ package cn.shef.msc5.todo.model
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 15:16
  */
-enum class PriorityLevelEnum {
-    A, B, C;
+enum class PriorityLevelEnum(){
+    LOW, MEDIUM, HIGH
 }
