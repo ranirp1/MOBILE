@@ -19,7 +19,6 @@ fun ConfirmDialog(
     dismissText: String = "Cancel",
     showDialog: (Boolean) -> Unit
 ) {
-    // var showDialog by remember { mutableStateOf(true) }
     AlertDialog(
         onDismissRequest = { showDialog(false) },
         title = {
