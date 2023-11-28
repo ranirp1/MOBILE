@@ -32,10 +32,6 @@
             android:screenOrientation="portrait"
             android:exported="false"></activity>
         <activity
-            android:name=".demos.activity.DemoActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
-        <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:exported="false"></activity>
@@ -43,41 +39,9 @@
             android:name=".activity.DetailActivity"
             android:screenOrientation="portrait"
             android:exported="false"></activity>
-        <activity
-            android:name=".demos.activity.PullRefreshActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
-        <activity
-            android:name=".demos.ui.navigation.NavigationBarActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
-        <activity
-            android:name=".demos.ui.timepickers.TimePickersActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
-        <activity
-            android:name=".demos.ui.datepickers.DatePickersActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
-        <activity
-            android:name=".demos.ui.appbars.TopAppBarActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
-        <activity
-            android:name=".demos.ui.buttons.ButtonsActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
-        <activity
-            android:name=".demos.ui.cards.CardsActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
         <!-- location service -->
         <service
             android:name=".services.LocationService"
-            android:screenOrientation="portrait"
-            android:exported="false"></service>
-       <service
-            android:name=".demos.service.DemoService"
             android:screenOrientation="portrait"
             android:exported="false"></service>
 

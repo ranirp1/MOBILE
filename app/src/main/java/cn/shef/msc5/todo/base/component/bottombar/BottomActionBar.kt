@@ -34,7 +34,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
-import cn.shef.msc5.todo.demos.ui.datepickers.DatePicker
 import kotlinx.coroutines.CoroutineScope
 
 /**
