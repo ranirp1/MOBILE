@@ -5,14 +5,20 @@ import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,12 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import cn.shef.msc5.todo.R
-import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.activity.LocationActivity
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
@@ -54,6 +55,9 @@ fun SettingScreen(context: Context, mainViewModel: MainViewModel){
                 .fillMaxHeight()
                 .fillMaxWidth()
                 .background(Color.White)
+                .padding(
+                    horizontal = 15.dp
+                )
         ){
             Text(
                 text = "My Account",
@@ -71,8 +75,17 @@ fun SettingScreen(context: Context, mainViewModel: MainViewModel){
                 Modifier
                     .padding(start = 32.dp, end = 32.dp, top = 10.dp, bottom = 10.dp)
                     .height(35.dp)
-            ) {
+            ) { Row(){
                 Text("Theme")
+                Spacer(modifier = Modifier.padding(15.dp))
+                var checked by remember { mutableStateOf(true) }
+                Switch(
+                    checked = checked,
+                    onCheckedChange = {
+                        checked = it
+                    }
+                )
+            }
             }
             val context = LocalContext.current
             TextButton(onClick = {
