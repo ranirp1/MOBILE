@@ -41,7 +41,7 @@ fun MainScreen() {
 
     val mainViewModel by lazy {
         MainViewModelFactory(AppDatabase.INSTANCE.getTaskDAO()).
-            create(MainViewModel::class.java)
+        create(MainViewModel::class.java)
     }
 
     //get context

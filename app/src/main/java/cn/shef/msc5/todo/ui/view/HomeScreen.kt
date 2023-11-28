@@ -75,7 +75,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                         // TODO check todos by location
                     }
                 )
-                
+
                 Spacer(modifier = Modifier.height(10.dp))
 
                 BaseFloatingActionBar(

@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.rounded.AddAlert
 import androidx.compose.material.icons.rounded.AddCircle
 import androidx.compose.material.icons.rounded.AddTask
 import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material.icons.rounded.Camera
 import androidx.compose.material.icons.rounded.Face
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.Icon
@@ -32,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
+import cn.shef.msc5.todo.demos.ui.datepickers.DatePicker
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -45,6 +48,8 @@ fun BottomActionBar(
     title: String,
     onLocation: () -> Unit = {},
     onCamera: () -> Unit = {},
+    onCalender:() -> Unit={},
+    onPriority:()-> Unit={},
     onSubTask: () -> Unit = {},
     addClick: () -> Unit = {},
 ) {
@@ -70,6 +75,8 @@ fun BottomActionBar(
             ActionIcons(
                 onLocation = onLocation,
                 onCamera = onCamera,
+                onCalender=onCalender,
+                onPriority=onPriority,
                 onSubTask = onSubTask
             )
             Spacer(modifier = modifier.width(16.dp))
@@ -103,6 +110,8 @@ fun BottomActionBar(
 fun ActionIcons(
     onLocation: () -> Unit,
     onCamera: () -> Unit,
+    onCalender: () -> Unit,
+    onPriority: () -> Unit,
     onSubTask: () -> Unit) {
     Row(modifier = Modifier.wrapContentWidth(), horizontalArrangement = Arrangement.SpaceAround) {
         IconButton(onClick = { onLocation.invoke() }) {
@@ -114,6 +123,22 @@ fun ActionIcons(
         }
 
         IconButton(onClick = { onCamera.invoke() }) {
+            Icon(
+                Icons.Rounded.Camera,
+                contentDescription = stringResource(R.string.todo_new_task),
+                tint = Color.White
+            )
+        }
+
+        IconButton(onClick = { onPriority.invoke() }) {
+            Icon(
+                Icons.Rounded.AddAlert,
+                contentDescription = stringResource(R.string.todo_new_task),
+                tint = Color.White
+            )
+        }
+
+        IconButton(onClick = { onCalender.invoke() }) {
             Icon(
                 Icons.Rounded.CalendarMonth,
                 contentDescription = stringResource(R.string.todo_new_task),

@@ -1,62 +1,74 @@
 package cn.shef.msc5.todo.ui.view
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.expandVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.SnackbarResult
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.TimePicker
-import androidx.compose.material3.rememberTimePickerState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.DetailActivity
-import cn.shef.msc5.todo.activity.MapsActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
-import cn.shef.msc5.todo.demos.ui.timepickers.TimePickerDialog
-import cn.shef.msc5.todo.demos.ui.timepickers.TimePickersActivity
+import cn.shef.msc5.todo.demos.ui.datepickers.DatePicker
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 13/11/2023 13:28
  */
+@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalAnimationApi
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailScreen() {
+    var text by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
-
     BaseScaffold(
         showTopBar = true,
         showNavigationIcon = true,
         showFirstIcon = false,
         showSecondIcon = false,
         title = stringResource(R.string.todo_new_task),
-        hostState = snackbarHostState,
-        bottomBar = {
+        hostState = snackbarHostState,bottomBar = {
             BottomActionBar(modifier = Modifier.height(70.dp),
                 title = "Save",
                 onCamera = {
@@ -66,21 +78,23 @@ fun DetailScreen() {
                 },
                 onLocation = {
                     scope.launch {
-                        snackbarHostState.showSnackbar("onLocation")
-                        val intent = Intent(context, MapsActivity::class.java)
-                        GeneralUtil.startActivity2(context, intent)
+                        snackbarHostState.showSnackbar("Loc")
                     }
                 },
                 onSubTask = {
                     scope.launch {
-                        val result = snackbarHostState.showSnackbar(
-                            message = "onSubTask",
-                            actionLabel = "back")
-                        if(result == androidx.compose.material3.SnackbarResult.ActionPerformed) {
-                            Log.d("123", "DetailScreen: aaa");
-                        }
+
                     }
                 },
+                onCalender = {scope.launch {
+                    snackbarHostState.showSnackbar("onCalender")
+                }},
+                onPriority={scope.launch {
+                    scope.launch {
+                        snackbarHostState.showSnackbar("Level")
+                    }
+                }},
+
                 addClick = {
                     scope.launch {
                         snackbarHostState.showSnackbar("Add task success",
@@ -88,9 +102,42 @@ fun DetailScreen() {
                         GeneralUtil.finishActivity2(context)
                     }
                 })
-        },
-    ) {
+        }) {
 
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            //.heightIn(80.dp)
+            ,verticalArrangement = Arrangement.Top) {
+
+            TextField(modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(80.dp)
+                .background(MaterialTheme.colorScheme.background)
+                .padding(10.dp),
+                value = title,
+                onValueChange = { title = it },
+                placeholder = { Text(text = "Title") })
+
+            TextField(modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(500.dp)
+                .background(MaterialTheme.colorScheme.background)
+                .padding(10.dp), value = text,
+                onValueChange = { text = it },
+                placeholder = { Text(text = "Description") })
+            Text(modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(50.dp)
+                .padding(10.dp), text = "Selected Task Location is ")
+            Text(modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(10.dp)
+                .padding(10.dp), text = "Due Date:")
+            Text(modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(10.dp)
+                .padding(10.dp), text = "Due time:")
+        }
     }
 }
 
@@ -101,3 +148,4 @@ fun DetailScreen() {
 fun PreviewDetailScreen() {
 //    MainScreen(LocalContext.current)
 }
+
