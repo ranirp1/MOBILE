@@ -47,6 +47,7 @@ fun MainScreen() {
     //get context
     val items = listOf(
         Constants.NAVIGATION_HOME,
+        Constants.NAVIGATION_TASKS,
         Constants.NAVIGATION_PROGRESS,
         Constants.NAVIGATION_PROFILE
     )
@@ -77,6 +78,8 @@ fun MainScreen() {
     ) {
         when (selectedItem) {
             Constants.NAVIGATION_HOME -> HomeScreen(context, mainViewModel)
+            Constants.NAVIGATION_TASKS -> TasksScreen(context, mainViewModel)
+            // TODO add progress screen
             Constants.NAVIGATION_PROGRESS -> TasksScreen(context, mainViewModel)
 //            Constants.NAVIGATION_TASKS -> EmptyScreen(context)
             Constants.NAVIGATION_PROFILE -> DashBoardScreen(context, mainViewModel)
@@ -89,6 +92,7 @@ fun MainScreen() {
 fun getIconForScreen(items: String): ImageVector {
     return when (items) {
         Constants.NAVIGATION_HOME -> Icons.Default.Home
+        Constants.NAVIGATION_TASKS -> Icons.Default.Task
         Constants.NAVIGATION_PROGRESS -> Icons.Default.DonutSmall
         Constants.NAVIGATION_PROFILE -> Icons.Default.AccountCircle
         else -> Icons.Default.Home

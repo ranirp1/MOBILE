@@ -115,7 +115,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                     modifier = Modifier.padding(25.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    (1..10).forEach {
+                    (1..3).forEach {
                         ItemHolder()
                         Spacer(modifier = Modifier.height(25.dp))
                     }

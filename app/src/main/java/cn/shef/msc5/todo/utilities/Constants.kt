@@ -18,6 +18,8 @@ class Constants {
 
         const val NAVIGATION_HOME = "Home"
 
+        const val NAVIGATION_TASKS = "Tasks"
+
         const val NAVIGATION_PROGRESS = "Progress"
 
         const val NAVIGATION_PROFILE = "Profile"
