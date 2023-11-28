@@ -1,6 +1,7 @@
 package cn.shef.msc5.todo.ui.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -20,10 +21,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import cn.shef.msc5.todo.R
+import cn.shef.msc5.todo.activity.DetailActivity
+import cn.shef.msc5.todo.activity.MapsActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
 import cn.shef.msc5.todo.demos.ui.timepickers.TimePickerDialog
+import cn.shef.msc5.todo.demos.ui.timepickers.TimePickersActivity
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -62,6 +67,8 @@ fun DetailScreen() {
                 onLocation = {
                     scope.launch {
                         snackbarHostState.showSnackbar("onLocation")
+                        val intent = Intent(context, MapsActivity::class.java)
+                        GeneralUtil.startActivity2(context, intent)
                     }
                 },
                 onSubTask = {
