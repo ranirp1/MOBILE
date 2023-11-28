@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
@@ -42,6 +43,8 @@ fun ItemHolder(
     // TODO add the task variables
 ) {
     var showOptionsMenu by remember { mutableStateOf(false) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(5.dp),
@@ -88,7 +91,8 @@ fun ItemHolder(
                             text = { Text(text = OPTIONS_DELETE, color = PurpleGrey40) },
                             onClick = {
                                 showOptionsMenu = false
-                                // TODO delete from database, show confirm dialog?
+                                // TODO delete from database, show confirm dialog
+                                showDeleteDialog = true
                             }
                         )
                     }
@@ -115,6 +119,10 @@ fun ItemHolder(
                     Text(text = "Due Date")
                 }
             }
+        }
+
+        if(showDeleteDialog){
+            ConfirmDialog{ showDeleteDialog = it }
         }
     }
 }
