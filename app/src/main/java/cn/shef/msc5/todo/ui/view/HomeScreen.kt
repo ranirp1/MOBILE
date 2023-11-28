@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
@@ -54,7 +56,8 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
     val taskListState = mainViewModel.taskListFlow.collectAsState(listOf())
     val sortType = mainViewModel.sortType
 
-    var fabVisible by remember { mutableStateOf(false) }
+    var fabVisibleAddTask by remember { mutableStateOf(false) }
+    var fabVisibleLocation by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     var date by remember { mutableStateOf(Date()) }
 
@@ -63,13 +66,27 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
         topBarType = TopBarType.SEARCH,
         title = stringResource(R.string.todo_title),
         floatingActionButton = {
-            BaseFloatingActionBar(
-                fabVisible = fabVisible,
-                onClick = {
-                    val intent = Intent(context, DetailActivity::class.java)
-                    GeneralUtil.startActivity2(context, intent)
-                }
-            )
+            Column {
+                BaseFloatingActionBar(
+                    fabVisible = fabVisibleLocation,
+                    imageVector = Icons.Default.PinDrop,
+                    contentDescription = "Location",
+                    onClick = {
+                        // TODO check todos by location
+                    }
+                )
+                
+                Spacer(modifier = Modifier.height(10.dp))
+
+                BaseFloatingActionBar(
+                    fabVisible = fabVisibleAddTask,
+                    onClick = {
+                        val intent = Intent(context, DetailActivity::class.java)
+                        GeneralUtil.startActivity2(context, intent)
+                    }
+                )
+            }
+
         },
         hostState = snackbarHostState
     ) {
@@ -92,7 +109,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                 }
             }
 
-            // TODO try some sample items
+            // trying to display some itemholders
             item {
                 Column(
                     modifier = Modifier.padding(25.dp),
@@ -104,8 +121,6 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                     }
                 }
             }
-
-
 
             items(
                 items = taskListState.value,
