@@ -11,11 +11,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cn.shef.msc5.todo.ui.theme.PurpleGrey40
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
 
@@ -37,8 +40,8 @@ import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
 @Composable
 fun ItemHolder(
     // TODO add the task variables
-){
-    var showOptionsMenu by remember{ mutableStateOf(false) }
+) {
+    var showOptionsMenu by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(5.dp),
@@ -48,14 +51,14 @@ fun ItemHolder(
     ) {
         Column(
             modifier = Modifier.padding(vertical = 8.dp, horizontal = 10.dp)
-        ){
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
-            ){
+            ) {
                 Text(text = "Title", fontSize = 20.sp)
-                Box{
+                Box {
                     IconButton(
                         modifier = Modifier.size(20.dp),
                         onClick = {
@@ -72,18 +75,22 @@ fun ItemHolder(
                         expanded = showOptionsMenu,
                         onDismissRequest = { showOptionsMenu = false }
                     ) {
-                        DropdownMenuItem(onClick = {
-                            showOptionsMenu = false
-                            // TODO duplicate by insert a copy to database
-                        }) {
-                            Text(text = OPTIONS_DUPLICATE)
-                        }
-                        DropdownMenuItem(onClick = {
-                            showOptionsMenu = false
-                            // TODO delete from database, show confirm dialog?
-                        }) {
-                            Text(text = OPTIONS_DELETE)
-                        }
+                        DropdownMenuItem(
+                            leadingIcon = { Icon(imageVector = Icons.Default.ContentCopy, contentDescription = OPTIONS_DUPLICATE)},
+                            text = { Text(text = OPTIONS_DUPLICATE, color = PurpleGrey40) },
+                            onClick = {
+                                showOptionsMenu = false
+                                // TODO duplicate by insert a copy to database
+                            })
+
+                        DropdownMenuItem(
+                            leadingIcon = { Icon(imageVector = Icons.Default.Delete, contentDescription = OPTIONS_DELETE)},
+                            text = { Text(text = OPTIONS_DELETE, color = PurpleGrey40) },
+                            onClick = {
+                                showOptionsMenu = false
+                                // TODO delete from database, show confirm dialog?
+                            }
+                        )
                     }
                 }
 
@@ -114,7 +121,7 @@ fun ItemHolder(
 
 @Preview(showSystemUi = true)
 @Composable
-fun ItemHolderPreview(){
+fun ItemHolderPreview() {
     Column(
         modifier = Modifier.padding(25.dp),
         horizontalAlignment = Alignment.CenterHorizontally
