@@ -21,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import cn.shef.msc5.todo.ui.view.getIconForScreen
 import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_HOME
-import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_DASHBOARD
-import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_TASKS
+import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_PROGRESS
+import cn.shef.msc5.todo.utilities.Constants.Companion.NAVIGATION_PROFILE
 
 
 /**
@@ -51,7 +51,7 @@ class NavigationBarActivity : ComponentActivity() {
 @Composable
 fun BottomNavigation() {
 
-    val items = listOf(NAVIGATION_HOME, NAVIGATION_TASKS, NAVIGATION_DASHBOARD)
+    val items = listOf(NAVIGATION_HOME, NAVIGATION_PROGRESS, NAVIGATION_PROFILE)
     var selectedItem by remember { mutableStateOf(items.first()) }
 
     NavigationBar {
@@ -73,7 +73,7 @@ fun BottomNavigation() {
 @Composable
 fun NavigationBarWithOnlySelected() {
 
-    val items = listOf(NAVIGATION_HOME, NAVIGATION_TASKS, NAVIGATION_DASHBOARD)
+    val items = listOf(NAVIGATION_HOME, NAVIGATION_PROGRESS, NAVIGATION_PROFILE)
     var selectedItem by remember { mutableStateOf(items.first()) }
 
     NavigationBar {

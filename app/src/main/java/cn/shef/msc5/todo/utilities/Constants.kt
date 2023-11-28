@@ -18,9 +18,9 @@ class Constants {
 
         const val NAVIGATION_HOME = "Home"
 
-        const val NAVIGATION_TASKS = "Tasks"
+        const val NAVIGATION_PROGRESS = "Progress"
 
-        const val NAVIGATION_DASHBOARD = "Dashboard"
+        const val NAVIGATION_PROFILE = "Profile"
 
         //delay times
         const val DELAY_TIME = 4000L
@@ -33,5 +33,8 @@ class Constants {
         const val SORT_PRIORITY = "Priority"
         const val SORT_DUE = "Due Date"
         const val SORT_LOCATION = "Location"
+
+        const val OPTIONS_DUPLICATE = "Duplicate"
+        const val OPTIONS_DELETE = "Delete"
     }
 }

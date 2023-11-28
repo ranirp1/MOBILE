@@ -1,6 +1,7 @@
 package cn.shef.msc5.todo.base.component
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,25 +11,34 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
+import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemHolder(
     // TODO add the task variables
 ){
+    var showOptionsMenu by remember{ mutableStateOf(false) }
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(5.dp),
@@ -45,17 +55,38 @@ fun ItemHolder(
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Text(text = "Title", fontSize = 20.sp)
-                IconButton(
-                    modifier = Modifier.size(20.dp),
-                    onClick = {
-                        // TODO delete/copy
+                Box{
+                    IconButton(
+                        modifier = Modifier.size(20.dp),
+                        onClick = {
+                            // TODO delete/copy
+                            showOptionsMenu = !showOptionsMenu
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = "Task actions"
+                        )
                     }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.MoreVert,
-                        contentDescription = "Task actions"
-                    )
+                    DropdownMenu(
+                        expanded = showOptionsMenu,
+                        onDismissRequest = { showOptionsMenu = false }
+                    ) {
+                        DropdownMenuItem(onClick = {
+                            showOptionsMenu = false
+                            // TODO duplicate by insert a copy to database
+                        }) {
+                            Text(text = OPTIONS_DUPLICATE)
+                        }
+                        DropdownMenuItem(onClick = {
+                            showOptionsMenu = false
+                            // TODO delete from database, show confirm dialog?
+                        }) {
+                            Text(text = OPTIONS_DELETE)
+                        }
+                    }
                 }
+
             }
 
             Spacer(modifier = Modifier.height(2.dp))
