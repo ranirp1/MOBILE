@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("kotlin-kapt")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -63,7 +64,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.ui:ui-text-android:1.5.4")
-
+    implementation("androidx.appcompat:appcompat:1.6.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -79,8 +80,7 @@ dependencies {
 
     val material3_version = "1.1.2"
     implementation("androidx.compose.material3:material3:$material3_version")
-    val material = "1.1.2"
-//    implementation("androidx.compose.material:material:$material")
+
     implementation("androidx.compose.material:material")
     implementation("androidx.compose.material:material-icons-extended")
     val swiperefreshlayout_version = "1.1.0"
@@ -91,11 +91,34 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
 
+    val google_gms_location = "21.0.1"
+    val google_gms_map = "18.1.0"
+    val google_map_compose = "2.8.0"
+    // google maps
+    implementation("com.google.android.gms:play-services-location:$google_gms_location")
+    implementation("com.google.android.gms:play-services-maps:$google_gms_map")
+    // google maps for compose
+    implementation("com.google.maps.android:maps-compose:$google_map_compose")
+
+    val google_map_ktx = "3.2.1"
+    // KTX for the Maps SDK for Android
+    implementation("com.google.maps.android:maps-ktx:$google_map_ktx")
+    // KTX for the Maps SDK for Android Utility Library
+    implementation("com.google.maps.android:maps-utils-ktx:$google_map_ktx")
+
+    val camerax_version = "1.1.0"
+    // camera
+    implementation("androidx.camera:camera-core:${camerax_version}")
+    implementation("androidx.camera:camera-camera2:${camerax_version}")
+    implementation("androidx.camera:camera-lifecycle:${camerax_version}")
+    implementation("androidx.camera:camera-video:${camerax_version}")
+
+    implementation("androidx.camera:camera-view:${camerax_version}")
+    implementation("androidx.camera:camera-extensions:${camerax_version}")
+
     // https://developer.android.com/jetpack/androidx/releases/core
     // To use the Animator APIs
     val animation_version = "1.0.0-beta01"
     implementation("androidx.core:core-animation:$animation_version")
-    // Optional - APIs for SplashScreen, including compatibility helpers on devices prior Android 12
-//    val splashscreen_version = "1.1.0-alpha02"
-//    implementation("androidx.core:core-splashscreen:$splashscreen_version")
+
 }

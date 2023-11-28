@@ -13,9 +13,9 @@
         android:theme="@style/Theme.Todo"
         android:name=".AppApplication"
         tools:targetApi="34">
-        <!-- LAUNCHER activity -->
-        <!-- screenOrientation: vertical display -->
-        <!-- theme: default theme -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
         <activity
             android:screenOrientation="portrait"
             android:name=".activity.SplashActivity"
@@ -27,6 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.MapsActivity"
+            android:screenOrientation="portrait"
+            android:exported="false"></activity>
         <activity
             android:name=".demos.activity.DemoActivity"
             android:screenOrientation="portrait"
