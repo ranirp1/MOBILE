@@ -29,10 +29,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
+import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
@@ -41,6 +41,7 @@ import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
 @Composable
 fun ItemHolder(
     // TODO add the task variables
+    task: Task
 ) {
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -60,7 +61,7 @@ fun ItemHolder(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Title", fontSize = 20.sp)
+                Text(text = task.id.toString(), fontSize = 20.sp)
                 Box {
                     IconButton(
                         modifier = Modifier.size(20.dp),
@@ -127,13 +128,13 @@ fun ItemHolder(
     }
 }
 
-@Preview(showSystemUi = true)
-@Composable
-fun ItemHolderPreview() {
-    Column(
-        modifier = Modifier.padding(25.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        ItemHolder()
-    }
-}
+//@Preview(showSystemUi = true)
+//@Composable
+//fun ItemHolderPreview() {
+//    Column(
+//        modifier = Modifier.padding(25.dp),
+//        horizontalAlignment = Alignment.CenterHorizontally
+//    ) {
+//        ItemHolder()
+//    }
+//}

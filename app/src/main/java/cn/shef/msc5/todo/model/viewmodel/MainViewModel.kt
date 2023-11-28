@@ -1,5 +1,6 @@
 package cn.shef.msc5.todo.model.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
@@ -40,6 +41,7 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
         viewModelScope.launch {
             taskDAO.getAllTasks().collect {
                 taskList = it.toMutableStateList()
+                Log.d("MainViewModel", taskList.size.toString())
                 _taskListFlow.value = taskList
                 postExecute?.invoke()
             }
@@ -71,7 +73,7 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
         val id = taskList.lastOrNull()?.id ?: -1
         val todoItem = Task(
             id + 1, title, 1, description, level, longitude, latitude,
-            imageUrl, dueTime, parentId, gmtCreated, gmtModified, 1, remark
+            imageUrl, dueTime, parentId, gmtCreated, gmtModified, 0, remark
         )
         viewModelScope.launch(Dispatchers.IO) {
             taskDAO.insert(todoItem)
