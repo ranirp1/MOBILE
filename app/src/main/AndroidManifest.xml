@@ -30,7 +30,12 @@
         <activity
             android:name=".activity.LocationActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_location"></activity>
+        <activity
+            android:name=".activity.CaptureImageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.MapsActivity"
             android:screenOrientation="portrait"
@@ -49,6 +54,15 @@
             android:screenOrientation="portrait"
             android:exported="false"></service>
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="cn.shef.msc5.todo.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
         <!-- demos -->
     </application>
 
