@@ -27,22 +27,22 @@ class DateConverter {
         return dateFormat.format(selectedDate)
     }
 
-    fun formatDateYear(selectedDate: java.util.Date): String {
+    fun formatDateYear(selectedDate: Date): String {
         val dateFormat = SimpleDateFormat("ddMMyyyy", Locale.getDefault())
         return dateFormat.format(selectedDate)
     }
 
-    fun getPrevDay(selectedDate: java.util.Date): java.util.Date {
+    fun getPrevDay(selectedDate: Date): Date {
         val calendar = Calendar.getInstance()
         calendar.time = selectedDate
         calendar.add(Calendar.DAY_OF_YEAR, -1)
-        return calendar.time
+        return Date(calendar.timeInMillis)
     }
 
-    fun getNextDay(selectedDate: java.util.Date): java.util.Date {
+    fun getNextDay(selectedDate: Date): Date {
         val calendar = Calendar.getInstance()
         calendar.time = selectedDate
         calendar.add(Calendar.DAY_OF_YEAR, 1)
-        return calendar.time
+        return Date(calendar.timeInMillis)
     }
 }

@@ -13,10 +13,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PinDrop
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -24,9 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
@@ -82,47 +78,30 @@ fun TasksScreen(context: Context, mainViewModel: MainViewModel) {
         },
         hostState = snackbarHostState
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(MaterialTheme.colorScheme.background),
-        ) {
-            item {
-                SortingMenu(sortType) {
-                    mainViewModel.sortAllTasks(it)
-                }
+        Column {
+            SortingMenu(sortType) {
+                mainViewModel.sortAllTasks(it)
             }
-
-            // trying to display some itemholders
-            item {
-                Column(
-                    modifier = Modifier.padding(25.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    (1..10).forEach {
-                        ItemHolder()
-                        Spacer(modifier = Modifier.height(25.dp))
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(horizontal = 25.dp),
+            ) {
+                items(
+                    items = taskListState.value,
+                    key = { taskItem -> taskItem.id },
+                    itemContent = { item ->
+                        val currentItem by rememberUpdatedState(item)
+                        Spacer(modifier = Modifier.height(10.dp))
+                        ItemHolder(currentItem)
+                        Spacer(modifier = Modifier.height(15.dp))
                     }
-                }
-            }
-
-            items(
-                items = taskListState.value,
-                key = { taskItem -> taskItem.id },
-                itemContent = { item ->
-                    val currentItem by rememberUpdatedState(item)
-                    Text(text = "title: ${item.title}")
-                    Text(text = "level: ${item.priority}")
-                    Text(text = "remark: ${item.remark}")
-                    Divider(color = Color.Blue)
-                }
-            )
-            // Avoid over-lapping with bottom navigation bar
-            item {
-                Spacer(modifier = Modifier.height(50.dp))
+                )
             }
         }
+
     }
 
 }

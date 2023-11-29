@@ -14,21 +14,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PinDrop
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
@@ -41,7 +36,7 @@ import cn.shef.msc5.todo.base.component.SortingMenu
 import cn.shef.msc5.todo.base.component.TopBarType
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
-import java.util.Date
+import java.time.LocalDate
 
 /**
  * @author Zhecheng Zhao
@@ -59,7 +54,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
     var fabVisibleAddTask by remember { mutableStateOf(false) }
     var fabVisibleLocation by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
-    var date by remember { mutableStateOf(Date()) }
+    var date by remember { mutableStateOf(mainViewModel.date) }
 
     BaseScaffold(
         showTopBar = true,
@@ -73,9 +68,25 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                     contentDescription = "Location",
                     onClick = {
                         // TODO check todos by location
+                        mainViewModel.addTask(
+                            "title",
+                            "description",
+                            1,
+                            1.11F,
+                            1.11F,
+                            "imageUrl",
+                            java.sql.Date.valueOf(LocalDate.now().toString()),
+                            java.sql.Date.valueOf(
+                                LocalDate.now().toString()
+                            ),
+                            java.sql.Date.valueOf(LocalDate.now().toString()),
+                            0,
+                            "remark",
+                            null
+                        )
                     }
                 )
-                
+
                 Spacer(modifier = Modifier.height(10.dp))
 
                 BaseFloatingActionBar(
@@ -90,54 +101,38 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
         },
         hostState = snackbarHostState
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(MaterialTheme.colorScheme.background),
-        ) {
-            stickyHeader{
-                DatePickerBar(
-                    onDateSelected = { date = it }
-                )
-            }
-
-            item {
-                SortingMenu(sortType) {
-                    // TODO change to date specific getAllTask
-                    mainViewModel.sortAllTasks(it)
-                }
-            }
-
-            // trying to display some itemholders
-            item {
-                Column(
-                    modifier = Modifier.padding(25.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    (1..3).forEach {
-                        ItemHolder()
-                        Spacer(modifier = Modifier.height(25.dp))
-                    }
-                }
-            }
-
-            items(
-                items = taskListState.value,
-                key = { taskItem -> taskItem.id },
-                itemContent = { item ->
-                    val currentItem by rememberUpdatedState(item)
-                    Text(text = "title: ${item.title}")
-                    Text(text = "level: ${item.priority}")
-                    Text(text = "remark: ${item.remark}")
-                    Divider(color = Color.Blue)
+        Column {
+            DatePickerBar(
+                onDateSelected = {
+                    date = it
+                    mainViewModel.sortTasksByDate(sortType, it)
                 }
             )
-            // Avoid over-lapping with bottom navigation bar
-            item {
-                Spacer(modifier = Modifier.height(50.dp))
+            SortingMenu(sortType) {
+                mainViewModel.sortTasksByDate(it, date)
+            }
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(horizontal = 25.dp),
+            ) {
+
+                items(
+                    items = taskListState.value,
+                    key = { taskItem -> taskItem.id },
+                    itemContent = { item ->
+                        val currentItem by rememberUpdatedState(item)
+                        Spacer(modifier = Modifier.height(10.dp))
+                        ItemHolder(currentItem)
+                        Spacer(modifier = Modifier.height(15.dp))
+                    }
+                )
             }
         }
+
     }
 }
 

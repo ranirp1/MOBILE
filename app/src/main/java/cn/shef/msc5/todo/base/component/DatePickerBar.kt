@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
@@ -34,7 +35,7 @@ import cn.shef.msc5.todo.demos.ui.datepickers.DatePicker
 import cn.shef.msc5.todo.utilities.DateConverter
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
+import java.sql.Date
 import java.util.Locale
 
 /**
@@ -48,11 +49,13 @@ fun DatePickerBar(
     onDateSelected: (Date) -> Unit
 ) {
     val dateConverter = DateConverter()
-    var date by remember { mutableStateOf(Date()) }
+    var date by remember { mutableStateOf(Date(System.currentTimeMillis())) }
     var showDatePicker by remember { mutableStateOf(false) }
 
     Row(
-        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background),
+        modifier = Modifier.fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         IconButton(onClick = {
@@ -101,10 +104,10 @@ fun DatePicker(
     onDateSelected: (Date) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val datePickerState = rememberDatePickerState(Date().time)
+    val datePickerState = rememberDatePickerState(Date(System.currentTimeMillis()).time)
 
     // convert the selected date into a date object
-    val selectedDate = datePickerState.selectedDateMillis?.let { Date(it) } ?: Date()
+    val selectedDate = datePickerState.selectedDateMillis?.let { Date(it) } ?: Date(System.currentTimeMillis())
 
     DatePickerDialog(
         onDismissRequest = { onDismiss() },
