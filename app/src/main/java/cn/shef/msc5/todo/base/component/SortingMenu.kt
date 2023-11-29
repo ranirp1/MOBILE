@@ -42,7 +42,7 @@ fun SortingMenu(
 ) {
     var showSortingMenu by remember { mutableStateOf(false) }
 
-    // default sort by priority in ascending order
+    // default sort by priority in ascending order (sortOrder == true)
     var sortOrder by remember { mutableStateOf(true) }
     var sortString by remember { mutableStateOf(SORT_PRIORITY) }
 

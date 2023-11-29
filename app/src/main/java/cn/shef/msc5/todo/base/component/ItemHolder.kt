@@ -29,10 +29,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
+import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
@@ -40,7 +40,7 @@ import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemHolder(
-    // TODO add the task variables
+    task: Task
 ) {
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -60,7 +60,7 @@ fun ItemHolder(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Title", fontSize = 20.sp)
+                Text(text = task.title, fontSize = 20.sp)
                 Box {
                     IconButton(
                         modifier = Modifier.size(20.dp),
@@ -102,7 +102,7 @@ fun ItemHolder(
 
             Spacer(modifier = Modifier.height(2.dp))
 
-            Text(text = "Remark")
+            Text(text = task.remark)
 
             Spacer(modifier = Modifier.height(2.dp))
 
@@ -111,12 +111,12 @@ fun ItemHolder(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Level")
+                Text(text = task.priority.toString())
                 Row {
                     // not sure add location or not
-                    Text(text = "Location")
+                    Text(text = "(" +task.latitude.toString() + ", " + task.longitude.toString() + ")")
                     Spacer(modifier = Modifier.width(7.dp))
-                    Text(text = "Due Date")
+                    Text(text = task.dueTime.toString())
                 }
             }
         }
@@ -124,16 +124,5 @@ fun ItemHolder(
         if(showDeleteDialog){
             ConfirmDialog{ showDeleteDialog = it }
         }
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun ItemHolderPreview() {
-    Column(
-        modifier = Modifier.padding(25.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        ItemHolder()
     }
 }
