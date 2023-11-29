@@ -46,18 +46,13 @@ import cn.shef.msc5.todo.activity.LocationActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
-import kotlinx.coroutines.CoroutineScope
 
-@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalAnimationApi
 @Composable
-fun ProfileScreen(context: Context, mainViewModel: MainViewModel) {
-    var text by remember { mutableStateOf("") }
-    var title by remember { mutableStateOf("") }
-    val keyboardController = LocalSoftwareKeyboardController.current
+fun ProfileScreen(context: Context,
+                  mainViewModel: MainViewModel) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope: CoroutineScope = rememberCoroutineScope()
     BaseScaffold(
         showTopBar = true,
         showNavigationIcon = false,
@@ -73,27 +68,7 @@ fun ProfileScreen(context: Context, mainViewModel: MainViewModel) {
                 .background(colorResource(id = R.color.white)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(8.dp))
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        start = 125.dp,
-                        top = 10.dp,
-                        end = 125.dp
-                    )
-                    .clip(CircleShape),
-                painter = painterResource(id = R.drawable.profile),
-                contentScale = ContentScale.Crop,
-                contentDescription = null
-            )
-            Text(
-                "UserName",
-                fontSize = 25.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(top = 10.dp, bottom = 30.dp),
-                color = Color.Black
-            )
+            ProfileImage("UserName")
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -103,91 +78,100 @@ fun ProfileScreen(context: Context, mainViewModel: MainViewModel) {
                         horizontal = 15.dp
                     )
             ) {
-                Divider()
-                Text(
-                    modifier = Modifier
-                        .padding(end = 32.dp, top = 10.dp, bottom = 10.dp)
-                        .height(35.dp),
-                    text = "My Account",
-                    textAlign = TextAlign.Left,
-                    color = Color.Black
-                )
-                Divider()
-                TextButton(
-                    onClick = {},
-                    Modifier
-                        .padding(end = 32.dp, top = 10.dp, bottom = 10.dp)
-                        .height(35.dp)
-                ) {
-                    Row() {
-                        Text(
-                            "Theme",
-                            textAlign = TextAlign.Left,
-                            color = Color.Black
-                        )
-                        Spacer(modifier = Modifier.padding(15.dp))
-                        var checked by remember { mutableStateOf(true) }
-                        Switch(
-                            checked = checked,
-                            onCheckedChange = {
-                                checked = it
-                            }
-                        )
-                    }
-                }
-                val context = LocalContext.current
-                Divider()
-                TextButton(
+                HeaderText(text = stringResource(R.string.profile_account))
+                switchTheme()
+                ProfileText("Location",
                     onClick = {
                         val intent = Intent(context, LocationActivity::class.java)
                         GeneralUtil.startActivity2(context, intent)
-                    },
-                    Modifier
-                        .padding(end = 32.dp, top = 10.dp, bottom = 10.dp)
-                        .height(35.dp)
-                ) {
-                    Text(
-                        "Location",
-                        textAlign = TextAlign.Left,
-                        color = Color.Black
-                    )
-                }
-                Divider()
-                Text(
-                    modifier = Modifier
-                        .padding(end = 32.dp, top = 10.dp, bottom = 10.dp)
-                        .height(35.dp),
-                    text = "About",
-                    textAlign = TextAlign.Left,
-                    color = Color.Black
-                )
-                Divider()
-                TextButton(
-                    onClick = { /*TODO*/ },
-                    Modifier
-                        .padding(end = 32.dp, top = 10.dp, bottom = 10.dp)
-                        .height(35.dp)
-                ) {
-                    Text(
-                        text = "Version 1.0",
-                        textAlign = TextAlign.Left,
-                        color = Color.Black
-                    )
-                }
-                Divider()
-                TextButton(
-                    onClick = { /*TODO*/ },
-                    Modifier
-                        .padding(end = 32.dp, top = 10.dp, bottom = 10.dp)
-                        .height(35.dp)
-                ) {
-                    Text(
-                        text = "Privacy Policy",
-                        textAlign = TextAlign.Left,
-                        color = Color.Black)
-                }
-                Divider()
+                    })
+                HeaderText(text = stringResource(R.string.profile_about))
+                ProfileText(stringResource(R.string.profile_version))
+                ProfileText(stringResource(R.string.profile_policy))
             }
         }
     }
+}
+
+@Composable
+fun HeaderText(text: String) {
+    Text(
+        modifier = Modifier
+            .padding(end = 32.dp, top = 10.dp, bottom = 10.dp)
+            .height(35.dp),
+        text = text,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Left,
+        color = Color.Black
+    )
+    Divider()
+}
+
+@Composable
+fun ProfileText(text: String,
+                onClick: () -> Unit = {}) {
+    TextButton(
+        onClick = { onClick.invoke() },
+        Modifier
+            .padding(end = 32.dp, top = 10.dp, bottom = 10.dp)
+            .height(35.dp)
+    ) {
+        Text(
+            text = text,
+            textAlign = TextAlign.Left,
+            color = Color.Black)
+    }
+    Divider()
+}
+
+@Composable
+fun ProfileImage(name: String) {
+    Spacer(modifier = Modifier.height(8.dp))
+    Image(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                start = 125.dp,
+                top = 10.dp,
+                end = 125.dp
+            )
+            .clip(CircleShape),
+        painter = painterResource(id = R.drawable.profile),
+        contentScale = ContentScale.Crop,
+        contentDescription = null
+    )
+    Text(
+        name,
+        fontSize = 25.sp,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.padding(top = 10.dp, bottom = 30.dp),
+        color = Color.Black
+    )
+}
+
+@Composable
+fun switchTheme() {
+    TextButton(
+        onClick = {},
+        Modifier
+            .padding(end = 32.dp, top = 10.dp, bottom = 10.dp)
+            .height(35.dp)
+    ) {
+        Row() {
+            Text(
+                "Theme",
+                textAlign = TextAlign.Left,
+                color = Color.Black
+            )
+            Spacer(modifier = Modifier.padding(15.dp))
+            var checked by remember { mutableStateOf(true) }
+            Switch(
+                checked = checked,
+                onCheckedChange = {
+                    checked = it
+                }
+            )
+        }
+    }
+    Divider()
 }

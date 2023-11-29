@@ -13,11 +13,15 @@
 
     <string name="todo_dashboard">DashBoard</string>
 
-    <string name="todo_tasks">All Tasks</string>
+    <string name="todo_tasks">Progress</string>
+
+    <string name="profile_about">About</string>
+
+    <string name="profile_account">My Account</string>
+
+    <string name="profile_policy">Privacy Policy</string>
+
+    <string name="profile_version">"Version 1.0"</string>
 
     <string name="todo_map">Choose Your Location</string>
-
-    <string name="title_activity_main_setting">MainSettingActivity</string>
-
-    <string name="title_activity_location">LocationActivity</string>
 </resources>

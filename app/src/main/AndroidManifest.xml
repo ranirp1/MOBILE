@@ -29,9 +29,8 @@
         </activity>
         <activity
             android:name=".activity.LocationActivity"
-            android:exported="false"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_location"></activity>
+            android:exported="false"></activity>
         <activity
             android:name=".activity.MapsActivity"
             android:screenOrientation="portrait"
@@ -50,7 +49,6 @@
             android:screenOrientation="portrait"
             android:exported="false"></service>
 
-        <!-- demos -->
     </application>
 
     <!-- internet permission -->
