@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -20,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -56,6 +59,8 @@ fun DetailScreen(mainViewModel: MainViewModel) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
+    var showpriormenu by remember { mutableStateOf(false) }
+    var prior by remember { mutableIntStateOf(2) }
     BaseScaffold(
         showTopBar = true,
         showNavigationIcon = true,
@@ -82,12 +87,10 @@ fun DetailScreen(mainViewModel: MainViewModel) {
                     snackbarHostState.showSnackbar("onCalender")
                 }},
                 onPriority={scope.launch {
-                    scope.launch {
-
-                    }
+                    showpriormenu= !showpriormenu
                 }},
                 addClick = {
-                    mainViewModel.addTask(title, text, 1, 1.11F, 1.11F,
+                    mainViewModel.addTask(title, text, prior, 1.11F, 1.11F,
                         "imageUrl", java.sql.Date.valueOf(LocalDate.now().toString()), java.sql.Date.valueOf(
                             LocalDate.now().toString()),
                         java.sql.Date.valueOf(LocalDate.now().toString()),
@@ -134,6 +137,26 @@ fun DetailScreen(mainViewModel: MainViewModel) {
                 .fillMaxWidth()
                 .heightIn(10.dp)
                 .padding(10.dp), text = "Due time:")
+            if(showpriormenu){
+                DropdownMenu(expanded = true, onDismissRequest = { showpriormenu=false}) {
+                    DropdownMenuItem(onClick = {
+                        prior=1
+                        showpriormenu = false}) {
+                        Text(text = "High priority")
+
+                    }
+                    DropdownMenuItem(onClick = { prior=2
+                        showpriormenu = false}) {
+                        Text(text = "Medium priority")
+
+                    }
+                    DropdownMenuItem(onClick = {prior=3
+                        showpriormenu = false}) {
+                        Text(text = "Low priority")
+
+                    }
+                }
+            }
         }
     }
 }
