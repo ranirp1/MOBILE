@@ -13,10 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.base.component.topbar.CancelTopAppBar
 import cn.shef.msc5.todo.base.component.topbar.CenterTopAppBar
 import cn.shef.msc5.todo.base.component.topbar.NormalTopAppBar
+import cn.shef.msc5.todo.base.component.topbar.SearchTopAppBar
+import cn.shef.msc5.todo.R
 
 /**
  * @author Zhecheng Zhao
@@ -54,6 +55,7 @@ fun BaseScaffold(
                         showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon)
                     is TopBarType.CANCEL -> CancelTopAppBar(title, firstOnClick, secondOnClick,
                         showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon)
+                    is TopBarType.SEARCH -> SearchTopAppBar(title)
                     else -> {}
                 }
             }

@@ -5,7 +5,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Dashboard
+import androidx.compose.material.icons.filled.DonutSmall
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Task
 import androidx.compose.material3.Icon
@@ -39,14 +41,14 @@ fun MainScreen() {
 
     val mainViewModel by lazy {
         MainViewModelFactory(AppDatabase.INSTANCE.getTaskDAO()).
-            create(MainViewModel::class.java)
+        create(MainViewModel::class.java)
     }
 
     //get context
     val items = listOf(
         Constants.NAVIGATION_HOME,
-        Constants.NAVIGATION_TASKS,
-        Constants.NAVIGATION_DASHBOARD
+        Constants.NAVIGATION_PROGRESS,
+        Constants.NAVIGATION_PROFILE
     )
 
     var selectedItem by remember { mutableStateOf(items.first()) }
@@ -75,9 +77,9 @@ fun MainScreen() {
     ) {
         when (selectedItem) {
             Constants.NAVIGATION_HOME -> HomeScreen(context, mainViewModel)
-            Constants.NAVIGATION_TASKS -> TasksScreen(context, mainViewModel)
+            Constants.NAVIGATION_PROGRESS -> TasksScreen(context, mainViewModel)
 //            Constants.NAVIGATION_TASKS -> EmptyScreen(context)
-            Constants.NAVIGATION_DASHBOARD -> SettingScreen(context, mainViewModel)
+            Constants.NAVIGATION_PROFILE -> SettingScreen(context, mainViewModel)
         }
     }
 }
@@ -87,8 +89,8 @@ fun MainScreen() {
 fun getIconForScreen(items: String): ImageVector {
     return when (items) {
         Constants.NAVIGATION_HOME -> Icons.Default.Home
-        Constants.NAVIGATION_TASKS -> Icons.Default.Task
-        Constants.NAVIGATION_DASHBOARD -> Icons.Default.Dashboard
+        Constants.NAVIGATION_PROGRESS -> Icons.Default.DonutSmall
+        Constants.NAVIGATION_PROFILE -> Icons.Default.AccountCircle
         else -> Icons.Default.Home
     }
 }

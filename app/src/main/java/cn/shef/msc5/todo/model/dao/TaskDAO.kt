@@ -10,6 +10,7 @@ import cn.shef.msc5.todo.base.BaseDAO
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.utilities.Constants.Companion.TABLE_TASK
 import kotlinx.coroutines.flow.Flow
+import java.util.Date
 
 /**
  * @author Zhecheng Zhao
@@ -22,13 +23,16 @@ interface TaskDAO : BaseDAO<Task> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(task: Task)
 
-    @Query("select * from $TABLE_TASK where id =:id and isDeleted = 0")
+    @Query("SELECT * from $TABLE_TASK WHERE id =:id and isDeleted = 0")
     fun findByPrimaryKey(id: Int): Task?
 
-    @Query("select * from $TABLE_TASK where isDeleted = 0")
+    @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0")
     fun getAllTasks(): Flow<List<Task>> //List<Task>?
 
-    @Query("select count(*) from $TABLE_TASK where isDeleted = 0")
+    @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0 AND strftime('%d%m%Y', dueTime) = :selectedDate")
+    fun getAllTasksByDate(selectedDate: String): Flow<List<Task>>
+
+    @Query("SELECT count(*) from $TABLE_TASK WHERE isDeleted = 0")
     suspend fun getCount(): Int
 
     override fun delete(task: Task) {

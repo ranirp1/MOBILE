@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 /**
@@ -26,6 +27,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BaseFloatingActionBar(
     fabVisible: Boolean = false,
+    imageVector: ImageVector = Icons.Filled.AddTask,
+    contentDescription: String = "Add",
     onClick: () -> Unit = {},
 ) {
     FloatingActionButton(
@@ -36,15 +39,15 @@ fun BaseFloatingActionBar(
     ) {
         Row(Modifier.padding(start = 12.dp, end = 12.dp)) {
             Icon(
-                Icons.Filled.AddTask,
-                contentDescription = "Add",
+                imageVector = imageVector,
+                contentDescription = contentDescription,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
             AnimatedVisibility(
                 fabVisible,
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
-                Text(modifier = Modifier.padding(start = 12.dp), text = "Add")
+                Text(modifier = Modifier.padding(start = 12.dp), text = contentDescription)
             }
         }
     }

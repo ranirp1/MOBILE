@@ -5,13 +5,17 @@
 
     <string name="mode">Debug</string>
 
-    <string name="todo_title">Tasks</string>
+    <string name="todo_title">Hi there</string>
 
     <string name="todo_new_task">New Task</string>
 
     <string name="todo_dashboard">DashBoard</string>
 
     <string name="todo_tasks">All Tasks</string>
+
+    <string name="todo_map">Choose Your Location</string>
+
     <string name="title_activity_main_setting">MainSettingActivity</string>
+
     <string name="title_activity_location">LocationActivity</string>
 </resources>

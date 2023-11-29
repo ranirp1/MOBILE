@@ -35,7 +35,7 @@ fun NormalTopAppBar(
 ) {
     val context = LocalContext.current
     TopAppBar(
-        scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
+        scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
         title = {
             Text(text = title)
         },

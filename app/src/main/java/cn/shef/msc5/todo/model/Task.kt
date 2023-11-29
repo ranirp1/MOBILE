@@ -31,8 +31,8 @@ data class Task(
     @ColumnInfo(name = "description", typeAffinity = ColumnInfo.TEXT)
     var description: String,
 
-    @ColumnInfo(name = "level", typeAffinity = ColumnInfo.INTEGER)
-    var level: Int,
+    @ColumnInfo(name = "priority", typeAffinity = ColumnInfo.INTEGER)
+    var priority: Int,
 
     @ColumnInfo(name = "longitude", typeAffinity = ColumnInfo.REAL)
     var longitude: Float,
@@ -63,6 +63,6 @@ data class Task(
 
 ){
     override fun toString(): String {
-        return "Task(id=$id, title=$title, description=$description, level=$level, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, remark='$remark)"
+        return "Task(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, remark='$remark)"
     }
 }

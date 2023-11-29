@@ -21,7 +21,7 @@ data class TaskDTO(
 
     var description: String,
 
-    var level: Int,
+    var priority: Int,
 
     var longitude: Float,
 
@@ -44,6 +44,6 @@ data class TaskDTO(
 
 ) : Parcelable{
     override fun toString(): String {
-        return "TaskDTO(id=$id, title=$title, description=$description, level=$level, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, remark='$remark)"
+        return "TaskDTO(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, remark='$remark)"
     }
 }
