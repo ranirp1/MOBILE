@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -47,7 +45,6 @@ fun TasksScreen(context: Context, mainViewModel: MainViewModel) {
     val sortType = mainViewModel.sortType
 
     var fabVisibleAddTask by remember { mutableStateOf(false) }
-    var fabVisibleLocation by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
 
     BaseScaffold(
@@ -56,17 +53,6 @@ fun TasksScreen(context: Context, mainViewModel: MainViewModel) {
         title = stringResource(R.string.todo_tasks),
         floatingActionButton = {
             Column {
-                BaseFloatingActionBar(
-                    fabVisible = fabVisibleLocation,
-                    imageVector = Icons.Default.PinDrop,
-                    contentDescription = "Location",
-                    onClick = {
-                        // TODO check todos by location
-                    }
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
                 BaseFloatingActionBar(
                     fabVisible = fabVisibleAddTask,
                     onClick = {
