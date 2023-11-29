@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import cn.shef.msc5.todo.activity.ui.theme.AppTheme
+import cn.shef.msc5.todo.ui.theme.AppTheme
 import cn.shef.msc5.todo.ui.view.LocationScreen
 
 class LocationActivity : ComponentActivity() {
