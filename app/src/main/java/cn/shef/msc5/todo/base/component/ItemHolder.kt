@@ -119,7 +119,7 @@ fun ItemHolder(
                     // not sure add location or not
                     Text(text = "Location")
                     Spacer(modifier = Modifier.width(7.dp))
-                    Text(text = "Due Date")
+                    Text(text = "Due on: ${task.dueTime}")
                 }
             }
         }
