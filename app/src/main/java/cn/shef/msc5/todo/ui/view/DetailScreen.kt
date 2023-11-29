@@ -64,9 +64,10 @@ fun DetailScreen() {
                     }
                 },
                 onLocation = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar("Loc")
-                    }
+                    GeneralUtil.finishActivity2(context)
+//                    scope.launch {
+//                        snackbarHostState.showSnackbar("Loc")
+//                    }
                 },
                 onSubTask = {
                     scope.launch {
@@ -81,13 +82,13 @@ fun DetailScreen() {
                         snackbarHostState.showSnackbar("Level")
                     }
                 }},
-
                 addClick = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar("Add task success",
-                            duration = SnackbarDuration.Short)
-                        GeneralUtil.finishActivity2(context)
-                    }
+                    GeneralUtil.finishActivity2(context)
+//                    scope.launch {
+////                        snackbarHostState.showSnackbar("Add task success",
+////                            duration = SnackbarDuration.Short)
+//                        GeneralUtil.finishActivity2(context)
+//                    }
                 })
         }) {
 

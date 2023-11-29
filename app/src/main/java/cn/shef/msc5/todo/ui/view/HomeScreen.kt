@@ -9,14 +9,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,7 +29,9 @@ import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.base.component.BaseFloatingActionBar
 import cn.shef.msc5.todo.base.component.BaseScaffold
+import cn.shef.msc5.todo.base.component.DatePickerBar
 import cn.shef.msc5.todo.base.component.ItemHolder
+import cn.shef.msc5.todo.base.component.SortingMenu
 import cn.shef.msc5.todo.base.component.TopBarType
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
@@ -90,21 +90,28 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
         },
         hostState = snackbarHostState
     ) {
-        Text(modifier = Modifier.padding(start = 12.dp), text = "1235")
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .background(MaterialTheme.colorScheme.background),
         ) {
-
+            stickyHeader{
+                DatePickerBar(
+                    onDateSelected = { date = it }
+                )
+                SortingMenu(sortType) {
+                    // TODO change to date specific getAllTask
+                    mainViewModel.sortAllTasks(it)
+                }
+            }
             items(
                 items = taskListState.value,
                 key = { taskItem -> taskItem.id },
                 itemContent = { item ->
                     val currentItem by rememberUpdatedState(item)
                     ItemHolder(currentItem)
-                    Spacer(modifier = Modifier.height(25.dp))
+                    Spacer(modifier = Modifier.height(5.dp))
                 }
             )
             // Avoid over-lapping with bottom navigation bar

@@ -47,8 +47,8 @@ fun ItemHolder(
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(5.dp),
+        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        shape = RoundedCornerShape(15.dp),
         onClick = {
             // TODO go to edit page
         }
