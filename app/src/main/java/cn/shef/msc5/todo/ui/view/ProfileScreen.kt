@@ -45,6 +45,7 @@ import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.LocationActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
+import cn.shef.msc5.todo.utilities.AppInfoUtil
 import cn.shef.msc5.todo.utilities.GeneralUtil
 
 @ExperimentalAnimationApi
@@ -80,13 +81,14 @@ fun ProfileScreen(context: Context,
             ) {
                 HeaderText(text = stringResource(R.string.profile_account))
                 switchTheme()
-                ProfileText("Location",
+                ProfileText(stringResource(R.string.profile_location),
                     onClick = {
                         val intent = Intent(context, LocationActivity::class.java)
-                        GeneralUtil.startActivity2(context, intent)
+                        GeneralUtil.startActivity(context, intent)
                     })
                 HeaderText(text = stringResource(R.string.profile_about))
-                ProfileText(stringResource(R.string.profile_version))
+                ProfileText(stringResource(R.string.profile_version) + "        " +
+                        AppInfoUtil.getAppVersionName(context))
                 ProfileText(stringResource(R.string.profile_policy))
             }
         }
@@ -97,7 +99,7 @@ fun ProfileScreen(context: Context,
 fun HeaderText(text: String) {
     Text(
         modifier = Modifier
-            .padding(end = 32.dp, top = 10.dp, bottom = 10.dp)
+            .padding(end = 32.dp, top = 20.dp, bottom = 10.dp)
             .height(35.dp),
         text = text,
         fontWeight = FontWeight.Bold,
@@ -131,9 +133,9 @@ fun ProfileImage(name: String) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-                start = 125.dp,
+                start = 145.dp,
                 top = 10.dp,
-                end = 125.dp
+                end = 145.dp
             )
             .clip(CircleShape),
         painter = painterResource(id = R.drawable.profile),
