@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.sql.Date
 
+
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
@@ -26,14 +27,20 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
 
     private var taskList = mutableStateListOf<Task>()
     private val _taskListFlow = MutableStateFlow(taskList)
-    val sortType = SortType.DueDate(SortOrder.Ascending)
+
+    // not sure
+    var sortType = SortType.Priority(SortOrder.Ascending)
+    var date = Date(System.currentTimeMillis())
+
     val taskListFlow: StateFlow<List<Task>> get() = _taskListFlow
     private var postExecute: (() -> Unit)? = null
-
     val dateConverter = DateConverter()
 
     init {
         loadTaskList()
+        // not sure if should add it like this
+        sortType = SortType.Priority(SortOrder.Ascending)
+        date = Date(System.currentTimeMillis())
     }
 
     private fun loadTaskList() {
@@ -57,7 +64,7 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
     fun addTask(
         title: String,
         description: String,
-        level: Int,
+        priority: Int,
         longitude: Float,
         latitude: Float,
         imageUrl: String,
@@ -70,8 +77,8 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
     ) {
         val id = taskList.lastOrNull()?.id ?: -1
         val todoItem = Task(
-            id + 1, title, 1, description, level, longitude, latitude,
-            imageUrl, dueTime, parentId, gmtCreated, gmtModified, 1, remark
+            id + 1, title, 1, description, priority, longitude, latitude,
+            imageUrl, dueTime, parentId, gmtCreated, gmtModified, 0, remark
         )
         viewModelScope.launch(Dispatchers.IO) {
             taskDAO.insert(todoItem)
@@ -79,47 +86,62 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
         }
     }
 
+    // it seemed to only sort by priority
     fun sortAllTasks(sortType: SortType) {
-        taskDAO.getAllTasks().map { tasks ->
-            when (sortType.sortOrder) {
-                is SortOrder.Ascending -> {
-                    when (sortType) {
-                        is SortType.Priority -> tasks.sortedBy { it.priority }
-                        is SortType.DueDate -> tasks.sortedBy { it.dueTime }
-                        is SortType.Location -> tasks.sortedBy { it.latitude }// ToDo by distance to location
+        viewModelScope.launch {
+            taskDAO.getAllTasks().map { tasks ->
+                when (sortType.sortOrder) {
+                    is SortOrder.Ascending -> {
+                        when (sortType) {
+                            is SortType.Priority -> tasks.sortedBy { it.priority }
+                            is SortType.DueDate -> tasks.sortedBy { it.dueTime }
+                            is SortType.Location -> tasks.sortedBy { it.latitude }// ToDo by distance to location
+                        }
+                    }
+
+                    is SortOrder.Descending -> {
+                        when (sortType) {
+                            is SortType.Priority -> tasks.sortedByDescending { it.priority }
+                            is SortType.DueDate -> tasks.sortedByDescending { it.dueTime }
+                            is SortType.Location -> tasks.sortedByDescending { it.latitude }// ToDo by distance to location
+                        }
                     }
                 }
 
-                is SortOrder.Descending -> {
-                    when (sortType) {
-                        is SortType.Priority -> tasks.sortedByDescending { it.priority }
-                        is SortType.DueDate -> tasks.sortedByDescending { it.dueTime }
-                        is SortType.Location -> tasks.sortedByDescending { it.latitude }// ToDo by distance to location
-                    }
-                }
+            }.collect{
+                taskList = it.toMutableStateList()
+                _taskListFlow.value = taskList
+                postExecute?.invoke()
             }
         }
     }
 
+    // it seemed to only sort by priority
     fun sortTasksByDate(sortType: SortType, date: Date) {
-        val selectedDate = dateConverter.formatDateYear(date)
-        taskDAO.getAllTasksByDate(selectedDate).map { tasks ->
-            when (sortType.sortOrder) {
-                is SortOrder.Ascending -> {
-                    when (sortType) {
-                        is SortType.Priority -> tasks.sortedBy { it.priority }
-                        is SortType.DueDate -> tasks.sortedBy { it.dueTime }
-                        is SortType.Location -> tasks.sortedBy { it.latitude }// ToDo by distance to location
+        val selectedDate = dateConverter.converterDate(date)
+        viewModelScope.launch {
+            taskDAO.getAllTasksByDate(selectedDate).map { tasks ->
+                when (sortType.sortOrder) {
+                    is SortOrder.Ascending -> {
+                        when (sortType) {
+                            is SortType.Priority -> tasks.sortedBy { it.priority }
+                            is SortType.DueDate -> tasks.sortedBy { it.dueTime }
+                            is SortType.Location -> tasks.sortedBy { it.latitude }// ToDo by distance to location
+                        }
                     }
-                }
 
-                is SortOrder.Descending -> {
-                    when (sortType) {
-                        is SortType.Priority -> tasks.sortedByDescending { it.priority }
-                        is SortType.DueDate -> tasks.sortedByDescending { it.dueTime }
-                        is SortType.Location -> tasks.sortedByDescending { it.latitude }// ToDo by distance to location
+                    is SortOrder.Descending -> {
+                        when (sortType) {
+                            is SortType.Priority -> tasks.sortedByDescending { it.priority }
+                            is SortType.DueDate -> tasks.sortedByDescending { it.dueTime }
+                            is SortType.Location -> tasks.sortedByDescending { it.latitude }// ToDo by distance to location
+                        }
                     }
                 }
+            }.collect{
+                taskList = it.toMutableStateList()
+                _taskListFlow.value = taskList
+                postExecute?.invoke()
             }
         }
     }
