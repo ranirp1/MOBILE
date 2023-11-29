@@ -30,6 +30,7 @@
         <activity
             android:name=".activity.LocationActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_location"></activity>
         <activity
             android:name=".activity.MapsActivity"

@@ -36,6 +36,7 @@ import cn.shef.msc5.todo.utilities.Constants
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 05/11/2023 22:56
  */
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainScreen() {
 
@@ -79,7 +80,8 @@ fun MainScreen() {
             Constants.NAVIGATION_HOME -> HomeScreen(context, mainViewModel)
             Constants.NAVIGATION_PROGRESS -> TasksScreen(context, mainViewModel)
 //            Constants.NAVIGATION_TASKS -> EmptyScreen(context)
-            Constants.NAVIGATION_PROFILE -> SettingScreen(context, mainViewModel)
+//            Constants.NAVIGATION_PROFILE -> SettingScreen(context, mainViewModel)
+            Constants.NAVIGATION_PROFILE -> ProfileScreen(context, mainViewModel)
         }
     }
 }
