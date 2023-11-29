@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.model.Task
+import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
@@ -41,7 +42,8 @@ import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
 @Composable
 fun ItemHolder(
     // TODO add the task variables
-    task: Task
+    task: Task,
+    mainViewModel: MainViewModel
 ) {
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -123,18 +125,11 @@ fun ItemHolder(
         }
 
         if(showDeleteDialog){
-            ConfirmDialog{ showDeleteDialog = it }
+            ConfirmDialog(
+                onClick = {
+                    mainViewModel.delete(task)
+                }
+            ){ showDeleteDialog = it }
         }
     }
 }
-
-//@Preview(showSystemUi = true)
-//@Composable
-//fun ItemHolderPreview() {
-//    Column(
-//        modifier = Modifier.padding(25.dp),
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        ItemHolder()
-//    }
-//}

@@ -81,6 +81,14 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
         }
     }
 
+    fun delete(
+        task: Task
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            taskDAO.delete(task)
+        }
+    }
+
     fun sortAllTasks(sortType: SortType) {
         taskDAO.getAllTasks().map { tasks ->
             when (sortType.sortOrder) {

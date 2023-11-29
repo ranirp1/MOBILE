@@ -17,6 +17,7 @@ fun ConfirmDialog(
     contentText: String = "Once deleted the todo cannot be retrieved.",
     confirmText: String = "Delete",
     dismissText: String = "Cancel",
+    onClick: () -> Unit = {},
     showDialog: (Boolean) -> Unit
 ) {
     // var showDialog by remember { mutableStateOf(true) }
@@ -33,6 +34,7 @@ fun ConfirmDialog(
                 onClick = {
                     showDialog(false)
                     // Todo delete task
+                    onClick.invoke()
                 }
             ) {
                 Text(text = confirmText)

@@ -110,7 +110,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                 key = { taskItem -> taskItem.id },
                 itemContent = { item ->
                     val currentItem by rememberUpdatedState(item)
-                    ItemHolder(currentItem)
+                    ItemHolder(currentItem, mainViewModel)
                     Spacer(modifier = Modifier.height(5.dp))
                 }
             )
