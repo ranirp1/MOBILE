@@ -23,7 +23,7 @@ class DateConverter {
     }
 
     fun formatDateMonth(selectedDate: java.util.Date): String {
-        val dateFormat = SimpleDateFormat("dd-MMM", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
         return dateFormat.format(selectedDate)
     }
 
