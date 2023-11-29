@@ -1,16 +1,18 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "cn.shef.msc5.todo"
+    namespace = "com.example.todo"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "cn.shef.msc5.todo"
-        minSdk = 30
-        targetSdk = 34
+        applicationId = "com.example.todo"
+        minSdk = 24
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -51,17 +53,16 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.7.0")
-//    implementation("androidx.fragment:fragment-ktx:1.7.0")
+    implementation("androidx.activity:activity-compose:1.8.1")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.ui:ui-text-android:1.5.4")
-    implementation("androidx.room:room-common:2.6.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -70,11 +71,28 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    val nav_version = "2.5.3"
-    debugImplementation("androidx.navigation:navigation-compose:$nav_version")
-    val material3_version = "1.1.2"
-    implementation("androidx.compose.material3:material3:$material3_version")
-    val swiperefreshlayout_version = "1.1.0"
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version")
+    //Navigation Component
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
+
+    //Room Component
+    implementation("androidx.room:room-runtime:2.6.0")
+    implementation ("androidx.room:room-ktx:2.6.0")
+    androidTestImplementation ("androidx.room:room-testing:2.6.0")
+
+    // Lifecycle components
+    implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation ("androidx.lifecycle:lifecycle-common-java8:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+
+    // Kotlin components
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0")
+    api ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    api ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
 
 }
+
+
