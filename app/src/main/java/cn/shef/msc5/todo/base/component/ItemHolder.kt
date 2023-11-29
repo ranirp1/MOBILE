@@ -63,7 +63,7 @@ fun ItemHolder(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = task.id.toString(), fontSize = 20.sp)
+                Text(text = task.title.toString(), fontSize = 20.sp)
                 Box {
                     IconButton(
                         modifier = Modifier.size(20.dp),
@@ -105,7 +105,7 @@ fun ItemHolder(
 
             Spacer(modifier = Modifier.height(2.dp))
 
-            Text(text = "Remark")
+            Text(text = task.description)
 
             Spacer(modifier = Modifier.height(2.dp))
 
@@ -114,7 +114,7 @@ fun ItemHolder(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Level")
+                Text(text = task.priority.toString())
                 Row {
                     // not sure add location or not
                     Text(text = "Location")

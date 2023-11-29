@@ -1,5 +1,7 @@
 package cn.shef.msc5.todo.ui.view
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -30,11 +32,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
+import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
+import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 /**
  * @author Zhecheng Zhao
@@ -44,7 +49,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalAnimationApi
 @Composable
-fun DetailScreen() {
+fun DetailScreen(mainViewModel: MainViewModel) {
     var text by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -78,10 +83,15 @@ fun DetailScreen() {
                 }},
                 onPriority={scope.launch {
                     scope.launch {
-                        snackbarHostState.showSnackbar("Level")
+
                     }
                 }},
                 addClick = {
+                    mainViewModel.addTask(title, text, 1, 1.11F, 1.11F,
+                        "imageUrl", java.sql.Date.valueOf(LocalDate.now().toString()), java.sql.Date.valueOf(
+                            LocalDate.now().toString()),
+                        java.sql.Date.valueOf(LocalDate.now().toString()),
+                        0,"remark", null)
                     GeneralUtil.finishActivity2(context)
                 })
         }) {
