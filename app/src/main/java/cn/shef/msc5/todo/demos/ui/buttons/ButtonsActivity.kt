@@ -102,7 +102,6 @@ fun ElevatedButton() {
 
 @Composable
 fun FilledButton() {
-
 }
 
 @Composable
@@ -139,7 +138,7 @@ fun IconButton() {
         colors = IconButtonDefaults.iconButtonColors(contentColor = Color.Green),
         content = {
             Icon(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                painter = painterResource(id = R.drawable.profile),
                 contentDescription = "icon"
             )
         }

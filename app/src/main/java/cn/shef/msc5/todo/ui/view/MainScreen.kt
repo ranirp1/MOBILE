@@ -1,15 +1,14 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package cn.shef.msc5.todo.ui.view
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.DonutSmall
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Task
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -77,7 +76,7 @@ fun MainScreen() {
     ) {
         when (selectedItem) {
             Constants.NAVIGATION_HOME -> HomeScreen(context, mainViewModel)
-            Constants.NAVIGATION_PROGRESS -> TasksScreen(context, mainViewModel)
+            Constants.NAVIGATION_PROGRESS -> ProgressScreen(context, mainViewModel)
 //            Constants.NAVIGATION_TASKS -> EmptyScreen(context)
             Constants.NAVIGATION_PROFILE -> DashBoardScreen(context, mainViewModel)
         }
