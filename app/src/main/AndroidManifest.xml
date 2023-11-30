@@ -20,7 +20,8 @@
             android:screenOrientation="portrait"
             android:name=".activity.SplashActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Todo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,8 +29,12 @@
         </activity>
         <activity
             android:name=".activity.LocationActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.CaptureImageActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.MapsActivity"
             android:screenOrientation="portrait"
@@ -48,6 +53,17 @@
             android:screenOrientation="portrait"
             android:exported="false"></service>
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="cn.shef.msc5.todo.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                tools:replace="android:resource"
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+        <!-- demos -->
     </application>
 
     <!-- internet permission -->
@@ -61,6 +77,7 @@
     <uses-feature android:name="android.hardware.camera.any"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 </manifest>
