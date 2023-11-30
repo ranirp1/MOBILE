@@ -3,6 +3,7 @@ package cn.shef.msc5.todo.activity
 import android.content.pm.PackageManager
 import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -29,7 +30,6 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
-import cn.shef.msc5.todo.activity.ui.theme.AppTheme
 import java.io.File
 
 
@@ -64,7 +64,7 @@ class CaptureImageActivity : ComponentActivity() {
             }
 
             var hasCameraPermission by remember { mutableStateOf(false) }
-            if (checkCameraPermission()) {
+            if (checkCameraPermission() && checkCameraPermission2()) {
                 hasCameraPermission = true
             } else {
                 val requestPermissionLauncher =
@@ -84,7 +84,7 @@ class CaptureImageActivity : ComponentActivity() {
                     requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
                 }
             }
-            AppTheme {
+            MaterialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -108,9 +108,18 @@ class CaptureImageActivity : ComponentActivity() {
                             }
                             Button(onClick = {
                                 cameraImageBitmap = null
+                                val authority = "$packageName.provider"
+                                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                                 cameraImageUri = FileProvider.getUriForFile(
                                     applicationContext,
-                                    applicationContext.getPackageName() + ".provider",
+                                    authority,
+                                    newImageFile()
+                                )}else{
+                                    cameraImageUri = Uri.fromFile(newImageFile())
+                                }
+                                cameraImageUri = FileProvider.getUriForFile(
+                                    applicationContext,
+                                    authority,
                                     newImageFile()
                                 )
                                 imageFromCameraLauncher.launch(cameraImageUri)
@@ -146,6 +155,12 @@ class CaptureImageActivity : ComponentActivity() {
         return PackageManager.PERMISSION_GRANTED ==
                 ActivityCompat.checkSelfPermission(applicationContext,
                     android.Manifest.permission.CAMERA
+                )
+    }
+    private fun checkCameraPermission2(): Boolean {
+        return PackageManager.PERMISSION_GRANTED ==
+                ActivityCompat.checkSelfPermission(applicationContext,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
                 )
     }
 }
