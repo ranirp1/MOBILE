@@ -1,5 +1,6 @@
 package cn.shef.msc5.todo.ui.view
 
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -31,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
+import cn.shef.msc5.todo.activity.CaptureImageActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.DatePicker
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
@@ -46,13 +48,11 @@ import java.util.Date
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 13/11/2023 13:28
  */
-@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalAnimationApi
 @Composable
 fun DetailScreen(mainViewModel: MainViewModel) {
     var text by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
-    val keyboardController = LocalSoftwareKeyboardController.current
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
@@ -70,9 +70,8 @@ fun DetailScreen(mainViewModel: MainViewModel) {
             BottomActionBar(modifier = Modifier.height(70.dp),
                 title = "Save",
                 onCamera = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar("onCamera")
-                    }
+                    val intent = Intent(context, CaptureImageActivity::class.java)
+                    GeneralUtil.startActivity2(context, intent)
                 },
                 onLocation = {
 

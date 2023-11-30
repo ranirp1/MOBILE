@@ -80,7 +80,7 @@ fun ProfileScreen(context: Context,
                     )
             ) {
                 HeaderText(text = stringResource(R.string.profile_account))
-                switchTheme()
+//                switchTheme()
                 ProfileText(stringResource(R.string.profile_location),
                     onClick = {
                         val intent = Intent(context, LocationActivity::class.java)
