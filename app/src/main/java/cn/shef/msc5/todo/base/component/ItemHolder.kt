@@ -31,6 +31,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cn.shef.msc5.todo.base.component.dialog.CameraDialog
+import cn.shef.msc5.todo.base.component.dialog.CameraDialog2
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
@@ -47,7 +49,9 @@ fun ItemHolder(
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     Card(
-        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
         shape = RoundedCornerShape(15.dp),
         onClick = {
             // TODO go to edit page
@@ -123,7 +127,10 @@ fun ItemHolder(
         }
 
         if(showDeleteDialog){
-            ConfirmDialog{ showDeleteDialog = it }
+            CameraDialog2 {
+                showDeleteDialog = false
+            }
+//            ConfirmDialog{ showDeleteDialog = it }
         }
     }
 }

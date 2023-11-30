@@ -29,6 +29,8 @@ class Constants {
         const val DATABASE_TASK = "d_task"
         const val TABLE_TASK = "t_task"
 
+        const val TABLE_USER = "t_user"
+
         // sorting types
         const val SORT_PRIORITY = "Priority"
         const val SORT_DUE = "Due Date"

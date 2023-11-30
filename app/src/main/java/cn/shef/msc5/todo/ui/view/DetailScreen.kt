@@ -6,10 +6,12 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -30,7 +32,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.CaptureImageActivity
-import cn.shef.msc5.todo.activity.LocationActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
 import cn.shef.msc5.todo.utilities.GeneralUtil
@@ -42,13 +43,11 @@ import kotlinx.coroutines.launch
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 13/11/2023 13:28
  */
-@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalAnimationApi
 @Composable
 fun DetailScreen() {
     var text by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
-    val keyboardController = LocalSoftwareKeyboardController.current
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
@@ -62,20 +61,15 @@ fun DetailScreen() {
             BottomActionBar(modifier = Modifier.height(70.dp),
                 title = "Save",
                 onCamera = {
-                    scope.launch {
-                        snackbarHostState.showSnackbar("onCamera")
-                        val intent = Intent(context, CaptureImageActivity::class.java)
-                        GeneralUtil.startActivity2(context, intent)
-                    }
+                    val intent = Intent(context, CaptureImageActivity::class.java)
+                    GeneralUtil.startActivity2(context, intent)
                 },
                 onLocation = {
                     GeneralUtil.finishActivity2(context)
-//                    scope.launch {
-//                        snackbarHostState.showSnackbar("Loc")
-//                    }
                 },
                 onSubTask = {
                     scope.launch {
+
                     }
                 },
                 onCalender = {scope.launch {
@@ -88,11 +82,6 @@ fun DetailScreen() {
                 }},
                 addClick = {
                     GeneralUtil.finishActivity2(context)
-//                    scope.launch {
-////                        snackbarHostState.showSnackbar("Add task success",
-////                            duration = SnackbarDuration.Short)
-//                        GeneralUtil.finishActivity2(context)
-//                    }
                 })
         }) {
 
@@ -101,26 +90,31 @@ fun DetailScreen() {
             //.heightIn(80.dp)
             ,verticalArrangement = Arrangement.Top) {
 
-            TextField(modifier = Modifier
+            OutlinedTextField(modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(80.dp)
                 .background(MaterialTheme.colorScheme.background)
                 .padding(10.dp),
                 value = title,
-                onValueChange = { title = it },
-                placeholder = { Text(text = "Title") })
+                singleLine = true,
+                label = { Text(text = "Title") },
+                onValueChange = { title = it })
 
-            TextField(modifier = Modifier
+            OutlinedTextField(modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(500.dp)
+                .heightIn(220.dp)
                 .background(MaterialTheme.colorScheme.background)
                 .padding(10.dp), value = text,
-                onValueChange = { text = it },
-                placeholder = { Text(text = "Description") })
+                maxLines = 10,
+                minLines = 1,
+                label = { Text(text = "Description") },
+                onValueChange = { text = it })
+
             Text(modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(50.dp)
                 .padding(10.dp), text = "Selected Task Location is ")
+
             Text(modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(10.dp)
