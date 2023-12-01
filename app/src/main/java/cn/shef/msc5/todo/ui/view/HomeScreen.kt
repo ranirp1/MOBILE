@@ -112,7 +112,6 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                 )
             }
         }
-
     }
 }
 

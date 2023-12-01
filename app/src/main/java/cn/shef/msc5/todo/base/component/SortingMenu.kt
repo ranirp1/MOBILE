@@ -82,8 +82,8 @@ fun SortingMenu(
                     onClick = {
                         showSortingMenu = false
                         sortString = SORT_PRIORITY
-                        sortTpyeSelected = SortType.Priority(sortType.sortOrder)
-                        onSelect(SortType.Priority(sortType.sortOrder))
+                        sortTpyeSelected = SortType.Priority(sortTpyeSelected.sortOrder)
+                        onSelect(sortTpyeSelected)
                     }
                 )
 
@@ -92,8 +92,8 @@ fun SortingMenu(
                     onClick = {
                         showSortingMenu = false
                         sortString = SORT_DUE
-                        sortTpyeSelected = SortType.DueDate(sortType.sortOrder)
-                        onSelect(SortType.DueDate(sortType.sortOrder))
+                        sortTpyeSelected = SortType.DueDate(sortTpyeSelected.sortOrder)
+                        onSelect(sortTpyeSelected)
                     }
                 )
 
@@ -102,8 +102,8 @@ fun SortingMenu(
                     onClick = {
                         showSortingMenu = false
                         sortString = SORT_LOCATION
-                        sortTpyeSelected = SortType.Location(sortType.sortOrder)
-                        onSelect(SortType.Location(sortType.sortOrder))
+                        sortTpyeSelected = SortType.Location(sortTpyeSelected.sortOrder)
+                        onSelect(sortTpyeSelected)
                     }
                 )
             }
@@ -119,9 +119,11 @@ fun SortingMenu(
         IconButton(onClick = {
             sortOrder = !sortOrder
             if(sortOrder){
-                onSelect(sortTpyeSelected.reorder(SortOrder.Ascending))
+                sortTpyeSelected = sortTpyeSelected.reorder(SortOrder.Ascending)
+                onSelect(sortTpyeSelected)
             }else{
-                onSelect(sortTpyeSelected.reorder(SortOrder.Descending))
+                sortTpyeSelected = sortTpyeSelected.reorder(SortOrder.Descending)
+                onSelect(sortTpyeSelected)
             }
         }) {
             if (sortOrder) {
