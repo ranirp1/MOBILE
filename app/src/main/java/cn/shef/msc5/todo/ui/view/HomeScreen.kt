@@ -35,7 +35,6 @@ import cn.shef.msc5.todo.base.component.SortingMenu
 import cn.shef.msc5.todo.base.component.TopBarType
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
-import java.time.LocalDate
 
 /**
  * @author Zhecheng Zhao
@@ -47,7 +46,7 @@ import java.time.LocalDate
 fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
 
     val taskListState = mainViewModel.taskListFlow.collectAsState(listOf())
-    val sortType = mainViewModel.sortType
+    var sortType by remember{ mutableStateOf(mainViewModel.sortType) }
 
     var fabVisibleAddTask by remember { mutableStateOf(false) }
     var fabVisibleLocation by remember { mutableStateOf(false) }
@@ -66,11 +65,6 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                     contentDescription = "Location",
                     onClick = {
                         // TODO check todos by location
-                        mainViewModel.addTask(
-                            "title", "description",1,1.11F,1.11F,"imageUrl",
-                            java.sql.Date.valueOf(LocalDate.now().toString()),java.sql.Date.valueOf(LocalDate.now().toString()),
-                            java.sql.Date.valueOf(LocalDate.now().toString()),0,"remark",null
-                        )
                     }
                 )
 
@@ -106,7 +100,6 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                     .background(MaterialTheme.colorScheme.background)
                     .padding(horizontal = 25.dp),
             ) {
-
                 items(
                     items = taskListState.value,
                     key = { taskItem -> taskItem.id },

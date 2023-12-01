@@ -43,6 +43,7 @@ fun SortingMenu(
     onSelect: (SortType) -> Unit
 ) {
     var showSortingMenu by remember { mutableStateOf(false) }
+    var sortTpyeSelected : SortType by remember { mutableStateOf(sortType) }
 
     // default sort by priority in ascending order (sortOrder == true)
     var sortOrder by remember { mutableStateOf(true) }
@@ -81,6 +82,7 @@ fun SortingMenu(
                     onClick = {
                         showSortingMenu = false
                         sortString = SORT_PRIORITY
+                        sortTpyeSelected = SortType.Priority(sortType.sortOrder)
                         onSelect(SortType.Priority(sortType.sortOrder))
                     }
                 )
@@ -90,6 +92,7 @@ fun SortingMenu(
                     onClick = {
                         showSortingMenu = false
                         sortString = SORT_DUE
+                        sortTpyeSelected = SortType.DueDate(sortType.sortOrder)
                         onSelect(SortType.DueDate(sortType.sortOrder))
                     }
                 )
@@ -99,6 +102,7 @@ fun SortingMenu(
                     onClick = {
                         showSortingMenu = false
                         sortString = SORT_LOCATION
+                        sortTpyeSelected = SortType.Location(sortType.sortOrder)
                         onSelect(SortType.Location(sortType.sortOrder))
                     }
                 )
@@ -112,16 +116,21 @@ fun SortingMenu(
                 .width(1.dp)
         )
 
-        IconButton(onClick = { sortOrder = !sortOrder }) {
+        IconButton(onClick = {
+            sortOrder = !sortOrder
+            if(sortOrder){
+                onSelect(sortTpyeSelected.reorder(SortOrder.Ascending))
+            }else{
+                onSelect(sortTpyeSelected.reorder(SortOrder.Descending))
+            }
+        }) {
             if (sortOrder) {
-                onSelect(sortType.reorder(SortOrder.Ascending))
                 Icon(
                     imageVector = Icons.Default.ArrowDownward,
                     contentDescription = "Sort by ascending order",
                     tint = Purple40,
                 )
             } else {
-                onSelect(sortType.reorder(SortOrder.Descending))
                 Icon(
                     imageVector = Icons.Default.ArrowUpward,
                     contentDescription = "Sort by descending order",

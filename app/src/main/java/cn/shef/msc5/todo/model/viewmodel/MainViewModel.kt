@@ -108,12 +108,12 @@ class MainViewModel(
     }
 
     // it seemed to only sort by priority
-    fun sortAllTasks(sortType: SortType) {
+    fun sortAllTasks(sortTypeSelected: SortType) {
         viewModelScope.launch {
             taskDAO.getAllTasks().map { tasks ->
-                when (sortType.sortOrder) {
+                when (sortTypeSelected.sortOrder) {
                     is SortOrder.Ascending -> {
-                        when (sortType) {
+                        when (sortTypeSelected) {
                             is SortType.Priority -> tasks.sortedBy { it.priority }
                             is SortType.DueDate -> tasks.sortedBy { it.dueTime }
                             is SortType.Location -> tasks.sortedBy { it.latitude }// ToDo by distance to location
@@ -121,7 +121,7 @@ class MainViewModel(
                     }
 
                     is SortOrder.Descending -> {
-                        when (sortType) {
+                        when (sortTypeSelected) {
                             is SortType.Priority -> tasks.sortedByDescending { it.priority }
                             is SortType.DueDate -> tasks.sortedByDescending { it.dueTime }
                             is SortType.Location -> tasks.sortedByDescending { it.latitude }// ToDo by distance to location
