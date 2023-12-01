@@ -1,29 +1,36 @@
 package cn.shef.msc5.todo.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import cn.shef.msc5.todo.utilities.Constants.Companion.TABLE_TASK
+import cn.shef.msc5.todo.utilities.DateConverter
+import java.sql.Date
+import java.time.OffsetDateTime
+
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
- * @date Created in 31/10/2023 10:48
+ * @date Created in 29/11/2023 11:48
  */
-data class User (
+@TypeConverters(DateConverter::class)
+@Entity(tableName = TABLE_TASK)
+data class User(
 
-    /**
-     * user id
-     */
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id", typeAffinity = ColumnInfo.INTEGER)
+    var id: Int,
 
-    /**
-     * user name
-     */
-    val username: String,
+    @ColumnInfo(name = "name", typeAffinity = ColumnInfo.TEXT)
+    var name: String,
 
-    /**
-     * user password
-     */
-    val password: String,
+    @ColumnInfo(name = "isDeleted", typeAffinity = ColumnInfo.INTEGER)
+    var isDeleted: Int,
 
-    /**
-     * user email
-     */
-    val email: String,
-)
+
+){
+    override fun toString(): String {
+        return "Task(id=$id, name=$name, isDeleted=$isDeleted)"
+    }
+}
