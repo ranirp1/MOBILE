@@ -125,19 +125,15 @@ fun DetailScreen(mainViewModel: MainViewModel) {
             Text(modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(50.dp)
-                .padding(10.dp), text = "Selected Task Location is ")
+                .padding(10.dp), text = "Selected Task Location: ")
 
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(10.dp)
                     .padding(10.dp),
-                text = "Due Date: $date",
+                text = "Due on: $date",
             )
-            Text(modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(10.dp)
-                .padding(10.dp), text = "Due time:")
             Column(modifier = Modifier
                 .fillMaxWidth()
                 , verticalArrangement = Arrangement.Bottom

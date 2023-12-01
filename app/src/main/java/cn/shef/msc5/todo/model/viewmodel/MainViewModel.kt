@@ -31,7 +31,7 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
     val taskListFlow: StateFlow<List<Task>> get() = _taskListFlow
     private var postExecute: (() -> Unit)? = null
 
-    val dateConverter = DateConverter()
+    private val dateConverter = DateConverter()
 
     init {
         loadTaskList()
