@@ -1,5 +1,29 @@
 <resources>
     <string name="app_name">Todo</string>
 
+    <string name="todo_list">Todo List</string>
+
     <string name="mode">Debug</string>
+
+    <string name="todo_title">Hi there</string>
+
+    <string name="todo_new_task">New Task</string>
+
+    <string name="todo_profile">Profile</string>
+
+    <string name="todo_dashboard">DashBoard</string>
+
+    <string name="todo_tasks">Progress</string>
+
+    <string name="profile_about">About</string>
+
+    <string name="profile_account">My Account</string>
+
+    <string name="profile_location">Location</string>
+
+    <string name="profile_policy">Privacy Policy</string>
+
+    <string name="profile_version">Version</string>
+
+    <string name="todo_map">Choose Your Location</string>
 </resources>
