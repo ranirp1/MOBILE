@@ -25,10 +25,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -58,10 +56,11 @@ fun DetailScreen(mainViewModel: MainViewModel) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
-    var showpriormenu by remember { mutableStateOf(false) }
-    var showcalender by remember { mutableStateOf(false) }
+    var showPriorMenu by remember { mutableStateOf(false) }
+    var showCalender by remember { mutableStateOf(false) }
     var prior by remember { mutableIntStateOf(2) }
     var date by remember { mutableStateOf(Date()) }
+
     BaseScaffold(
         showTopBar = true,
         showNavigationIcon = true,
@@ -73,6 +72,8 @@ fun DetailScreen(mainViewModel: MainViewModel) {
             BottomActionBar(modifier = Modifier.height(70.dp),
                 title = "Save",
                 onCamera = {
+                    //TODO add the bottomsheet here
+
                     val intent = Intent(context, CaptureImageActivity::class.java)
                     GeneralUtil.startActivity2(context, intent)
                 },
@@ -84,27 +85,31 @@ fun DetailScreen(mainViewModel: MainViewModel) {
 
                     }
                 },
-                onCalender = {scope.launch {
-                    showcalender=!showcalender
-                }},
-                onPriority={scope.launch {
-                    showpriormenu= !showpriormenu
-                }},
+                onCalender = {
+                    scope.launch {
+                        showCalender = !showCalender
+                    }
+                },
+                onPriority={
+                    scope.launch {
+                        showPriorMenu= !showPriorMenu
+                    }
+                },
                 addClick = {
                     mainViewModel.addTask(title, text, prior, 1.11F, 1.11F,
-                        "imageUrl", java.sql.Date.valueOf(LocalDate.now().toString()), java.sql.Date.valueOf(
-                            LocalDate.now().toString()),
-                        date.toSqlDate(),
+                        "imageUrl", java.sql.Date.valueOf(LocalDate.now().toString()),
+                        java.sql.Date.valueOf(LocalDate.now().toString()), date.toSqlDate(),
                         0,"remark", null)
                     GeneralUtil.finishActivity2(context)
-                })
-        }) {
-
+                }
+            )
+        }
+    ) {
         Column(modifier = Modifier
             .fillMaxWidth()
             //.heightIn(80.dp)
-            ,verticalArrangement = Arrangement.Top) {
-
+            ,verticalArrangement = Arrangement.Top
+        ) {
             OutlinedTextField(modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(80.dp)
@@ -113,7 +118,8 @@ fun DetailScreen(mainViewModel: MainViewModel) {
                 value = title,
                 singleLine = true,
                 label = { Text(text = "Title") },
-                onValueChange = { title = it })
+                onValueChange = { title = it }
+            )
 
             OutlinedTextField(modifier = Modifier
                 .fillMaxWidth()
@@ -123,53 +129,62 @@ fun DetailScreen(mainViewModel: MainViewModel) {
                 maxLines = 10,
                 minLines = 1,
                 label = { Text(text = "Description") },
-                onValueChange = { text = it })
+                onValueChange = { text = it }
+            )
 
             Text(modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(50.dp)
-                .padding(10.dp), text = "Selected Task Location is ")
+                .padding(10.dp), text = "Selected Task Location is "
+            )
 
-            Text(
-                modifier = Modifier
+            Text(modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(10.dp)
                     .padding(10.dp),
                 text = "Due Date: $date",
             )
+
             Text(modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(10.dp)
-                .padding(10.dp), text = "Due time:")
+                .padding(10.dp), text = "Due time:"
+            )
+
             Column(modifier = Modifier
                 .fillMaxWidth()
                 , verticalArrangement = Arrangement.Bottom
-                , horizontalAlignment = Alignment.CenterHorizontally) {
-                if(showpriormenu){
-                    DropdownMenu(expanded = true, onDismissRequest = { showpriormenu=false}) {
+                , horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if(showPriorMenu){
+                    DropdownMenu(expanded = true, onDismissRequest = { showPriorMenu = false }) {
                         DropdownMenuItem(onClick = {
-                            prior=1
-                            showpriormenu = false}) {
+                            prior = 1
+                            showPriorMenu = false
+                        }) {
                             Text(text = "High priority")
-
                         }
-                        DropdownMenuItem(onClick = { prior=2
-                            showpriormenu = false}) {
+
+                        DropdownMenuItem(onClick = {
+                            prior = 2
+                            showPriorMenu = false
+                        }) {
                             Text(text = "Medium priority")
-
                         }
-                        DropdownMenuItem(onClick = {prior=3
-                            showpriormenu = false}) {
-                            Text(text = "Low priority")
 
+                        DropdownMenuItem(onClick = {
+                            prior=3
+                            showPriorMenu = false
+                        }) {
+                            Text(text = "Low priority")
                         }
                     }
                 }
-                if (showcalender) {
+                if (showCalender) {
                     DatePicker(
                         onDateSelected = { date = it },
                         onDismiss = {
-                            showcalender = false
+                            showCalender = false
                         }
                     )
                 }
@@ -178,7 +193,7 @@ fun DetailScreen(mainViewModel: MainViewModel) {
     }
 }
 
-fun java.util.Date.toSqlDate(): java.sql.Date {
+fun Date.toSqlDate(): java.sql.Date {
     return java.sql.Date(this.time)
 }
 @Preview(name = "Light theme")
