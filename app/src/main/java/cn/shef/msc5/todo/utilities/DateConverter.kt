@@ -27,15 +27,26 @@ class DateConverter {
         return dateFormat.format(selectedDate)
     }
 
-    fun formatDateYear(selectedDate: Date): String {
-        val dateFormat = SimpleDateFormat("ddMMyyyy", Locale.getDefault())
-        return dateFormat.format(selectedDate)
+    fun formatDateYear(selectedDate: Long): Long {
+        val calendar = Calendar.getInstance()
+        calendar.time = revertDate(selectedDate)
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+        return calendar.timeInMillis
     }
 
     fun getPrevDay(selectedDate: Date): Date {
         val calendar = Calendar.getInstance()
         calendar.time = selectedDate
         calendar.add(Calendar.DAY_OF_YEAR, -1)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
         return Date(calendar.timeInMillis)
     }
 
@@ -43,6 +54,10 @@ class DateConverter {
         val calendar = Calendar.getInstance()
         calendar.time = selectedDate
         calendar.add(Calendar.DAY_OF_YEAR, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
         return Date(calendar.timeInMillis)
     }
 }

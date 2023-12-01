@@ -31,18 +31,16 @@ class MainViewModel(
     private var taskList = mutableStateListOf<Task>()
     private val _taskListFlow = MutableStateFlow(taskList)
 
-    // not sure
-    var sortType = SortType.Priority(SortOrder.Ascending)
-    var date = Date(System.currentTimeMillis())
+    val dateConverter = DateConverter()
+    var sortType : SortType = SortType.Priority(SortOrder.Ascending)
+    var date = Date(dateConverter.formatDateYear(System.currentTimeMillis()))
 
     val taskListFlow: StateFlow<List<Task>> get() = _taskListFlow
     private var postExecute: (() -> Unit)? = null
 
-    val dateConverter = DateConverter()
-
     init {
         when (screenType) {
-            ScreenTypeEnum.HOME_SCREEN -> loadTaskListByDate(date)
+            ScreenTypeEnum.HOME_SCREEN -> loadTaskListByDate()
             ScreenTypeEnum.OTHER_SCREEN -> loadTaskList()
         }
     }
@@ -57,7 +55,7 @@ class MainViewModel(
         }
     }
 
-    private fun loadTaskListByDate(date: Date) {
+    private fun loadTaskListByDate() {
         val selectedDate = dateConverter.converterDate(date)
         viewModelScope.launch {
             taskDAO.getAllTasksByDate(selectedDate).collect {
