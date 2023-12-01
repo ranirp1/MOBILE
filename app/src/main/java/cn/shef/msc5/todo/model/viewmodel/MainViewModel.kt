@@ -115,7 +115,6 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
                         }
                     }
                 }
-
             }.collect{
                 taskList = it.toMutableStateList()
                 _taskListFlow.value = taskList

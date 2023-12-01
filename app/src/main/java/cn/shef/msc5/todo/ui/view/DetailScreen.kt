@@ -1,5 +1,6 @@
 package cn.shef.msc5.todo.ui.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -49,6 +50,7 @@ import java.util.Date
  * @date Created in 13/11/2023 13:28
  */
 @ExperimentalAnimationApi
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailScreen(mainViewModel: MainViewModel) {
     var text by remember { mutableStateOf("") }
@@ -66,7 +68,8 @@ fun DetailScreen(mainViewModel: MainViewModel) {
         showFirstIcon = false,
         showSecondIcon = false,
         title = stringResource(R.string.todo_new_task),
-        hostState = snackbarHostState,bottomBar = {
+        hostState = snackbarHostState,
+        bottomBar = {
             BottomActionBar(modifier = Modifier.height(70.dp),
                 title = "Save",
                 onCamera = {
@@ -184,4 +187,3 @@ fun java.util.Date.toSqlDate(): java.sql.Date {
 fun PreviewDetailScreen() {
 //    MainScreen(LocalContext.current)
 }
-

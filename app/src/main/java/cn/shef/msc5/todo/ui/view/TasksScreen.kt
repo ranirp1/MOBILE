@@ -81,7 +81,7 @@ fun TasksScreen(context: Context, mainViewModel: MainViewModel) {
                     itemContent = { item ->
                         val currentItem by rememberUpdatedState(item)
                         Spacer(modifier = Modifier.height(10.dp))
-                        ItemHolder(currentItem)
+                        ItemHolder(currentItem, mainViewModel)
                         Spacer(modifier = Modifier.height(15.dp))
                     }
                 )
