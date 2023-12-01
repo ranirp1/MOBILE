@@ -5,6 +5,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import cn.shef.msc5.todo.model.ScreenTypeEnum
 import cn.shef.msc5.todo.model.SortOrder
 import cn.shef.msc5.todo.model.SortType
 import cn.shef.msc5.todo.model.Task
@@ -22,7 +23,10 @@ import java.sql.Date
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 05/11/2023 15:52
  */
-class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
+class MainViewModel(
+    private val screenType: ScreenTypeEnum,
+    private val taskDAO: TaskDAO
+) : ViewModel() {
 
     private var taskList = mutableStateListOf<Task>()
     private val _taskListFlow = MutableStateFlow(taskList)
@@ -37,15 +41,26 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
     val dateConverter = DateConverter()
 
     init {
-        loadTaskList()
-        // not sure if should add it like this
-        sortType = SortType.Priority(SortOrder.Ascending)
-        date = Date(System.currentTimeMillis())
+        when (screenType) {
+            ScreenTypeEnum.HOME_SCREEN -> loadTaskListByDate(date)
+            ScreenTypeEnum.OTHER_SCREEN -> loadTaskList()
+        }
     }
 
     private fun loadTaskList() {
         viewModelScope.launch {
             taskDAO.getAllTasks().collect {
+                taskList = it.toMutableStateList()
+                _taskListFlow.value = taskList
+                postExecute?.invoke()
+            }
+        }
+    }
+
+    private fun loadTaskListByDate(date: Date) {
+        val selectedDate = dateConverter.converterDate(date)
+        viewModelScope.launch {
+            taskDAO.getAllTasksByDate(selectedDate).collect {
                 taskList = it.toMutableStateList()
                 _taskListFlow.value = taskList
                 postExecute?.invoke()
@@ -86,7 +101,6 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
         }
     }
 
-    // it seemed to only sort by priority
     fun delete(
         task: Task
     ) {
@@ -95,6 +109,7 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
         }
     }
 
+    // it seemed to only sort by priority
     fun sortAllTasks(sortType: SortType) {
         viewModelScope.launch {
             taskDAO.getAllTasks().map { tasks ->
@@ -155,11 +170,12 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
 }
 
 class MainViewModelFactory(
+    private val screenType: ScreenTypeEnum,
     private val taskDAO: TaskDAO
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(taskDAO) as T
+            return MainViewModel(screenType, taskDAO) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
