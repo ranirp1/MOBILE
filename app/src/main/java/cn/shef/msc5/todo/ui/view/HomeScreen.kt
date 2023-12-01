@@ -14,16 +14,21 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PinDrop
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
@@ -68,25 +73,14 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                     contentDescription = "Location",
                     onClick = {
                         // TODO check todos by location
-                        mainViewModel.addTask(
-                            "title",
-                            "description",
-                            1,
-                            1.11F,
-                            1.11F,
-                            "imageUrl",
-                            java.sql.Date.valueOf(LocalDate.now().toString()),
-                            java.sql.Date.valueOf(
-                                LocalDate.now().toString()
-                            ),
-                            java.sql.Date.valueOf(LocalDate.now().toString()),
-                            0,
-                            "remark",
-                            null
-                        )
+                        mainViewModel.addTask("title", "description", 1, 1.11F, 1.11F,
+                        "imageUrl", java.sql.Date.valueOf(LocalDate.now().toString()), java.sql.Date.valueOf(
+                            LocalDate.now().toString()),
+                        java.sql.Date.valueOf(LocalDate.now().toString()),
+                        0,"remark", null)
                     }
                 )
-
+                
                 Spacer(modifier = Modifier.height(10.dp))
 
                 BaseFloatingActionBar(
@@ -132,7 +126,6 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                 )
             }
         }
-
     }
 }
 

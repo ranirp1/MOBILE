@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.demos.ui.textfields
+package cn.shef.msc5.todo.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,16 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import cn.shef.msc5.todo.base.BaseActivity
+import cn.shef.msc5.todo.ui.theme.AppTheme
+import cn.shef.msc5.todo.ui.view.LocationScreen
 
-
-/**
- * @author Zhecheng Zhao
- * @email zzhao84@sheffield.ac.uk
- * @date Created in 31/10/2023 11:56
- */
-class TextFieldActivity : ComponentActivity() {
+class LocationActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -25,13 +21,9 @@ class TextFieldActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    LocationScreen()
                 }
             }
         }
     }
-}
-
-@Composable
-fun TextField() {
-
 }

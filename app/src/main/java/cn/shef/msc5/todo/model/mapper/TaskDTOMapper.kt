@@ -1,10 +1,7 @@
 package cn.shef.msc5.todo.model.mapper
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.dto.TaskDTO
-import java.sql.Date
 
 /**
  * @author Zhecheng Zhao

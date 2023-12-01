@@ -36,12 +36,13 @@ import cn.shef.msc5.todo.utilities.Constants
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 05/11/2023 22:56
  */
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainScreen() {
 
     val mainViewModel by lazy {
         MainViewModelFactory(AppDatabase.INSTANCE.getTaskDAO()).
-            create(MainViewModel::class.java)
+        create(MainViewModel::class.java)
     }
 
     //get context
@@ -82,7 +83,8 @@ fun MainScreen() {
             // TODO add progress screen
             Constants.NAVIGATION_PROGRESS -> TasksScreen(context, mainViewModel)
 //            Constants.NAVIGATION_TASKS -> EmptyScreen(context)
-            Constants.NAVIGATION_PROFILE -> DashBoardScreen(context, mainViewModel)
+//            Constants.NAVIGATION_PROFILE -> SettingScreen(context, mainViewModel)
+            Constants.NAVIGATION_PROFILE -> ProfileScreen(context, mainViewModel)
         }
     }
 }

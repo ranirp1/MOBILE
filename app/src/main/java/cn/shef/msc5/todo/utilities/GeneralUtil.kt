@@ -2,6 +2,7 @@ package cn.shef.msc5.todo.utilities
 
 import android.content.Context
 import android.content.Intent
+import androidx.navigation.ActivityNavigator
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.base.BaseActivity
 
@@ -20,7 +21,7 @@ class GeneralUtil {
 
         fun startActivity2(context: Context, intent: Intent) {
             (context as BaseActivity).startActivity(intent)
-            context.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up)
+            context.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_no_animation)
         }
 
         fun finishActivity(context: Context) {
@@ -30,8 +31,7 @@ class GeneralUtil {
 
         fun finishActivity2(context: Context) {
             (context as BaseActivity).finish()
-//            context.overridePendingTransition(R.anim.slide_bottom_in, R.anim.slide_top_out)
-//            context.overridePendingTransition(R.anim.slide_bottom_in, 0)
+            context.overridePendingTransition(R.anim.slide_no_animation, R.anim.slide_out_up)
         }
 
     }

@@ -1,5 +1,6 @@
 package cn.shef.msc5.todo.base.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -25,7 +26,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.model.SortOrder
 import cn.shef.msc5.todo.model.SortType
 import cn.shef.msc5.todo.ui.theme.Purple40
@@ -49,6 +52,7 @@ fun SortingMenu(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(colorResource(id = R.color.white))
             .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically

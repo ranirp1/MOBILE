@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
@@ -33,10 +32,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.demos.ui.datepickers.DatePicker
 import cn.shef.msc5.todo.utilities.DateConverter
-import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.sql.Date
-import java.util.Locale
 
 /**
  * @author Cheng Man Li
@@ -125,6 +121,8 @@ fun DatePicker(
             }
         }
     ) {
-        androidx.compose.material3.DatePicker(state = datePickerState)
+        androidx.compose.material3.DatePicker(
+            state = datePickerState
+        )
     }
 }

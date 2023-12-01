@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.sql.Date
 
-
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
@@ -34,6 +33,7 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
 
     val taskListFlow: StateFlow<List<Task>> get() = _taskListFlow
     private var postExecute: (() -> Unit)? = null
+
     val dateConverter = DateConverter()
 
     init {
@@ -87,6 +87,14 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
     }
 
     // it seemed to only sort by priority
+    fun delete(
+        task: Task
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            taskDAO.delete(task)
+        }
+    }
+
     fun sortAllTasks(sortType: SortType) {
         viewModelScope.launch {
             taskDAO.getAllTasks().map { tasks ->

@@ -29,10 +29,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.model.Task
+import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
@@ -40,7 +42,9 @@ import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemHolder(
-    task: Task
+    // TODO add the task variables
+    task: Task,
+    mainViewModel: MainViewModel
 ) {
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -60,7 +64,7 @@ fun ItemHolder(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = task.title, fontSize = 20.sp)
+                Text(text = task.title.toString(), fontSize = 20.sp)
                 Box {
                     IconButton(
                         modifier = Modifier.size(20.dp),
@@ -102,7 +106,7 @@ fun ItemHolder(
 
             Spacer(modifier = Modifier.height(2.dp))
 
-            Text(text = task.remark)
+            Text(text = task.description)
 
             Spacer(modifier = Modifier.height(2.dp))
 
@@ -116,13 +120,17 @@ fun ItemHolder(
                     // not sure add location or not
                     Text(text = "(" +task.latitude.toString() + ", " + task.longitude.toString() + ")")
                     Spacer(modifier = Modifier.width(7.dp))
-                    Text(text = task.dueTime.toString())
+                    Text(text = "Due on: ${task.dueTime}")
                 }
             }
         }
 
         if(showDeleteDialog){
-            ConfirmDialog{ showDeleteDialog = it }
+            ConfirmDialog(
+                onClick = {
+                    mainViewModel.delete(task)
+                }
+            ){ showDeleteDialog = it }
         }
     }
 }

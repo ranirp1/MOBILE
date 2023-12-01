@@ -35,7 +35,6 @@ interface TaskDAO : BaseDAO<Task> {
     suspend fun getCount(): Int
 
     override fun delete(task: Task) {
-        TODO("Not yet implemented")
         task.isDeleted = 1
         insert(task)
     }
