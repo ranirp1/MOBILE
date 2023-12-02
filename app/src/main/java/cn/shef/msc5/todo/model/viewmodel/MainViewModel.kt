@@ -46,24 +46,11 @@ class MainViewModel(
     }
 
     private fun loadTaskList() {
-        viewModelScope.launch {
-            taskDAO.getAllTasks().collect {
-                taskList = it.toMutableStateList()
-                _taskListFlow.value = taskList
-                postExecute?.invoke()
-            }
-        }
+        sortAllTasks(sortType)
     }
 
     private fun loadTaskListByDate() {
-        val selectedDate = dateConverter.converterDate(date)
-        viewModelScope.launch {
-            taskDAO.getAllTasksByDate(selectedDate).collect {
-                taskList = it.toMutableStateList()
-                _taskListFlow.value = taskList
-                postExecute?.invoke()
-            }
-        }
+        sortTasksByDate(sortType, date)
     }
 
     fun setLevel(index: Int, value: Int) {
