@@ -50,7 +50,7 @@ fun TasksScreen(context: Context, mainViewModel: MainViewModel) {
     BaseScaffold(
         showTopBar = true,
         topBarType = TopBarType.SEARCH,
-        title = stringResource(R.string.todo_tasks),
+        title = stringResource(R.string.todo_list),
         floatingActionButton = {
             Column {
                 BaseFloatingActionBar(
