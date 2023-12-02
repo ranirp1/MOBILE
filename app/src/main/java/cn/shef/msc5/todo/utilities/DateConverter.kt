@@ -1,7 +1,10 @@
 package cn.shef.msc5.todo.utilities
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TimePickerState
 import androidx.room.TypeConverter
 import java.sql.Date
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -27,6 +30,12 @@ class DateConverter {
         return dateFormat.format(selectedDate)
     }
 
+    fun formatHourMinute(date: Date): String {
+        val timeStr = java.util.Date(date.time)
+        val format = SimpleDateFormat("HH:mm")
+        return format.format(timeStr)
+    }
+
     fun formatDateYear(selectedDate: Long): Long {
         val calendar = Calendar.getInstance()
         calendar.time = revertDate(selectedDate)
@@ -37,6 +46,21 @@ class DateConverter {
         calendar.set(Calendar.MILLISECOND, 0)
 
         return calendar.timeInMillis
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    fun updateDateWithTime(originalDate: Date, state: TimePickerState): Date {
+        val timestamp = Timestamp(originalDate.time)
+
+        // Get the time from state
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = timestamp.time
+        calendar.set(Calendar.HOUR_OF_DAY, state.hour)
+        calendar.set(Calendar.MINUTE, state.minute)
+
+        timestamp.time = calendar.timeInMillis
+
+        return Date(timestamp.time)
     }
 
     fun getPrevDay(selectedDate: Date): Date {

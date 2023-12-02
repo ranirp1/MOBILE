@@ -42,6 +42,7 @@ import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DONE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_UNDONE
+import cn.shef.msc5.todo.utilities.DateConverter
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,6 +52,7 @@ fun ItemHolder(
     task: Task,
     mainViewModel: MainViewModel
 ) {
+    val dateConverter = DateConverter()
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -132,30 +134,32 @@ fun ItemHolder(
                         )
                     }
                 }
-
             }
 
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
             Text(text = task.description)
 
-            Spacer(modifier = Modifier.height(7.dp))
+            Spacer(modifier = Modifier.height(9.dp))
 
             when(PriorityLevelEnum.createFromInt(task.priority)){
                 is PriorityLevelEnum.LOW -> Text(
                     text = PriorityLevelEnum.LOW.value,
                     fontStyle = FontStyle.Italic,
-                    color = PriorityLevelEnum.LOW.color
+                    color = PriorityLevelEnum.LOW.color,
+                    fontSize = 14.sp
                 )
                 is PriorityLevelEnum.MEDIUM -> Text(
                     text = PriorityLevelEnum.MEDIUM.value,
                     fontStyle = FontStyle.Italic,
-                    color = PriorityLevelEnum.MEDIUM.color
+                    color = PriorityLevelEnum.MEDIUM.color,
+                    fontSize = 14.sp
                 )
                 is PriorityLevelEnum.HIGH -> Text(
                     text = PriorityLevelEnum.HIGH.value,
                     fontStyle = FontStyle.Italic,
-                    color = PriorityLevelEnum.HIGH.color
+                    color = PriorityLevelEnum.HIGH.color,
+                    fontSize = 14.sp
                 )
             }
 
@@ -166,9 +170,12 @@ fun ItemHolder(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Due on: ${task.dueTime}")
+                Text(text = "Due on: ${task.dueTime} ${dateConverter.formatHourMinute(task.dueTime)}", fontSize = 14.sp)
                 Spacer(modifier = Modifier.width(7.dp))
-                Text(text = "(" + task.latitude.toString() + ", " + task.longitude.toString() + ")")
+                Text(
+                    text = "(" + task.latitude.toString() + ", " + task.longitude.toString() + ")",
+                    fontSize = 14.sp
+                )
             }
         }
 

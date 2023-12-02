@@ -1,8 +1,8 @@
 package cn.shef.msc5.todo.model
 
 sealed class TemplateEnum(val templateType: String, val templateText: String){
-    object ASSIGNMENT : TemplateEnum("Assignment", "Assignment submission for course")
-    object EXERCISE : TemplateEnum("Exercise", "Go to gym")
+    object ASSIGNMENT : TemplateEnum("Assignment", "Assignment submission for course ")
+    object EXERCISE : TemplateEnum("Attendance", "Attend course ")
     object MEETING : TemplateEnum("Meeting", "Meeting with ")
 }
 

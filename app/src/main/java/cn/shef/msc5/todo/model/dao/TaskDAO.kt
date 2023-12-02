@@ -28,7 +28,7 @@ interface TaskDAO : BaseDAO<Task> {
     @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0")
     fun getAllTasks(): Flow<List<Task>> //List<Task>?
 
-    @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0 AND dueTime = :selectedDate")
+    @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0 AND strftime('%Y-%m-%d', dueTime / 1000, 'unixepoch') = strftime('%Y-%m-%d', :selectedDate / 1000, 'unixepoch')")
     fun getAllTasksByDate(selectedDate: Long): Flow<List<Task>>
 
     @Query("SELECT count(*) from $TABLE_TASK WHERE isDeleted = 0")
