@@ -38,6 +38,8 @@ class Constants {
         const val SORT_DUE = "Due Date"
         const val SORT_LOCATION = "Location"
 
+        const val OPTIONS_DONE = "Mark as done"
+        const val OPTIONS_UNDONE = "Mark as undone"
         const val OPTIONS_DUPLICATE = "Duplicate"
         const val OPTIONS_DELETE = "Delete"
     }

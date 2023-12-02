@@ -32,7 +32,6 @@ fun ConfirmDialog(
             TextButton(
                 onClick = {
                     showDialog(false)
-                    // Todo delete task
                     onClick.invoke()
                 }
             ) {

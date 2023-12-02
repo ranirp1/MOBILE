@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
@@ -29,15 +30,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
+import cn.shef.msc5.todo.model.PriorityLevelEnum
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
+import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DONE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
+import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_UNDONE
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,10 +53,11 @@ fun ItemHolder(
 ) {
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(5.dp),
+        enabled = !(task.isCompleted),
         onClick = {
             // TODO go to edit page
         }
@@ -64,12 +70,11 @@ fun ItemHolder(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = task.title.toString(), fontSize = 20.sp)
+                Text(text = task.title, fontSize = 20.sp)
                 Box {
                     IconButton(
                         modifier = Modifier.size(20.dp),
                         onClick = {
-                            // TODO delete/copy
                             showOptionsMenu = !showOptionsMenu
                         }
                     ) {
@@ -83,19 +88,45 @@ fun ItemHolder(
                         onDismissRequest = { showOptionsMenu = false }
                     ) {
                         DropdownMenuItem(
-                            leadingIcon = { Icon(imageVector = Icons.Default.ContentCopy, contentDescription = OPTIONS_DUPLICATE)},
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Done,
+                                    contentDescription = OPTIONS_DONE
+                                )
+                            },
+                            text = { Text(text = if(!task.isCompleted) OPTIONS_DONE else OPTIONS_UNDONE, color = PurpleGrey40) },
+                            onClick = {
+                                showOptionsMenu = false
+                                mainViewModel.markAsDone(task)
+                            }
+                        )
+
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.ContentCopy,
+                                    contentDescription = OPTIONS_DUPLICATE
+                                )
+                            },
                             text = { Text(text = OPTIONS_DUPLICATE, color = PurpleGrey40) },
                             onClick = {
                                 showOptionsMenu = false
                                 // TODO duplicate by insert a copy to database
-                            })
+                                mainViewModel.duplicate(task,java.sql.Date.valueOf(LocalDate.now().toString()),
+                                    java.sql.Date.valueOf(LocalDate.now().toString()), null)
+                            }
+                        )
 
                         DropdownMenuItem(
-                            leadingIcon = { Icon(imageVector = Icons.Default.Delete, contentDescription = OPTIONS_DELETE)},
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = OPTIONS_DELETE
+                                )
+                            },
                             text = { Text(text = OPTIONS_DELETE, color = PurpleGrey40) },
                             onClick = {
                                 showOptionsMenu = false
-                                // TODO delete from database, show confirm dialog
                                 showDeleteDialog = true
                             }
                         )
@@ -108,6 +139,26 @@ fun ItemHolder(
 
             Text(text = task.description)
 
+            Spacer(modifier = Modifier.height(7.dp))
+
+            when(PriorityLevelEnum.createFromInt(task.priority)){
+                is PriorityLevelEnum.LOW -> Text(
+                    text = PriorityLevelEnum.LOW.value,
+                    fontStyle = FontStyle.Italic,
+                    color = PriorityLevelEnum.LOW.color
+                )
+                is PriorityLevelEnum.MEDIUM -> Text(
+                    text = PriorityLevelEnum.MEDIUM.value,
+                    fontStyle = FontStyle.Italic,
+                    color = PriorityLevelEnum.MEDIUM.color
+                )
+                is PriorityLevelEnum.HIGH -> Text(
+                    text = PriorityLevelEnum.HIGH.value,
+                    fontStyle = FontStyle.Italic,
+                    color = PriorityLevelEnum.HIGH.color
+                )
+            }
+
             Spacer(modifier = Modifier.height(2.dp))
 
             Row(
@@ -115,17 +166,13 @@ fun ItemHolder(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = task.priority.toString())
-                Row {
-                    // not sure add location or not
-                    Text(text = "(" +task.latitude.toString() + ", " + task.longitude.toString() + ")")
-                    Spacer(modifier = Modifier.width(7.dp))
-                    Text(text = "Due on: ${task.dueTime}")
-                }
+                Text(text = "Due on: ${task.dueTime}")
+                Spacer(modifier = Modifier.width(7.dp))
+                Text(text = "(" + task.latitude.toString() + ", " + task.longitude.toString() + ")")
             }
         }
 
-        if(showDeleteDialog){
+        if (showDeleteDialog) {
             ConfirmDialog(
                 onClick = {
                     mainViewModel.delete(task)

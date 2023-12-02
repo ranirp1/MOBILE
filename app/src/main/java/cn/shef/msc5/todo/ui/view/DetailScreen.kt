@@ -99,7 +99,7 @@ fun DetailScreen(mainViewModel: MainViewModel) {
                     mainViewModel.addTask(title, text, prior, 1.11F, 1.11F,
                         "imageUrl", java.sql.Date.valueOf(LocalDate.now().toString()),
                         java.sql.Date.valueOf(LocalDate.now().toString()), date.toSqlDate(),
-                        0,"remark", null)
+                        0,false, null)
                     GeneralUtil.finishActivity2(context)
                 }
             )
@@ -173,7 +173,7 @@ fun DetailScreen(mainViewModel: MainViewModel) {
                         }
 
                         DropdownMenuItem(onClick = {
-                            prior=3
+                            prior = 3
                             showPriorMenu = false
                         }) {
                             Text(text = "Low priority")
