@@ -55,7 +55,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
 
     BaseScaffold(
         showTopBar = true,
-        topBarType = TopBarType.SEARCH,
+        topBarType = TopBarType.NORMAL,
         title = stringResource(R.string.todo_title),
         floatingActionButton = {
             Column {
