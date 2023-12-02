@@ -85,13 +85,13 @@ class MainViewModel(
         gmtModified: Date,
         dueTime: Date,
         parentId: Int,
-        remark: String,
+        isCompleted: Boolean,
         postInsert: (() -> Unit)? = null
     ) {
         val id = taskList.lastOrNull()?.id ?: -1
         val todoItem = Task(
             id + 1, title, 1, description, priority, longitude, latitude,
-            imageUrl, dueTime, parentId, gmtCreated, gmtModified, 0, remark
+            imageUrl, dueTime, parentId, gmtCreated, gmtModified, 0, isCompleted
         )
         viewModelScope.launch(Dispatchers.IO) {
             taskDAO.insert(todoItem)
@@ -99,15 +99,35 @@ class MainViewModel(
         }
     }
 
-    fun delete(
-        task: Task
-    ) {
+    fun delete(task: Task) {
         viewModelScope.launch(Dispatchers.IO) {
             taskDAO.delete(task)
         }
     }
 
-    // it seemed to only sort by priority
+    fun markAsDone(task: Task){
+        viewModelScope.launch(Dispatchers.IO){
+            taskDAO.updateComplete(task)
+        }
+    }
+
+    fun duplicate(
+        task: Task,
+        gmtCreated: Date,
+        gmtModified: Date,
+        postInsert: (() -> Unit)? = null
+    ){
+        val id = taskList.lastOrNull()?.id ?: -1
+        val todoItem = Task(
+            id + 1, task.title, 1, task.description, task.priority, task.longitude, task.latitude,
+            task.imageUrl, task.dueTime, task.parentId, gmtCreated, gmtModified, 0, false
+        )
+        viewModelScope.launch(Dispatchers.IO) {
+            taskDAO.insert(todoItem)
+            postExecute = postInsert
+        }
+    }
+
     fun sortAllTasks(sortTypeSelected: SortType) {
         viewModelScope.launch {
             taskDAO.getAllTasks().map { tasks ->
@@ -136,7 +156,6 @@ class MainViewModel(
         }
     }
 
-    // it seemed to only sort by priority
     fun sortTasksByDate(sortType: SortType, date: Date) {
         val selectedDate = dateConverter.converterDate(date)
         viewModelScope.launch {

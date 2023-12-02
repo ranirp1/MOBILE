@@ -39,11 +39,11 @@ data class TaskDTO(
 
     var isDeleted: Int,
 
-    var remark: String
+    var isCompleted: Boolean
 
 
 ) : Parcelable{
     override fun toString(): String {
-        return "TaskDTO(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, remark='$remark)"
+        return "TaskDTO(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, isCompleted='$isCompleted)"
     }
 }

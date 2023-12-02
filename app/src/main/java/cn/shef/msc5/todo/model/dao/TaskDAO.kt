@@ -36,8 +36,14 @@ interface TaskDAO : BaseDAO<Task> {
 
     override fun delete(task: Task) {
         task.isDeleted = 1
-        insert(task)
+        update(task)
     }
+
+    fun updateComplete(task: Task){
+        task.isCompleted = !task.isCompleted
+        update(task)
+    }
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(task : Task)
+    fun update(task : Task)
 }

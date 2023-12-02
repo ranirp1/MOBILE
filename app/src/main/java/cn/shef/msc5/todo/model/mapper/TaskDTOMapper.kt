@@ -25,7 +25,7 @@ class TaskDTOMapper : DomainMapper<TaskDTO, Task> {
             gmtModified =  model.gmtModified,
             gmtCreated =  model.gmtCreated,
             isDeleted =  model.isDeleted,
-            remark = model.remark
+            isCompleted = model.isCompleted
         )
     }
 
@@ -44,7 +44,7 @@ class TaskDTOMapper : DomainMapper<TaskDTO, Task> {
             gmtModified =  domainModel.gmtModified,
             gmtCreated =  domainModel.gmtCreated,
             isDeleted =  domainModel.isDeleted,
-            remark = domainModel.remark
+            isCompleted = domainModel.isCompleted
         )
     }
 

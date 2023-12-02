@@ -58,11 +58,11 @@ data class Task(
     @ColumnInfo(name = "isDeleted", typeAffinity = ColumnInfo.INTEGER)
     var isDeleted: Int,
 
-    @ColumnInfo(name = "remark", typeAffinity = ColumnInfo.TEXT)
-    var remark: String
+    @ColumnInfo(name = "isCompleted")
+    var isCompleted: Boolean
 
 ){
     override fun toString(): String {
-        return "Task(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, remark='$remark)"
+        return "Task(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, isCompleted='$isCompleted)"
     }
 }
