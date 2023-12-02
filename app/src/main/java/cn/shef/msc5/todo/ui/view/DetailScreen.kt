@@ -33,14 +33,18 @@ import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.CaptureImageActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
+import cn.shef.msc5.todo.base.component.Chips
 import cn.shef.msc5.todo.base.component.DatePicker
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
+import cn.shef.msc5.todo.model.getPriorityValues
+import cn.shef.msc5.todo.model.getTemplateStr
+import cn.shef.msc5.todo.model.getTemplateTextStr
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.Date
+import java.sql.Date
 
 /**
  * @author Zhecheng Zhao
@@ -51,15 +55,30 @@ import java.util.Date
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DetailScreen(mainViewModel: MainViewModel) {
-    var text by remember { mutableStateOf("") }
-    var title by remember { mutableStateOf("") }
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
-    var showPriorMenu by remember { mutableStateOf(false) }
+
+//    var showPriorMenu by remember { mutableStateOf(false) }
     var showCalender by remember { mutableStateOf(false) }
+    var date by remember { mutableStateOf(mainViewModel.date) }
+
+    val priorityLevels = getPriorityValues()
     var prior by remember { mutableIntStateOf(2) }
-    var date by remember { mutableStateOf(Date()) }
+
+    val templates = getTemplateStr()
+    val templateDesc = getTemplateTextStr()
+    var selectedTemplate by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf("") }
+    var text by remember { mutableStateOf("") }
+
+    if (selectedTemplate.isNotBlank()) {
+        val templateIndex = templates.indexOf(selectedTemplate)
+        if (templateIndex != -1 && templateIndex < templateDesc.size) {
+            text = templateDesc[templateIndex]
+            title = templates[templateIndex]
+        }
+    }
 
     BaseScaffold(
         showTopBar = true,
@@ -90,15 +109,15 @@ fun DetailScreen(mainViewModel: MainViewModel) {
                         showCalender = !showCalender
                     }
                 },
-                onPriority={
-                    scope.launch {
-                        showPriorMenu= !showPriorMenu
-                    }
-                },
+//                onPriority={
+//                    scope.launch {
+//                        showPriorMenu= !showPriorMenu
+//                    }
+//                },
                 addClick = {
                     mainViewModel.addTask(title, text, prior, 1.11F, 1.11F,
-                        "imageUrl", java.sql.Date.valueOf(LocalDate.now().toString()),
-                        java.sql.Date.valueOf(LocalDate.now().toString()), date.toSqlDate(),
+                        "imageUrl", Date.valueOf(LocalDate.now().toString()),
+                        Date.valueOf(LocalDate.now().toString()), date,
                         0,false, null)
                     GeneralUtil.finishActivity2(context)
                 }
@@ -107,9 +126,14 @@ fun DetailScreen(mainViewModel: MainViewModel) {
     ) {
         Column(modifier = Modifier
             .fillMaxWidth()
+            .padding(10.dp)
             //.heightIn(80.dp)
             ,verticalArrangement = Arrangement.Top
         ) {
+            Chips("", "Templates: ", templates){
+                selectedTemplate = it
+            }
+
             OutlinedTextField(modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(80.dp)
@@ -139,9 +163,9 @@ fun DetailScreen(mainViewModel: MainViewModel) {
             )
 
             Text(modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(10.dp)
-                    .padding(10.dp),
+                .fillMaxWidth()
+                .heightIn(10.dp)
+                .padding(10.dp),
                 text = "Due Date: $date",
             )
 
@@ -151,51 +175,52 @@ fun DetailScreen(mainViewModel: MainViewModel) {
                 .padding(10.dp), text = "Due time:"
             )
 
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                , verticalArrangement = Arrangement.Bottom
-                , horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                if(showPriorMenu){
-                    DropdownMenu(expanded = true, onDismissRequest = { showPriorMenu = false }) {
-                        DropdownMenuItem(onClick = {
-                            prior = 1
-                            showPriorMenu = false
-                        }) {
-                            Text(text = "High priority")
-                        }
-
-                        DropdownMenuItem(onClick = {
-                            prior = 2
-                            showPriorMenu = false
-                        }) {
-                            Text(text = "Medium priority")
-                        }
-
-                        DropdownMenuItem(onClick = {
-                            prior = 3
-                            showPriorMenu = false
-                        }) {
-                            Text(text = "Low priority")
-                        }
-                    }
-                }
-                if (showCalender) {
-                    DatePicker(
-                        onDateSelected = { date = it },
-                        onDismiss = {
-                            showCalender = false
-                        }
-                    )
-                }
+            Chips(priorityLevels[1], "Priority: ", priorityLevels){
+                prior = priorityLevels.indexOf(it) + 1
             }
+//
+//            Column(modifier = Modifier
+//                .fillMaxWidth()
+//                , verticalArrangement = Arrangement.Bottom
+//                , horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                if(showPriorMenu){
+//                    DropdownMenu(expanded = true, onDismissRequest = { showPriorMenu = false }) {
+//                        DropdownMenuItem(onClick = {
+//                            prior = 1
+//                            showPriorMenu = false
+//                        }) {
+//                            Text(text = "High priority")
+//                        }
+//
+//                        DropdownMenuItem(onClick = {
+//                            prior = 2
+//                            showPriorMenu = false
+//                        }) {
+//                            Text(text = "Medium priority")
+//                        }
+//
+//                        DropdownMenuItem(onClick = {
+//                            prior = 3
+//                            showPriorMenu = false
+//                        }) {
+//                            Text(text = "Low priority")
+//                        }
+//                    }
+//                }
+//                if (showCalender) {
+//                    DatePicker(
+//                        onDateSelected = { date = it },
+//                        onDismiss = {
+//                            showCalender = false
+//                        }
+//                    )
+//                }
+//            }
         }
     }
 }
 
-fun Date.toSqlDate(): java.sql.Date {
-    return java.sql.Date(this.time)
-}
 @Preview(name = "Light theme")
 @Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable

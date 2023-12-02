@@ -10,10 +10,10 @@ import cn.shef.msc5.todo.ui.theme.Red
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 15:16
  */
-sealed class PriorityLevelEnum(val level: Int, val color: Color, val value: String){
-    object HIGH : PriorityLevelEnum(1, Red, "SUPER IMPORTANT")
-    object MEDIUM : PriorityLevelEnum(2, Orange, "Please do this")
-    object LOW : PriorityLevelEnum(3, Purple40, "Not urgent")
+sealed class PriorityLevelEnum(val level: Int, val color: Color, val value: String, val levelStr: String){
+    object HIGH : PriorityLevelEnum(1, Red, "SUPER IMPORTANT", "High")
+    object MEDIUM : PriorityLevelEnum(2, Orange, "Please do this", "Medium")
+    object LOW : PriorityLevelEnum(3, Purple40, "Not urgent", "Low")
 
     companion object {
         fun createFromInt(priority: Int): PriorityLevelEnum {
@@ -25,4 +25,12 @@ sealed class PriorityLevelEnum(val level: Int, val color: Color, val value: Stri
             }
         }
     }
+}
+
+fun getPriorityValues(): List<String> {
+    return listOf(
+        PriorityLevelEnum.HIGH.levelStr,
+        PriorityLevelEnum.MEDIUM.levelStr,
+        PriorityLevelEnum.LOW.levelStr
+    )
 }
