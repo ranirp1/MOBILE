@@ -22,7 +22,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.model.dto.SubTask
@@ -74,6 +76,7 @@ fun CheckboxListTextField(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CheckboxRow(
     item: SubTask,
@@ -81,6 +84,8 @@ fun CheckboxRow(
     onItemTextChange: (String) -> Unit,
     onDeleteItemClick: () -> Unit
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -108,6 +113,7 @@ fun CheckboxRow(
             keyboardActions = KeyboardActions(
                 onDone = {
                     // Additional logic when editing is done
+                    keyboardController?.hide()
                 }
             ),
             modifier = Modifier

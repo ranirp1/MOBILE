@@ -59,7 +59,9 @@ import java.sql.Date
 @ExperimentalAnimationApi
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun DetailScreen(mainViewModel: MainViewModel) {
+fun DetailScreen(
+    mainViewModel: MainViewModel
+) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
@@ -78,7 +80,7 @@ fun DetailScreen(mainViewModel: MainViewModel) {
     var selectedTemplate by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
     var text by remember { mutableStateOf("") }
-    var subTasks by remember { mutableStateOf(listOf(SubTask("", false))) }
+    var subTasks by remember { mutableStateOf(listOf(SubTask("Enter subtask", false))) }
 
     if (selectedTemplate.isNotBlank()) {
         val templateIndex = templates.indexOf(selectedTemplate)
@@ -180,7 +182,7 @@ fun DetailScreen(mainViewModel: MainViewModel) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 7.dp),
+                    .padding(10.dp),
                 text = "Due Date: $date at ${dateConverter.formatHourMinute(date)}",
             )
 
