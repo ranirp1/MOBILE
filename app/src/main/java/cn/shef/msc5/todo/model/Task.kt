@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import cn.shef.msc5.todo.model.dto.SubTask
 import cn.shef.msc5.todo.utilities.Constants.Companion.TABLE_TASK
 import cn.shef.msc5.todo.utilities.DateConverter
 import java.sql.Date
@@ -59,10 +60,13 @@ data class Task(
     var isDeleted: Int,
 
     @ColumnInfo(name = "isCompleted")
-    var isCompleted: Boolean
+    var isCompleted: Boolean,
+
+    @ColumnInfo(name = "subTasks")
+    var subTasks: List<SubTask>
 
 ){
     override fun toString(): String {
-        return "Task(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, isCompleted='$isCompleted)"
+        return "Task(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, isCompleted=$isCompleted, subTasks=$subTasks)"
     }
 }

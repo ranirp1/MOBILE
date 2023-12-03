@@ -4,17 +4,20 @@ import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import cn.shef.msc5.todo.AppApplication
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.dao.TaskDAO
 import cn.shef.msc5.todo.utilities.Constants.Companion.DATABASE_TASK
+import cn.shef.msc5.todo.utilities.SubTaskConverter
 
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 19:18
  */
+@TypeConverters(SubTaskConverter::class)
 @Database(entities = [Task::class], version = 6, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -35,7 +38,6 @@ abstract class AppDatabase : RoomDatabase() {
                 })
                 .fallbackToDestructiveMigration()
                 .build()
-
         }
 
     }

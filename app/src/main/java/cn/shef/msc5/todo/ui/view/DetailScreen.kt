@@ -33,10 +33,12 @@ import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.CaptureImageActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
+import cn.shef.msc5.todo.base.component.CheckboxListTextFieldExample
 import cn.shef.msc5.todo.base.component.Chips
 import cn.shef.msc5.todo.base.component.DatePicker
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
 import cn.shef.msc5.todo.base.component.dialog.TimePickerDialog
+import cn.shef.msc5.todo.model.dto.SubTask
 import cn.shef.msc5.todo.model.getPriorityValues
 import cn.shef.msc5.todo.model.getTemplateStr
 import cn.shef.msc5.todo.model.getTemplateTextStr
@@ -76,6 +78,7 @@ fun DetailScreen(mainViewModel: MainViewModel) {
     var selectedTemplate by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
     var text by remember { mutableStateOf("") }
+    var subTasks by remember { mutableStateOf(listOf(SubTask("", false))) }
 
     if (selectedTemplate.isNotBlank()) {
         val templateIndex = templates.indexOf(selectedTemplate)
@@ -114,9 +117,8 @@ fun DetailScreen(mainViewModel: MainViewModel) {
                         showCalender = !showCalender
                     }
                 },
-                onPriority = {
+                onReminder = {
                     scope.launch {
-//                        showPriorMenu= !showPriorMenu
                         showTimePicker = !showTimePicker
                     }
                 },
@@ -125,7 +127,7 @@ fun DetailScreen(mainViewModel: MainViewModel) {
                         title, text, prior, 1.11F, 1.11F,
                         "imageUrl", Date.valueOf(LocalDate.now().toString()),
                         Date.valueOf(LocalDate.now().toString()), date,
-                        0, false, null
+                        0, false, subTasks, null
                     )
                     GeneralUtil.finishActivity2(context)
                 }
@@ -135,9 +137,8 @@ fun DetailScreen(mainViewModel: MainViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp)
-            //.heightIn(80.dp)
-            , verticalArrangement = Arrangement.Top
+                .padding(10.dp),
+            verticalArrangement = Arrangement.Top
         ) {
             Chips("", "Templates: ", templates) {
                 selectedTemplate = it
@@ -156,39 +157,35 @@ fun DetailScreen(mainViewModel: MainViewModel) {
 
             OutlinedTextField(modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(220.dp)
+                .heightIn(135.dp)
                 .background(MaterialTheme.colorScheme.background)
                 .padding(10.dp), value = text,
-                maxLines = 10,
+                maxLines = 4,
                 minLines = 1,
                 label = { Text(text = "Description") },
                 onValueChange = { text = it }
             )
 
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(50.dp)
-                    .padding(10.dp), text = "Selected Task Location is "
-            )
-
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(10.dp)
-                    .padding(10.dp),
-                text = "Due Date: $date",
-            )
-
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(10.dp)
-                    .padding(10.dp), text = "Due time: ${dateConverter.formatHourMinute(date)}"
-            )
-
             Chips(priorityLevels[1], "Priority: ", priorityLevels) {
                 prior = priorityLevels.indexOf(it) + 1
+            }
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp, vertical = 7.dp),
+                text = "Location: "
+            )
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp, vertical = 7.dp),
+                text = "Due Date: $date at ${dateConverter.formatHourMinute(date)}",
+            )
+
+            CheckboxListTextFieldExample(subTasks){
+                subTasks = it
             }
 
             if (showCalender) {

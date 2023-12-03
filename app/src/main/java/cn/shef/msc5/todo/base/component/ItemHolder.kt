@@ -1,5 +1,7 @@
 package cn.shef.msc5.todo.base.component
 
+import android.content.Intent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,9 +32,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.model.PriorityLevelEnum
 import cn.shef.msc5.todo.model.Task
@@ -43,16 +47,17 @@ import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DONE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_UNDONE
 import cn.shef.msc5.todo.utilities.DateConverter
+import cn.shef.msc5.todo.utilities.GeneralUtil
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemHolder(
-    // TODO add the task variables
     task: Task,
     mainViewModel: MainViewModel
 ) {
     val dateConverter = DateConverter()
+    val context = LocalContext.current
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -61,7 +66,8 @@ fun ItemHolder(
         shape = RoundedCornerShape(5.dp),
         enabled = !(task.isCompleted),
         onClick = {
-            // TODO go to edit page
+            val intent = Intent(context, DetailActivity::class.java)
+            GeneralUtil.startActivity2(context, intent)
         }
     ) {
         Column(
@@ -113,7 +119,6 @@ fun ItemHolder(
                             text = { Text(text = OPTIONS_DUPLICATE, color = PurpleGrey40) },
                             onClick = {
                                 showOptionsMenu = false
-                                // TODO duplicate by insert a copy to database
                                 mainViewModel.duplicate(task,java.sql.Date.valueOf(LocalDate.now().toString()),
                                     java.sql.Date.valueOf(LocalDate.now().toString()), null)
                             }
@@ -170,7 +175,7 @@ fun ItemHolder(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Due on: ${task.dueTime} ${dateConverter.formatHourMinute(task.dueTime)}", fontSize = 14.sp)
+                Text(text = "Due on: ${task.dueTime} at ${dateConverter.formatHourMinute(task.dueTime)}", fontSize = 14.sp)
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = "(" + task.latitude.toString() + ", " + task.longitude.toString() + ")",

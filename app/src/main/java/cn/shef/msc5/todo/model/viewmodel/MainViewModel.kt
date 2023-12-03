@@ -10,6 +10,7 @@ import cn.shef.msc5.todo.model.SortOrder
 import cn.shef.msc5.todo.model.SortType
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.dao.TaskDAO
+import cn.shef.msc5.todo.model.dto.SubTask
 import cn.shef.msc5.todo.utilities.DateConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -73,12 +74,13 @@ class MainViewModel(
         dueTime: Date,
         parentId: Int,
         isCompleted: Boolean,
+        subTask: List<SubTask>,
         postInsert: (() -> Unit)? = null
     ) {
         val id = taskList.lastOrNull()?.id ?: -1
         val todoItem = Task(
             id + 1, title, 1, description, priority, longitude, latitude,
-            imageUrl, dueTime, parentId, gmtCreated, gmtModified, 0, isCompleted
+            imageUrl, dueTime, parentId, gmtCreated, gmtModified, 0, isCompleted, subTask
         )
         viewModelScope.launch(Dispatchers.IO) {
             taskDAO.insert(todoItem)
@@ -107,7 +109,7 @@ class MainViewModel(
         val id = taskList.lastOrNull()?.id ?: -1
         val todoItem = Task(
             id + 1, task.title, 1, task.description, task.priority, task.longitude, task.latitude,
-            task.imageUrl, task.dueTime, task.parentId, gmtCreated, gmtModified, 0, false
+            task.imageUrl, task.dueTime, task.parentId, gmtCreated, gmtModified, 0, false, task.subTasks
         )
         viewModelScope.launch(Dispatchers.IO) {
             taskDAO.insert(todoItem)
