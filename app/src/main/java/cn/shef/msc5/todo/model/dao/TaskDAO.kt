@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.Flow
 interface TaskDAO : BaseDAO<Task> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(task: Task)
+    suspend fun insert(task: Task)
 
     @Query("SELECT * from $TABLE_TASK WHERE id =:id and isDeleted = 0")
     fun findByPrimaryKey(id: Int): Task?
