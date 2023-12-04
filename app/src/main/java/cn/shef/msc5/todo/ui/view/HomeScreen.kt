@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -54,11 +55,12 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
  * @date Created in 04/11/2023 15:57
  */
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
 
     val taskListState = mainViewModel.taskListFlow.collectAsState(listOf())
-    var sortType by remember{ mutableStateOf(mainViewModel.sortType) }
+    var sortType by remember { mutableStateOf(mainViewModel.sortType) }
 
     var fabVisibleAddTask by remember { mutableStateOf(false) }
     var fabVisibleLocation by remember { mutableStateOf(false) }
@@ -123,15 +125,6 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
             EmptyScreen(context = context)
         } else {
             Column {
-                DatePickerBar(
-                    onDateSelected = {
-                        date = it
-                        mainViewModel.sortTasksByDate(sortType, it)
-                    }
-                )
-                SortingMenu(sortType) {
-                    mainViewModel.sortTasksByDate(it, date)
-                }
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -140,6 +133,17 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                         .nestedScroll(nestedScrollConnection),
                     state = listState,
                 ) {
+                    stickyHeader {
+                        DatePickerBar(
+                            onDateSelected = {
+                                date = it
+                                mainViewModel.sortTasksByDate(sortType, it)
+                            }
+                        )
+                        SortingMenu(sortType) {
+                            mainViewModel.sortTasksByDate(it, date)
+                        }
+                    }
                     items(
                         items = taskListState.value,
                         key = { taskItem -> taskItem.id },
