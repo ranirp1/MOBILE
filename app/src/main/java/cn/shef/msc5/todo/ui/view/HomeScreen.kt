@@ -132,6 +132,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
             LoadingScreen()
         } else if (state.isEmpty) {
             EmptyScreen(context = context)
+            isVisible.value = false
         } else {
             LazyColumn(
                 modifier = Modifier
