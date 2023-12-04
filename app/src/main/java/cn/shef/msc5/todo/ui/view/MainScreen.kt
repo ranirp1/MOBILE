@@ -1,12 +1,10 @@
 package cn.shef.msc5.todo.ui.view
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.DonutSmall
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Task
@@ -26,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.base.component.AppScaffold
+import cn.shef.msc5.todo.model.ScreenTypeEnum
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
@@ -41,13 +40,19 @@ import cn.shef.msc5.todo.utilities.Constants
 fun MainScreen() {
 
     val mainViewModel by lazy {
-        MainViewModelFactory(AppDatabase.INSTANCE.getTaskDAO()).
+        MainViewModelFactory(ScreenTypeEnum.OTHER_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
+        create(MainViewModel::class.java)
+    }
+
+    val homeViewModel by lazy {
+        MainViewModelFactory(ScreenTypeEnum.HOME_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
         create(MainViewModel::class.java)
     }
 
     //get context
     val items = listOf(
         Constants.NAVIGATION_HOME,
+        Constants.NAVIGATION_TASKS,
         Constants.NAVIGATION_PROGRESS,
         Constants.NAVIGATION_PROFILE
     )
@@ -77,7 +82,9 @@ fun MainScreen() {
         hostState = snackbarHostState,
     ) {
         when (selectedItem) {
-            Constants.NAVIGATION_HOME -> HomeScreen(context, mainViewModel)
+            Constants.NAVIGATION_HOME -> HomeScreen(context, homeViewModel)
+            Constants.NAVIGATION_TASKS -> TasksScreen(context, mainViewModel)
+            // TODO add progress screen
             Constants.NAVIGATION_PROGRESS -> TasksScreen(context, mainViewModel)
 //            Constants.NAVIGATION_TASKS -> EmptyScreen(context)
 //            Constants.NAVIGATION_PROFILE -> SettingScreen(context, mainViewModel)
@@ -91,6 +98,7 @@ fun MainScreen() {
 fun getIconForScreen(items: String): ImageVector {
     return when (items) {
         Constants.NAVIGATION_HOME -> Icons.Default.Home
+        Constants.NAVIGATION_TASKS -> Icons.Default.Task
         Constants.NAVIGATION_PROGRESS -> Icons.Default.DonutSmall
         Constants.NAVIGATION_PROFILE -> Icons.Default.AccountCircle
         else -> Icons.Default.Home

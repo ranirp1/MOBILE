@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
@@ -24,8 +22,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.utilities.DateConverter
-import java.util.Date
+import java.sql.Date
 
 /**
  * @author Cheng Man Li
@@ -38,12 +37,13 @@ fun DatePickerBar(
     onDateSelected: (Date) -> Unit
 ) {
     val dateConverter = DateConverter()
-    var date by remember { mutableStateOf(Date()) }
+    var date by remember { mutableStateOf(Date(System.currentTimeMillis())) }
     var showDatePicker by remember { mutableStateOf(false) }
 
     Row(
         modifier = Modifier.fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         IconButton(onClick = {
@@ -92,10 +92,10 @@ fun DatePicker(
     onDateSelected: (Date) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val datePickerState = rememberDatePickerState(Date().time)
+    val datePickerState = rememberDatePickerState(Date(System.currentTimeMillis()).time)
 
     // convert the selected date into a date object
-    val selectedDate = datePickerState.selectedDateMillis?.let { Date(it) } ?: Date()
+    val selectedDate = datePickerState.selectedDateMillis?.let { Date(it) } ?: Date(System.currentTimeMillis())
 
     DatePickerDialog(
         onDismissRequest = { onDismiss() },

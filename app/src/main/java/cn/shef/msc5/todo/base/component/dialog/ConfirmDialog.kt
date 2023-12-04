@@ -20,7 +20,6 @@ fun ConfirmDialog(
     onClick: () -> Unit = {},
     showDialog: (Boolean) -> Unit
 ) {
-    // var showDialog by remember { mutableStateOf(true) }
     AlertDialog(
         onDismissRequest = { showDialog(false) },
         title = {
@@ -33,7 +32,6 @@ fun ConfirmDialog(
             TextButton(
                 onClick = {
                     showDialog(false)
-                    // Todo delete task
                     onClick.invoke()
                 }
             ) {

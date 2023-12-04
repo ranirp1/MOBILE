@@ -10,6 +10,13 @@ import java.sql.Date
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 19:10
  */
+
+@Parcelize
+data class SubTask(
+    var text: String,
+    var isChecked: Boolean = false
+) : Parcelable
+
 @Parcelize
 data class TaskDTO(
 
@@ -39,11 +46,12 @@ data class TaskDTO(
 
     var isDeleted: Int,
 
-    var remark: String
+    var isCompleted: Boolean,
 
+    var subTasks: List<SubTask>
 
 ) : Parcelable{
     override fun toString(): String {
-        return "TaskDTO(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, remark='$remark)"
+        return "TaskDTO(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, isCompleted=$isCompleted, subTasks=$subTasks)"
     }
 }

@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.outlined.FilterAlt
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -26,9 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.model.SortOrder
 import cn.shef.msc5.todo.model.SortType
 import cn.shef.msc5.todo.ui.theme.Purple40
@@ -44,15 +43,16 @@ fun SortingMenu(
     onSelect: (SortType) -> Unit
 ) {
     var showSortingMenu by remember { mutableStateOf(false) }
+    var sortTpyeSelected : SortType by remember { mutableStateOf(sortType) }
 
-    // default sort by priority in ascending order
+    // default sort by priority in ascending order (sortOrder == true)
     var sortOrder by remember { mutableStateOf(true) }
     var sortString by remember { mutableStateOf(SORT_PRIORITY) }
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(colorResource(id = R.color.white))
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
@@ -82,7 +82,8 @@ fun SortingMenu(
                     onClick = {
                         showSortingMenu = false
                         sortString = SORT_PRIORITY
-                        onSelect(SortType.Priority(sortType.sortOrder))
+                        sortTpyeSelected = SortType.Priority(sortTpyeSelected.sortOrder)
+                        onSelect(sortTpyeSelected)
                     }
                 )
 
@@ -91,7 +92,8 @@ fun SortingMenu(
                     onClick = {
                         showSortingMenu = false
                         sortString = SORT_DUE
-                        onSelect(SortType.DueDate(sortType.sortOrder))
+                        sortTpyeSelected = SortType.DueDate(sortTpyeSelected.sortOrder)
+                        onSelect(sortTpyeSelected)
                     }
                 )
 
@@ -100,7 +102,8 @@ fun SortingMenu(
                     onClick = {
                         showSortingMenu = false
                         sortString = SORT_LOCATION
-                        onSelect(SortType.Location(sortType.sortOrder))
+                        sortTpyeSelected = SortType.Location(sortTpyeSelected.sortOrder)
+                        onSelect(sortTpyeSelected)
                     }
                 )
             }
@@ -113,16 +116,23 @@ fun SortingMenu(
                 .width(1.dp)
         )
 
-        IconButton(onClick = { sortOrder = !sortOrder }) {
+        IconButton(onClick = {
+            sortOrder = !sortOrder
+            if(sortOrder){
+                sortTpyeSelected = sortTpyeSelected.reorder(SortOrder.Ascending)
+                onSelect(sortTpyeSelected)
+            }else{
+                sortTpyeSelected = sortTpyeSelected.reorder(SortOrder.Descending)
+                onSelect(sortTpyeSelected)
+            }
+        }) {
             if (sortOrder) {
-                onSelect(sortType.reorder(SortOrder.Ascending))
                 Icon(
                     imageVector = Icons.Default.ArrowDownward,
                     contentDescription = "Sort by ascending order",
                     tint = Purple40,
                 )
             } else {
-                onSelect(sortType.reorder(SortOrder.Descending))
                 Icon(
                     imageVector = Icons.Default.ArrowUpward,
                     contentDescription = "Sort by descending order",

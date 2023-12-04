@@ -33,7 +33,9 @@ import cn.shef.msc5.todo.R
  * @date Created in 05/11/2023 22:57
  */
 @Composable
-fun EmptyScreen(context : Context) {
+fun EmptyScreen(
+    // context : Context
+) {
     Column(
         modifier =  Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -55,8 +57,8 @@ fun EmptyScreen(context : Context) {
         )
         Button(
             onClick = {
-                val intent = Intent(context, DetailActivity::class.java)
-                GeneralUtil.startActivity2(context, intent)
+                //val intent = Intent(context, DetailActivity::class.java)
+                //GeneralUtil.startActivity2(context, intent)
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -89,7 +91,7 @@ fun ErrorScreen() {
 }
 
 @Composable
-fun EmptyScreen2(message: String) {
+fun EmptyScreen2(message: String = "lkjvc") {
     Box(
         Modifier.fillMaxSize()
     ) {
@@ -125,5 +127,12 @@ fun PreviewErrorScreen() {
 @Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewEmptyScreen() {
-    ErrorScreen()
+    EmptyScreen()
+}
+
+@Preview(name = "Light theme")
+@Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewEmptyScreen2() {
+    EmptyScreen2()
 }

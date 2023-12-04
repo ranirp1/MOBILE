@@ -37,7 +37,7 @@ fun SearchTopAppBar(
     var inputText by remember { mutableStateOf("") }
     if (!showSearchBar) {
         TopAppBar(
-            scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
+            scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
             title = {
                 Text(text = title)
             },
@@ -45,8 +45,7 @@ fun SearchTopAppBar(
                 if (showFirstIcon) {
                     IconButton(onClick = { showSearchBar = !showSearchBar }) {
                         Icon(
-                            imageVector = firstIcon,
-                            contentDescription = "search ToDos"
+                            imageVector = firstIcon, contentDescription = "search ToDos"
                         )
                     }
                 }

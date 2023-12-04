@@ -18,6 +18,8 @@ class Constants {
 
         const val NAVIGATION_HOME = "Home"
 
+        const val NAVIGATION_TASKS = "Tasks"
+
         const val NAVIGATION_PROGRESS = "Progress"
 
         const val NAVIGATION_PROFILE = "Profile"
@@ -36,6 +38,8 @@ class Constants {
         const val SORT_DUE = "Due Date"
         const val SORT_LOCATION = "Location"
 
+        const val OPTIONS_DONE = "Mark as done"
+        const val OPTIONS_UNDONE = "Mark as undone"
         const val OPTIONS_DUPLICATE = "Duplicate"
         const val OPTIONS_DELETE = "Delete"
     }

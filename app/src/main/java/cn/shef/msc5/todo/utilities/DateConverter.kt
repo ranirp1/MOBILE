@@ -1,7 +1,10 @@
 package cn.shef.msc5.todo.utilities
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TimePickerState
 import androidx.room.TypeConverter
 import java.sql.Date
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -23,26 +26,62 @@ class DateConverter {
     }
 
     fun formatDateMonth(selectedDate: java.util.Date): String {
-        val dateFormat = SimpleDateFormat("dd-MMM", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
         return dateFormat.format(selectedDate)
     }
 
-    fun formatDateYear(selectedDate: java.util.Date): String {
-        val dateFormat = SimpleDateFormat("ddMMyyyy", Locale.getDefault())
-        return dateFormat.format(selectedDate)
+    fun formatHourMinute(date: Date): String {
+        val timeStr = java.util.Date(date.time)
+        val format = SimpleDateFormat("HH:mm")
+        return format.format(timeStr)
     }
 
-    fun getPrevDay(selectedDate: java.util.Date): java.util.Date {
+    fun formatDateYear(selectedDate: Long): Long {
+        val calendar = Calendar.getInstance()
+        calendar.time = revertDate(selectedDate)
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+        return calendar.timeInMillis
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    fun updateDateWithTime(originalDate: Date, state: TimePickerState): Date {
+        val timestamp = Timestamp(originalDate.time)
+
+        // Get the time from state
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = timestamp.time
+        calendar.set(Calendar.HOUR_OF_DAY, state.hour)
+        calendar.set(Calendar.MINUTE, state.minute)
+
+        timestamp.time = calendar.timeInMillis
+
+        return Date(timestamp.time)
+    }
+
+    fun getPrevDay(selectedDate: Date): Date {
         val calendar = Calendar.getInstance()
         calendar.time = selectedDate
         calendar.add(Calendar.DAY_OF_YEAR, -1)
-        return calendar.time
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        return Date(calendar.timeInMillis)
     }
 
-    fun getNextDay(selectedDate: java.util.Date): java.util.Date {
+    fun getNextDay(selectedDate: Date): Date {
         val calendar = Calendar.getInstance()
         calendar.time = selectedDate
         calendar.add(Calendar.DAY_OF_YEAR, 1)
-        return calendar.time
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        return Date(calendar.timeInMillis)
     }
 }

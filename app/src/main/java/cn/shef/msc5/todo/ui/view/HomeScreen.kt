@@ -2,13 +2,13 @@ package cn.shef.msc5.todo.ui.view
 
 import android.content.Context
 import android.content.Intent
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -35,8 +35,6 @@ import cn.shef.msc5.todo.base.component.SortingMenu
 import cn.shef.msc5.todo.base.component.TopBarType
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.GeneralUtil
-import java.time.LocalDate
-import java.util.Date
 
 /**
  * @author Zhecheng Zhao
@@ -44,21 +42,20 @@ import java.util.Date
  * @date Created in 04/11/2023 15:57
  */
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
 
     val taskListState = mainViewModel.taskListFlow.collectAsState(listOf())
-    val sortType = mainViewModel.sortType
+    var sortType by remember{ mutableStateOf(mainViewModel.sortType) }
 
     var fabVisibleAddTask by remember { mutableStateOf(false) }
     var fabVisibleLocation by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
-    var date by remember { mutableStateOf(Date()) }
+    var date by remember { mutableStateOf(mainViewModel.date) }
 
     BaseScaffold(
         showTopBar = true,
-        topBarType = TopBarType.SEARCH,
+        topBarType = TopBarType.NORMAL,
         title = stringResource(R.string.todo_title),
         floatingActionButton = {
             Column {
@@ -68,11 +65,6 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                     contentDescription = "Location",
                     onClick = {
                         // TODO check todos by location
-                        mainViewModel.addTask("title", "description", 1, 1.11F, 1.11F,
-                        "imageUrl", java.sql.Date.valueOf(LocalDate.now().toString()), java.sql.Date.valueOf(
-                            LocalDate.now().toString()),
-                        java.sql.Date.valueOf(LocalDate.now().toString()),
-                        0,"remark", null)
                     }
                 )
 
@@ -90,33 +82,34 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
         },
         hostState = snackbarHostState
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(MaterialTheme.colorScheme.background),
-        ) {
-            stickyHeader{
-                DatePickerBar(
-                    onDateSelected = { date = it }
-                )
-                SortingMenu(sortType) {
-                    // TODO change to date specific getAllTask
-                    mainViewModel.sortAllTasks(it)
-                }
-            }
-            items(
-                items = taskListState.value,
-                key = { taskItem -> taskItem.id },
-                itemContent = { item ->
-                    val currentItem by rememberUpdatedState(item)
-                    ItemHolder(currentItem, mainViewModel)
-                    Spacer(modifier = Modifier.height(5.dp))
+        Column {
+            DatePickerBar(
+                onDateSelected = {
+                    date = it
+                    mainViewModel.sortTasksByDate(sortType, it)
                 }
             )
-            // Avoid over-lapping with bottom navigation bar
-            item {
-                Spacer(modifier = Modifier.height(50.dp))
+            SortingMenu(sortType) {
+                mainViewModel.sortTasksByDate(it, date)
+            }
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(horizontal = 25.dp),
+            ) {
+                items(
+                    items = taskListState.value,
+                    key = { taskItem -> taskItem.id },
+                    itemContent = { item ->
+                        val currentItem by rememberUpdatedState(item)
+                        Spacer(modifier = Modifier.height(10.dp))
+                        ItemHolder(currentItem, mainViewModel)
+                        Spacer(modifier = Modifier.height(15.dp))
+                    }
+                )
             }
         }
     }

@@ -48,7 +48,7 @@ fun BottomActionBar(
     onLocation: () -> Unit = {},
     onCamera: () -> Unit = {},
     onCalender:() -> Unit={},
-    onPriority:()-> Unit={},
+    onReminder:()-> Unit={},
     onSubTask: () -> Unit = {},
     addClick: () -> Unit = {},
 ) {
@@ -75,7 +75,7 @@ fun BottomActionBar(
                 onLocation = onLocation,
                 onCamera = onCamera,
                 onCalender=onCalender,
-                onPriority=onPriority,
+                onReminder=onReminder,
                 onSubTask = onSubTask
             )
             Spacer(modifier = modifier.width(16.dp))
@@ -110,7 +110,7 @@ fun ActionIcons(
     onLocation: () -> Unit,
     onCamera: () -> Unit,
     onCalender: () -> Unit,
-    onPriority: () -> Unit,
+    onReminder: () -> Unit,
     onSubTask: () -> Unit) {
     Row(modifier = Modifier.wrapContentWidth(), horizontalArrangement = Arrangement.SpaceAround) {
         IconButton(onClick = { onLocation.invoke() }) {
@@ -129,7 +129,7 @@ fun ActionIcons(
             )
         }
 
-        IconButton(onClick = { onPriority.invoke() }) {
+        IconButton(onClick = { onReminder.invoke() }) {
             Icon(
                 Icons.Rounded.AddAlert,
                 contentDescription = stringResource(R.string.todo_new_task),
