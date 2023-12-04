@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.activity
+package cn.shef.msc5.todo.progress
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
