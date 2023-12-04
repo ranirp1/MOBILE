@@ -9,7 +9,7 @@ data class TaskListState(
 
     val isLoading: Boolean = false,
 
-    val isEmpty: Boolean = false,
+    val isRefreshing: Boolean = false,
 
     val hasError: Boolean = false,
 
