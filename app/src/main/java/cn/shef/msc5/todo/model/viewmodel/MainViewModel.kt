@@ -1,6 +1,9 @@
 package cn.shef.msc5.todo.model.viewmodel
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,10 +12,12 @@ import cn.shef.msc5.todo.model.ScreenTypeEnum
 import cn.shef.msc5.todo.model.SortOrder
 import cn.shef.msc5.todo.model.SortType
 import cn.shef.msc5.todo.model.Task
+import cn.shef.msc5.todo.model.TaskListState
 import cn.shef.msc5.todo.model.dao.TaskDAO
 import cn.shef.msc5.todo.model.dto.SubTask
 import cn.shef.msc5.todo.utilities.DateConverter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -39,7 +44,10 @@ class MainViewModel(
     val taskListFlow: StateFlow<List<Task>> get() = _taskListFlow
     private var postExecute: (() -> Unit)? = null
 
+    var state by mutableStateOf(TaskListState())
+
     init {
+        state = state.copy(isLoading = true)
         when (screenType) {
             ScreenTypeEnum.HOME_SCREEN -> loadTaskListByDate()
             ScreenTypeEnum.OTHER_SCREEN -> loadTaskList()
@@ -119,6 +127,8 @@ class MainViewModel(
 
     fun sortAllTasks(sortTypeSelected: SortType) {
         viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            delay(2500)
             taskDAO.getAllTasks().map { tasks ->
                 when (sortTypeSelected.sortOrder) {
                     is SortOrder.Ascending -> {
@@ -140,6 +150,8 @@ class MainViewModel(
             }.collect{
                 taskList = it.toMutableStateList()
                 _taskListFlow.value = taskList
+                state = state.copy(isLoading = false,
+                    data = _taskListFlow.value)
                 postExecute?.invoke()
             }
         }
@@ -148,6 +160,8 @@ class MainViewModel(
     fun sortTasksByDate(sortType: SortType, date: Date) {
         val selectedDate = dateConverter.converterDate(date)
         viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            delay(2500)
             taskDAO.getAllTasksByDate(selectedDate).map { tasks ->
                 when (sortType.sortOrder) {
                     is SortOrder.Ascending -> {
@@ -169,6 +183,8 @@ class MainViewModel(
             }.collect{
                 taskList = it.toMutableStateList()
                 _taskListFlow.value = taskList
+                state = state.copy(isLoading = false,
+                    data = _taskListFlow.value)
                 postExecute?.invoke()
             }
         }

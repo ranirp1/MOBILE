@@ -2,6 +2,7 @@ package cn.shef.msc5.todo.ui.view
 
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -23,7 +24,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.base.component.AppScaffold
+import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.model.ScreenTypeEnum
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
@@ -35,7 +36,7 @@ import cn.shef.msc5.todo.utilities.Constants
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 05/11/2023 22:56
  */
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen() {
 
@@ -60,7 +61,7 @@ fun MainScreen() {
     var selectedItem by remember { mutableStateOf(items.first()) }
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
-    AppScaffold(
+    BaseScaffold(
         showTopBar = false,
         bottomBar = {
             NavigationBar(
@@ -85,9 +86,7 @@ fun MainScreen() {
             Constants.NAVIGATION_HOME -> HomeScreen(context, homeViewModel)
             Constants.NAVIGATION_TASKS -> TasksScreen(context, mainViewModel)
             // TODO add progress screen
-            Constants.NAVIGATION_PROGRESS -> TasksScreen(context, mainViewModel)
-//            Constants.NAVIGATION_TASKS -> EmptyScreen(context)
-//            Constants.NAVIGATION_PROFILE -> SettingScreen(context, mainViewModel)
+            Constants.NAVIGATION_PROGRESS -> ProgressScreen(context, mainViewModel)
             Constants.NAVIGATION_PROFILE -> ProfileScreen(context, mainViewModel)
         }
     }

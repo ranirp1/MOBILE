@@ -19,8 +19,10 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,15 +34,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
+import cn.shef.msc5.todo.base.component.topbar.CancelTopAppBar
+import cn.shef.msc5.todo.base.component.topbar.CenterTopAppBar
+import cn.shef.msc5.todo.base.component.topbar.NormalTopAppBar
+import cn.shef.msc5.todo.base.component.topbar.SearchTopAppBar
 import cn.shef.msc5.todo.model.PriorityLevelEnum
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
+import cn.shef.msc5.todo.ui.theme.Orange
+import cn.shef.msc5.todo.ui.theme.Purple40
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DONE
@@ -48,6 +58,7 @@ import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_UNDONE
 import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.utilities.GeneralUtil
+import java.sql.Date
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,10 +71,24 @@ fun ItemHolder(
     val context = LocalContext.current
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var color = Purple40
 
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(5.dp),
+    if(task.priority == 1){
+        color = Color.Red
+    }else if(task.priority == 2){
+        color = Orange
+    }else if(task.priority == 3){
+        color = Purple40
+    }
+
+    ElevatedCard(
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = color
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        shape = RoundedCornerShape(15.dp),
         enabled = !(task.isCompleted),
         onClick = {
             val intent = Intent(context, DetailActivity::class.java)
@@ -119,8 +144,8 @@ fun ItemHolder(
                             text = { Text(text = OPTIONS_DUPLICATE, color = PurpleGrey40) },
                             onClick = {
                                 showOptionsMenu = false
-                                mainViewModel.duplicate(task,java.sql.Date.valueOf(LocalDate.now().toString()),
-                                    java.sql.Date.valueOf(LocalDate.now().toString()), null)
+                                mainViewModel.duplicate(task, Date.valueOf(LocalDate.now().toString()),
+                                    Date.valueOf(LocalDate.now().toString()), null)
                             }
                         )
 
@@ -141,11 +166,11 @@ fun ItemHolder(
                 }
             }
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
             Text(text = task.description)
 
-            Spacer(modifier = Modifier.height(9.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
             when(PriorityLevelEnum.createFromInt(task.priority)){
                 is PriorityLevelEnum.LOW -> Text(
