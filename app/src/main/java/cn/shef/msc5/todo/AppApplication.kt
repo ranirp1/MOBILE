@@ -2,7 +2,7 @@ package cn.shef.msc5.todo
 
 import android.app.Application
 import android.content.Context
-import cn.shef.msc5.todo.model.database.AppDatabase
+
 
 /**
  * @author Zhecheng Zhao
@@ -11,7 +11,6 @@ import cn.shef.msc5.todo.model.database.AppDatabase
  */
 class AppApplication : Application() {
 
-//    val database: AppDatabase by lazy { AppDatabase.INSTANCE }
     init {
         instance = this
     }

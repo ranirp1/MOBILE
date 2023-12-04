@@ -7,8 +7,12 @@ import cn.shef.msc5.todo.R
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 15:16
  */
-sealed class PriorityLevelEnum(val color: Int){
-    object LOW : PriorityLevelEnum(androidx.appcompat.R.color.material_blue_grey_800)
-    object MEDIUM : PriorityLevelEnum(R.color.purple_200)
-    object HIGH : PriorityLevelEnum(R.color.red)
+sealed class PriorityLevelEnum(val color: Int, val id: Int){
+    object LOW : PriorityLevelEnum(androidx.appcompat.R.color.material_blue_grey_800, 3)
+    object MEDIUM : PriorityLevelEnum(R.color.purple_200, 2)
+    object HIGH : PriorityLevelEnum(R.color.red, 1)
+
+
 }
+
+

@@ -8,6 +8,10 @@ import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -16,6 +20,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import cn.shef.msc5.todo.base.BaseActivity
 import cn.shef.msc5.todo.model.viewmodel.MapViewModel
+import cn.shef.msc5.todo.ui.theme.AppTheme
+import cn.shef.msc5.todo.ui.view.LocationScreen
 import cn.shef.msc5.todo.ui.view.MapScreen
 
 /**
@@ -36,11 +42,19 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         if(isNeedCheck) checkPermission(permissionsRequired)
         setContent {
-            MapScreen(
-                state = viewModel.state.value,
-                setupClusterManager = viewModel::setupClusterManager,
-                calculateZoneViewCenter = viewModel::calculateZoneLatLngBounds
-            )
+            AppTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    MapScreen(
+                        state = viewModel.state.value,
+                        setupClusterManager = viewModel::setupClusterManager,
+                        calculateZoneViewCenter = viewModel::calculateZoneLatLngBounds
+                    )
+                }
+            }
         }
     }
 

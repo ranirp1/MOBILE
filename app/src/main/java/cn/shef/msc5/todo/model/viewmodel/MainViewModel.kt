@@ -1,7 +1,11 @@
 package cn.shef.msc5.todo.model.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,9 +13,11 @@ import androidx.lifecycle.viewModelScope
 import cn.shef.msc5.todo.model.SortOrder
 import cn.shef.msc5.todo.model.SortType
 import cn.shef.msc5.todo.model.Task
+import cn.shef.msc5.todo.model.TaskListState
 import cn.shef.msc5.todo.model.dao.TaskDAO
 import cn.shef.msc5.todo.utilities.DateConverter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -33,16 +39,26 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
 
     val dateConverter = DateConverter()
 
+    var state by mutableStateOf(TaskListState())
+
     init {
+        state = state.copy(isLoading = true)
         loadTaskList()
     }
 
     private fun loadTaskList() {
         viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            delay(2500)
             taskDAO.getAllTasks().collect {
                 taskList = it.toMutableStateList()
+
                 Log.d("MainViewModel", taskList.size.toString())
                 _taskListFlow.value = taskList
+
+                state = state.copy(isLoading = false,
+                    data = _taskListFlow.value)
+
                 postExecute?.invoke()
             }
         }
@@ -76,7 +92,10 @@ class MainViewModel(private val taskDAO: TaskDAO) : ViewModel() {
             imageUrl, dueTime, parentId, gmtCreated, gmtModified, 0, remark
         )
         viewModelScope.launch(Dispatchers.IO) {
+//            state = state.copy(isLoading = true)
+//            delay(500)
             taskDAO.insert(todoItem)
+//            state = state.copy(isLoading = false)
             postExecute = postInsert
         }
     }

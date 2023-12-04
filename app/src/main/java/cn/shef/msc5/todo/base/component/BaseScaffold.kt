@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
@@ -37,6 +38,7 @@ fun BaseScaffold(
     bottomBar: @Composable () -> Unit = {},
     firstOnClick: () -> Unit = {},
     secondOnClick: () -> Unit = {},
+    navigationIIcon: ImageVector = Icons.Default.Close,
     firstIcon: ImageVector = Icons.Default.Edit,
     secondIcon: ImageVector = Icons.Default.Delete,
     floatingActionButton: @Composable (() -> Unit) = {},
@@ -50,13 +52,12 @@ fun BaseScaffold(
             if (showTopBar) {
                 when (topBarType) {
                     is TopBarType.CENTER -> CenterTopAppBar(title, firstOnClick, secondOnClick,
-                        showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon)
+                        showNavigationIcon, showFirstIcon, showSecondIcon, navigationIIcon, firstIcon, secondIcon)
                     is TopBarType.NORMAL -> NormalTopAppBar(title, firstOnClick, secondOnClick,
-                        showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon)
+                        showNavigationIcon, showFirstIcon, showSecondIcon, navigationIIcon, firstIcon, secondIcon)
                     is TopBarType.CANCEL -> CancelTopAppBar(title, firstOnClick, secondOnClick,
-                        showNavigationIcon, showFirstIcon, showSecondIcon, firstIcon, secondIcon)
+                        showNavigationIcon, showFirstIcon, showSecondIcon, navigationIIcon, firstIcon, secondIcon)
                     is TopBarType.SEARCH -> SearchTopAppBar(title)
-                    else -> {}
                 }
             }
         },
@@ -76,3 +77,11 @@ fun BaseScaffold(
     }
 }
 
+
+sealed class TopBarType {
+
+    object NORMAL : TopBarType()
+    object CENTER : TopBarType()
+    object CANCEL : TopBarType()
+    object SEARCH : TopBarType()
+}

@@ -2,7 +2,6 @@ package cn.shef.msc5.todo.base
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 
 /**

@@ -2,6 +2,8 @@ package cn.shef.msc5.todo.utilities
 
 import android.content.Context
 import android.os.Build
+import cn.shef.msc5.todo.model.viewmodel.MainViewModel
+import java.time.LocalDate
 
 /**
  * @author Zhecheng Zhao
@@ -33,6 +35,24 @@ class AppInfoUtil {
                 appVersionName = packageInfo.versionName;
             }
             return appVersionName;
+        }
+        fun test(mainViewModel: MainViewModel) {
+            mainViewModel.addTask(
+                "title",
+                "description",
+                2,
+                1.11F,
+                1.11F,
+                "imageUrl",
+                java.sql.Date.valueOf(LocalDate.now().toString()),
+                java.sql.Date.valueOf(
+                    LocalDate.now().toString()
+                ),
+                java.sql.Date.valueOf(LocalDate.now().toString()),
+                0,
+                "remark",
+                null
+            )
         }
     }
 }
