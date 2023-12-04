@@ -1,16 +1,21 @@
 package cn.shef.msc5.todo.ui.view
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -19,23 +24,24 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.CaptureImageActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.CheckboxListTextFieldExample
 import cn.shef.msc5.todo.base.component.Chips
 import cn.shef.msc5.todo.base.component.DatePicker
+import cn.shef.msc5.todo.base.component.ItemHolder
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
 import cn.shef.msc5.todo.base.component.dialog.TimePickerDialog
 import cn.shef.msc5.todo.model.Task
@@ -52,35 +58,35 @@ import java.time.LocalDate
 import java.sql.Date
 
 /**
- * @author Zhecheng Zhao
- * @email zzhao84@sheffield.ac.uk
- * @date Created in 13/11/2023 13:28
+ * @author Raghav Chhabra
+ * @email rchhabra1@sheffield.ac.uk
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalAnimationApi
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun DetailScreen(
-    mainViewModel: MainViewModel
+fun ViewScreen(task: Task,
+               mainViewModel: MainViewModel
 ) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
     val dateConverter = DateConverter()
+
     var showCalender by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
     var date by remember { mutableStateOf(mainViewModel.date) }
     val state = rememberTimePickerState()
 
     val priorityLevels = getPriorityValues()
-    var prior by remember { mutableIntStateOf(2) }
+    var prior by remember { mutableIntStateOf(task.priority) }
 
     val templates = getTemplateStr()
     val templateDesc = getTemplateTextStr()
     var selectedTemplate by remember { mutableStateOf("") }
-    var title by remember { mutableStateOf("") }
-    var text by remember { mutableStateOf("") }
-    var subTasks by remember { mutableStateOf(listOf(SubTask("Enter subtask", false))) }
+    var title by remember { mutableStateOf(task.title) }
+    var text by remember { mutableStateOf(task.description) }
+    var subTasks by remember { mutableStateOf(task.subTasks) }
 
     if (selectedTemplate.isNotBlank()) {
         val templateIndex = templates.indexOf(selectedTemplate)
@@ -95,11 +101,11 @@ fun DetailScreen(
         showNavigationIcon = true,
         showFirstIcon = false,
         showSecondIcon = false,
-        title = stringResource(R.string.todo_new_task),
+        title = title,
         hostState = snackbarHostState,
         bottomBar = {
             BottomActionBar(modifier = Modifier.height(70.dp),
-                title = "Save",
+                title = "Update",
                 onCamera = {
                     val intent = Intent(context, CaptureImageActivity::class.java)
                     GeneralUtil.startActivity2(context, intent)
@@ -125,7 +131,7 @@ fun DetailScreen(
                 addClick = {
                     mainViewModel.addTask(
                         title, text, prior, 1.11F, 1.11F,
-                        "imageUrl", Date.valueOf(LocalDate.now().toString()),
+                        "imageUrl", task.gmtCreated,
                         Date.valueOf(LocalDate.now().toString()), date,
                         0, false, subTasks, null
                     )
@@ -210,9 +216,3 @@ fun DetailScreen(
     }
 }
 
-@Preview(name = "Light theme")
-@Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun PreviewDetailScreen() {
-//    MainScreen(LocalContext.current)
-}

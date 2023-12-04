@@ -49,6 +49,7 @@ import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_UNDONE
 import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import java.time.LocalDate
+import cn.shef.msc5.todo.activity.ViewActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,7 +67,7 @@ fun ItemHolder(
         shape = RoundedCornerShape(5.dp),
         enabled = !(task.isCompleted),
         onClick = {
-            val intent = Intent(context, DetailActivity::class.java)
+            val intent = Intent(context, ViewActivity::class.java)
             GeneralUtil.startActivity2(context, intent)
         }
     ) {
