@@ -134,6 +134,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
             EmptyScreen(context = context)
             isVisible.value = false
         } else {
+            isVisible.value = true
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
