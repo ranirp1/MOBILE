@@ -30,10 +30,11 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import cn.shef.msc5.todo.base.BaseActivity
 import java.io.File
 
 
-class CaptureImageActivity : ComponentActivity() {
+class CaptureImageActivity : BaseActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

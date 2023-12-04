@@ -33,8 +33,6 @@ fun BaseFloatingActionBar(
 ) {
     FloatingActionButton(
         onClick = onClick,
-//        contentColor = Color.White,
-//        containerColor = Color.White,
         shape = CircleShape,
     ) {
         Row(Modifier.padding(start = 12.dp, end = 12.dp)) {
@@ -51,19 +49,4 @@ fun BaseFloatingActionBar(
             }
         }
     }
-//
-//    FloatingActionButton(
-//        onClick = onClick,
-//
-//        contentColor = Color.White,
-//        containerColor = Color.White,
-//        shape = CircleShape,
-//    ) {
-//        Icon(
-//            Icons.Filled.Add,
-//            contentDescription = null,
-//            tint = MaterialTheme.colorScheme.primary,
-//            modifier = Modifier.size(getAnimate().value.dp)
-//        )
-//    }
 }

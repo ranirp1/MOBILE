@@ -13,6 +13,7 @@ import cn.shef.msc5.todo.model.ScreenTypeEnum
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
+import cn.shef.msc5.todo.ui.theme.AppTheme
 import cn.shef.msc5.todo.ui.view.DetailScreen
 
 /**
@@ -35,7 +36,7 @@ class DetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            MaterialTheme {
+            AppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),

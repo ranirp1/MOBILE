@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Todo" parent="Theme.AppCompat.DayNight.NoActionBar">
-    </style>
+    <style name="Theme.Todo" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
 
     <style name="slideActivityAnimation" parent="android:Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
@@ -11,15 +10,4 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
     </style>
 
-    <!--    <style name="Theme.SplashScreen.Starting" parent="Theme.SplashScreen">-->
-    <!--        <item name="windowSplashScreenBackground">@color/white</item>-->
-    <!--        <item name="windowSplashScreenAnimatedIcon">@mipmap/logo</item>-->
-    <!--        <item name="windowSplashScreenAnimationDuration">3000</item>-->
-    <!--        <item name="postSplashScreenTheme">@style/Theme.SplashScreen.Launcher</item>-->
-    <!--    </style>-->
-
-    <!--    <style name="Theme.SplashScreen.Launcher" parent="android:Theme.Material.Light.NoActionBar">-->
-    <!--        <item name="android:windowTranslucentStatus">true</item>-->
-    <!--        <item name="android:windowTranslucentNavigation">true</item>-->
-    <!--    </style>-->
 </resources>

@@ -5,10 +5,12 @@ import android.content.Intent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,7 +18,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -30,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -37,6 +42,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -50,8 +56,10 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 
 @ExperimentalAnimationApi
 @Composable
-fun ProfileScreen(context: Context,
-                  mainViewModel: MainViewModel) {
+fun ProfileScreen(
+    context: Context,
+    mainViewModel: MainViewModel
+) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     BaseScaffold(
@@ -59,14 +67,14 @@ fun ProfileScreen(context: Context,
         showNavigationIcon = false,
         secondIcon = Icons.Default.Sort,
         showFirstIcon = false,
-        showSecondIcon = true,
+        showSecondIcon = false,
         title = stringResource(R.string.todo_profile),
         hostState = snackbarHostState
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(colorResource(id = R.color.white)),
+                .background(color = MaterialTheme.colorScheme.background),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             ProfileImage("UserName")
@@ -74,7 +82,7 @@ fun ProfileScreen(context: Context,
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth()
-                    .background(Color.White)
+                    .background(color = MaterialTheme.colorScheme.background)
                     .padding(
                         horizontal = 15.dp
                     )
@@ -87,9 +95,13 @@ fun ProfileScreen(context: Context,
                         GeneralUtil.startActivity(context, intent)
                     })
                 HeaderText(text = stringResource(R.string.profile_about))
-                ProfileText(stringResource(R.string.profile_version) + "        " +
-                        AppInfoUtil.getAppVersionName(context))
-                ProfileText(stringResource(R.string.profile_policy))
+                ProfileText(
+                    stringResource(R.string.profile_version) + "        " +
+                            AppInfoUtil.getAppVersionName(context),
+                    enabled = false
+                )
+                ProfileText(stringResource(R.string.profile_policy),
+                    enabled = false)
             }
         }
     }
@@ -104,24 +116,32 @@ fun HeaderText(text: String) {
         text = text,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Left,
-        color = Color.Black
     )
     Divider()
 }
 
 @Composable
-fun ProfileText(text: String,
-                onClick: () -> Unit = {}) {
-    TextButton(
-        onClick = { onClick.invoke() },
-        Modifier
-            .padding(end = 32.dp, top = 10.dp, bottom = 10.dp)
-            .height(35.dp)
+fun ProfileText(
+    text: String,
+    enabled: Boolean = true,
+    onClick: () -> Unit = {}
+) {
+    Surface(
+        modifier = Modifier.fillMaxWidth()
+            .clickable(
+                onClick = onClick,
+                enabled = enabled,
+                role = Role.Button
+            )
     ) {
         Text(
             text = text,
-            textAlign = TextAlign.Left,
-            color = Color.Black)
+            Modifier
+                .padding(start = 10.dp, end = 32.dp, top = 10.dp, bottom = 10.dp)
+                .height(25.dp),
+            textAlign = TextAlign.Left
+        )
+
     }
     Divider()
 }
@@ -147,7 +167,6 @@ fun ProfileImage(name: String) {
         fontSize = 25.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(top = 10.dp, bottom = 30.dp),
-        color = Color.Black
     )
 }
 

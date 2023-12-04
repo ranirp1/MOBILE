@@ -9,6 +9,12 @@
 
     <string name="todo_new_task">New Task</string>
 
+    <string name="todo_add_new_task">Add New Task</string>
+
+    <string name="todo_add_location">Add Location</string>
+
+    <string name="home_empty">Empty</string>
+
     <string name="todo_profile">Profile</string>
 
     <string name="todo_dashboard">DashBoard</string>

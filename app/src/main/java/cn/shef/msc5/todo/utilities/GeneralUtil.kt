@@ -24,6 +24,10 @@ class GeneralUtil {
             context.overridePendingTransition(R.anim.slide_in_up, R.anim.slide_no_animation)
         }
 
+        fun startActivity3(context: Context, intent: Intent) {
+            (context as BaseActivity).startActivity(intent)
+        }
+
         fun finishActivity(context: Context) {
             (context as BaseActivity).finish()
             context.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out)
@@ -32,6 +36,10 @@ class GeneralUtil {
         fun finishActivity2(context: Context) {
             (context as BaseActivity).finish()
             context.overridePendingTransition(R.anim.slide_no_animation, R.anim.slide_out_up)
+        }
+
+        fun finishActivity3(context: Context) {
+            (context as BaseActivity).finish()
         }
 
     }
