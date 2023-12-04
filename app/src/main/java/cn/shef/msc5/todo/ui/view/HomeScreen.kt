@@ -119,45 +119,44 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
         },
         hostState = snackbarHostState
     ) {
+        DatePickerBar(
+            onDateSelected = {
+                date = it
+                mainViewModel.sortTasksByDate(sortType, it)
+            }
+        )
+        SortingMenu(sortType) {
+            mainViewModel.sortTasksByDate(it, date)
+        }
         if (state.isLoading) {
             LoadingScreen()
         } else if (state.isEmpty) {
             EmptyScreen(context = context)
         } else {
-            Column {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .background(MaterialTheme.colorScheme.background)
-                        .nestedScroll(nestedScrollConnection),
-                    state = listState,
-                ) {
-                    stickyHeader {
-                        DatePickerBar(
-                            onDateSelected = {
-                                date = it
-                                mainViewModel.sortTasksByDate(sortType, it)
-                            }
-                        )
-                        SortingMenu(sortType) {
-                            mainViewModel.sortTasksByDate(it, date)
-                        }
-                    }
-                    items(
-                        items = taskListState.value,
-                        key = { taskItem -> taskItem.id },
-                        itemContent = { item ->
-                            val currentItem by rememberUpdatedState(item)
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 85.dp)
+                    .background(MaterialTheme.colorScheme.background)
+                    .nestedScroll(nestedScrollConnection),
+                state = listState,
+            ) {
+//                    stickyHeader {
+//
+//                    }
+                items(
+                    items = taskListState.value,
+                    key = { taskItem -> taskItem.id },
+                    itemContent = { item ->
+                        val currentItem by rememberUpdatedState(item)
 //                            Spacer(modifier = Modifier.height(10.dp))
-                            ItemHolder(currentItem, mainViewModel)
-                            Spacer(modifier = Modifier.height(5.dp))
-                        }
-                    )
-                    // avoid over-lapping with bottom navigation bar
-                    item {
-                        Spacer(modifier = Modifier.height(50.dp))
+                        ItemHolder(currentItem, mainViewModel)
+                        Spacer(modifier = Modifier.height(5.dp))
                     }
+                )
+                // avoid over-lapping with bottom navigation bar
+                item {
+                    Spacer(modifier = Modifier.height(50.dp))
                 }
             }
         }
