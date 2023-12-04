@@ -128,7 +128,7 @@ class MainViewModel(
     fun sortAllTasks(sortTypeSelected: SortType) {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
-            delay(2500)
+            delay(1400)
             taskDAO.getAllTasks().map { tasks ->
                 when (sortTypeSelected.sortOrder) {
                     is SortOrder.Ascending -> {
@@ -161,7 +161,7 @@ class MainViewModel(
         val selectedDate = dateConverter.converterDate(date)
         viewModelScope.launch {
             state = state.copy(isLoading = true)
-            delay(2500)
+            delay(1400)
             taskDAO.getAllTasksByDate(selectedDate).map { tasks ->
                 when (sortType.sortOrder) {
                     is SortOrder.Ascending -> {
