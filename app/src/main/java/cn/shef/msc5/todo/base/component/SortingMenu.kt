@@ -1,5 +1,6 @@
 package cn.shef.msc5.todo.base.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.outlined.FilterAlt
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -25,7 +27,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.model.SortOrder
 import cn.shef.msc5.todo.model.SortType
 import cn.shef.msc5.todo.ui.theme.Purple40
@@ -49,6 +53,7 @@ fun SortingMenu(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically

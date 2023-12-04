@@ -2,6 +2,7 @@ package cn.shef.msc5.todo.base.component.topbar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,6 +31,7 @@ fun NormalTopAppBar(
     showNavigationIcon: Boolean = false,
     showFirstIcon: Boolean = false,
     showSecondIcon: Boolean = false,
+    navigationIIcon: ImageVector = Icons.Filled.Close,
     firstIcon: ImageVector = Icons.Default.Edit,
     secondIcon: ImageVector = Icons.Default.Delete
 ) {
@@ -42,10 +44,14 @@ fun NormalTopAppBar(
         navigationIcon = {
             if (showNavigationIcon) {
                 IconButton(onClick = {
-                    GeneralUtil.finishActivity(context)
+                    if(navigationIIcon == Icons.Filled.ArrowBack){
+                        GeneralUtil.finishActivity(context)
+                    }else{
+                        GeneralUtil.finishActivity2(context)
+                    }
                 }) {
                     Icon(
-                        imageVector = Icons.Filled.ArrowBack,
+                        imageVector = navigationIIcon,
                         contentDescription = "",
                     )
                 }

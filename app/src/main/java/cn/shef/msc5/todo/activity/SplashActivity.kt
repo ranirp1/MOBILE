@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import cn.shef.msc5.todo.ui.theme.AppTheme
 import cn.shef.msc5.todo.ui.view.SplashScreen
 import cn.shef.msc5.todo.utilities.Constants
 
@@ -31,7 +32,7 @@ class SplashActivity : ComponentActivity() {
 
         setContent {
             //Using Material theme
-            MaterialTheme {
+            AppTheme {
                 //Surface is a basic building block for displaying content and can be used to wrap other composable to provide a background color,
                 //elevation, padding, and other layout properties.
                 Surface(

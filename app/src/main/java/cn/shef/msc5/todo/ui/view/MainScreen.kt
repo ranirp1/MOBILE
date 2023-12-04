@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.base.component.AppScaffold
+import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
@@ -35,12 +35,13 @@ import cn.shef.msc5.todo.utilities.Constants
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 05/11/2023 22:56
  */
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainScreen() {
 
     val mainViewModel by lazy {
         MainViewModelFactory(AppDatabase.INSTANCE.getTaskDAO()).
-            create(MainViewModel::class.java)
+        create(MainViewModel::class.java)
     }
 
     //get context
@@ -53,7 +54,7 @@ fun MainScreen() {
     var selectedItem by remember { mutableStateOf(items.first()) }
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
-    AppScaffold(
+    BaseScaffold(
         showTopBar = false,
         bottomBar = {
             NavigationBar(
@@ -78,7 +79,8 @@ fun MainScreen() {
             Constants.NAVIGATION_HOME -> HomeScreen(context, mainViewModel)
             Constants.NAVIGATION_PROGRESS -> ProgressScreen(context, mainViewModel)
 //            Constants.NAVIGATION_TASKS -> EmptyScreen(context)
-            Constants.NAVIGATION_PROFILE -> DashBoardScreen(context, mainViewModel)
+//            Constants.NAVIGATION_PROFILE -> SettingScreen(context, mainViewModel)
+            Constants.NAVIGATION_PROFILE -> ProfileScreen(context, mainViewModel)
         }
     }
 }

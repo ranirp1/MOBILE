@@ -9,6 +9,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import cn.shef.msc5.todo.base.BaseActivity
+import cn.shef.msc5.todo.model.database.AppDatabase
+import cn.shef.msc5.todo.model.viewmodel.MainViewModel
+import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
+import cn.shef.msc5.todo.ui.theme.AppTheme
 import cn.shef.msc5.todo.ui.view.DetailScreen
 
 /**
@@ -20,19 +24,24 @@ import cn.shef.msc5.todo.ui.view.DetailScreen
 class DetailActivity : BaseActivity() {
 
     private val TAG = "DetailActivity"
+    val mainViewModel by lazy {
+        MainViewModelFactory(AppDatabase.INSTANCE.getTaskDAO()).
+        create(MainViewModel::class.java)
+    }
+
 
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            MaterialTheme {
+            AppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DetailScreen()
+                    DetailScreen(mainViewModel)
                 }
             }
         }
