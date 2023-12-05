@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -68,7 +69,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
     var fabVisibleLocation by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     var date by remember { mutableStateOf(mainViewModel.date) }
-    var numTaskDue by remember { mutableStateOf(0) }
+    var numTaskDue by remember { mutableIntStateOf(0) }
 
     var snackbarShown by remember { mutableStateOf(false) }
 
@@ -89,7 +90,6 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
             }
         }
     }
-
 
     if(!state.isEmpty && !snackbarShown){
         LaunchedEffect(Unit) {
@@ -146,49 +146,49 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
         },
         hostState = snackbarHostState
     ) {
-        DatePickerBar(
-            onDateSelected = {
-                date = it
-                mainViewModel.sortTasksByDate(sortType, it)
+        Column {
+            DatePickerBar(
+                onDateSelected = {
+                    date = it
+                    mainViewModel.sortTasksByDate(sortType, it)
+                }
+            )
+            SortingMenu(sortType) {
+                mainViewModel.sortTasksByDate(it, date)
             }
-        )
-        SortingMenu(sortType) {
-            mainViewModel.sortTasksByDate(it, date)
-        }
-        if (state.isLoading) {
-            LoadingScreen()
-        } else if (state.isEmpty) {
-            EmptyScreen(context = context)
-            isVisible.value = false
-        } else {
-            isVisible.value = true
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 85.dp)
-                    .background(MaterialTheme.colorScheme.background)
-                    .nestedScroll(nestedScrollConnection),
-                state = listState,
-            ) {
-//                    stickyHeader {
-//
-//                    }
-                items(
-                    items = taskListState.value,
-                    key = { taskItem -> taskItem.id },
-                    itemContent = { item ->
-                        val currentItem by rememberUpdatedState(item)
+            if (state.isLoading) {
+                LoadingScreen()
+            } else if (state.isEmpty) {
+                EmptyScreen(context = context)
+                isVisible.value = false
+            } else {
+                isVisible.value = true
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.background)
+                        .nestedScroll(nestedScrollConnection),
+                    state = listState,
+                ) {
+
+                    items(
+                        items = taskListState.value,
+                        key = { taskItem -> taskItem.id },
+                        itemContent = { item ->
+                            val currentItem by rememberUpdatedState(item)
 //                            Spacer(modifier = Modifier.height(10.dp))
-                        ItemHolder(currentItem, mainViewModel)
-                        Spacer(modifier = Modifier.height(5.dp))
+                            ItemHolder(currentItem, mainViewModel)
+                            Spacer(modifier = Modifier.height(5.dp))
+                        }
+                    )
+                    // avoid over-lapping with bottom navigation bar
+                    item {
+                        Spacer(modifier = Modifier.height(50.dp))
                     }
-                )
-                // avoid over-lapping with bottom navigation bar
-                item {
-                    Spacer(modifier = Modifier.height(50.dp))
                 }
             }
         }
+
     }
 }
 
