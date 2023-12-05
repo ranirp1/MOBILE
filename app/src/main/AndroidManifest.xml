@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- internet permission -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- location permission -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- camera permission -->
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
+        android:name=".AppApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,47 +22,62 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Todo"
-        android:name=".AppApplication"
         tools:targetApi="34">
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
         <activity
-            android:screenOrientation="portrait"
+            android:name=".activity.CaptureActivity"
+            android:exported="false"
+            android:label="@string/title_activity_capture"
+            android:theme="@style/Theme.Todo" >
+        </activity>
+        <activity
+            android:name=".activity.OpenGalleryActivity"
+            android:exported="false"
+            android:label="@string/title_activity_open_gallery"
+            android:theme="@style/Theme.Todo" />
+
+        <activity
             android:name=".activity.SplashActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Todo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.LocationActivity"
             android:exported="false"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CaptureImageActivity"
             android:exported="false"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MapsActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DetailActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
+            android:exported="true"
+            android:screenOrientation="portrait" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <!-- location service -->
         <service
             android:name=".services.LocationService"
-            android:screenOrientation="portrait"
-            android:exported="false"></service>
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -59,25 +85,10 @@
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
-                tools:replace="android:resource"
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
+                android:resource="@xml/provider_paths"
+                tools:replace="android:resource" />
         </provider>
-        <!-- demos -->
     </application>
 
-    <!-- internet permission -->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- location permission -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- camera permission -->
-    <uses-feature android:name="android.hardware.camera.any"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 </manifest>

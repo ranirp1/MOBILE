@@ -38,18 +38,6 @@ class CaptureImageActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             // TODO will also need pickedImageUri for storing in DB ...
-            var pickedImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
-            val imageFromGalleryLauncher = rememberLauncherForActivityResult(
-                ActivityResultContracts.PickVisualMedia() ) {
-                    uri: Uri? ->
-                if (uri == null) {
-                    pickedImageBitmap = null
-                } else {
-                    pickedImageBitmap = ImageDecoder.decodeBitmap(
-                        ImageDecoder.createSource(getContentResolver(),
-                            uri)).asImageBitmap()
-                }
-            }
             var cameraImageUri by remember { mutableStateOf<Uri?>(null) }
             var cameraImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
             val imageFromCameraLauncher = rememberLauncherForActivityResult(
@@ -91,17 +79,6 @@ class CaptureImageActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Column {
-                        pickedImageBitmap?.let { imageBitmap ->
-                            Image(imageBitmap, null)
-                        }
-                        Button(onClick = {
-                            imageFromGalleryLauncher.launch(
-                                PickVisualMediaRequest(mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly)
-                            )
-                        }
-                        ) {
-                            Text("Open Gallery")
-                        }
                         if (hasCameraPermission) {
                             cameraImageBitmap?.let { cameraBitmap ->
                                 Image(cameraBitmap, null)
@@ -109,12 +86,10 @@ class CaptureImageActivity : ComponentActivity() {
                             Button(onClick = {
                                 cameraImageBitmap = null
                                 val authority = "$packageName.provider"
-                                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
-                                cameraImageUri = FileProvider.getUriForFile(
-                                    applicationContext,
-                                    authority,
-                                    newImageFile()
-                                )}else{
+                                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                                    cameraImageUri =
+                                        FileProvider.getUriForFile(applicationContext, authority, newImageFile())
+                                } else {
                                     cameraImageUri = Uri.fromFile(newImageFile())
                                 }
                                 cameraImageUri = FileProvider.getUriForFile(
@@ -131,9 +106,9 @@ class CaptureImageActivity : ComponentActivity() {
                         }
                     }
                 }
-                }
             }
         }
+    }
 
     private fun newImageFile(): File{
         val timeMillis = System.currentTimeMillis().toString()
@@ -150,7 +125,6 @@ class CaptureImageActivity : ComponentActivity() {
         }
         return result
     }
-
     private fun checkCameraPermission(): Boolean {
         return PackageManager.PERMISSION_GRANTED ==
                 ActivityCompat.checkSelfPermission(applicationContext,
@@ -164,5 +138,6 @@ class CaptureImageActivity : ComponentActivity() {
                 )
     }
 }
+
 
 
