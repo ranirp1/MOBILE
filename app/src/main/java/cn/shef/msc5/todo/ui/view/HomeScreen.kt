@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -55,6 +56,7 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
  * @date Created in 04/11/2023 15:57
  */
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
 
@@ -144,44 +146,46 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
         },
         hostState = snackbarHostState
     ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 15.dp)
-        ) {
-            DatePickerBar(
-                onDateSelected = {
-                    date = it
-                    mainViewModel.sortTasksByDate(sortType, it)
-                }
-            )
-            SortingMenu(sortType) {
-                mainViewModel.sortTasksByDate(it, date)
+        DatePickerBar(
+            onDateSelected = {
+                date = it
+                mainViewModel.sortTasksByDate(sortType, it)
             }
-
-            if (state.isLoading) {
-                LoadingScreen()
-            } else if (state.isEmpty) {
-                EmptyScreen(context = context)
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.background)
-                        .nestedScroll(nestedScrollConnection),
-                    state = listState,
-                ) {
-                    items(
-                        items = taskListState.value,
-                        key = { taskItem -> taskItem.id },
-                        itemContent = { item ->
-                            val currentItem by rememberUpdatedState(item)
-                            Spacer(modifier = Modifier.height(10.dp))
-                            ItemHolder(currentItem, mainViewModel)
-                        }
-                    )
-                    // avoid over-lapping with bottom navigation bar
-                    item {
-                        Spacer(modifier = Modifier.height(20.dp))
+        )
+        SortingMenu(sortType) {
+            mainViewModel.sortTasksByDate(it, date)
+        }
+        if (state.isLoading) {
+            LoadingScreen()
+        } else if (state.isEmpty) {
+            EmptyScreen(context = context)
+            isVisible.value = false
+        } else {
+            isVisible.value = true
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 85.dp)
+                    .background(MaterialTheme.colorScheme.background)
+                    .nestedScroll(nestedScrollConnection),
+                state = listState,
+            ) {
+//                    stickyHeader {
+//
+//                    }
+                items(
+                    items = taskListState.value,
+                    key = { taskItem -> taskItem.id },
+                    itemContent = { item ->
+                        val currentItem by rememberUpdatedState(item)
+//                            Spacer(modifier = Modifier.height(10.dp))
+                        ItemHolder(currentItem, mainViewModel)
+                        Spacer(modifier = Modifier.height(5.dp))
                     }
+                )
+                // avoid over-lapping with bottom navigation bar
+                item {
+                    Spacer(modifier = Modifier.height(50.dp))
                 }
             }
         }
