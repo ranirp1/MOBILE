@@ -53,8 +53,7 @@ fun SortingMenu(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = 10.dp),
+            .background(MaterialTheme.colorScheme.background),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
