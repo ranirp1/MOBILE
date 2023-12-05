@@ -5,11 +5,9 @@ import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -57,7 +55,6 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
  * @date Created in 04/11/2023 15:57
  */
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
 
@@ -98,7 +95,6 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                 val currentTime = System.currentTimeMillis()
                 for (task in taskListState.value) {
                     val taskDueTime = dateConverter.converterDate(task.dueTime)
-                    Log.d("dateeee", "Task Due Time: $taskDueTime, Current Time: $currentTime")
 
                     if (currentTime > taskDueTime) {
                         numTaskDue++
@@ -148,44 +144,44 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
         },
         hostState = snackbarHostState
     ) {
-        DatePickerBar(
-            onDateSelected = {
-                date = it
-                mainViewModel.sortTasksByDate(sortType, it)
+        Column(
+            modifier = Modifier.padding(horizontal = 15.dp)
+        ) {
+            DatePickerBar(
+                onDateSelected = {
+                    date = it
+                    mainViewModel.sortTasksByDate(sortType, it)
+                }
+            )
+            SortingMenu(sortType) {
+                mainViewModel.sortTasksByDate(it, date)
             }
-        )
-        SortingMenu(sortType) {
-            mainViewModel.sortTasksByDate(it, date)
-        }
-        if (state.isLoading) {
-            LoadingScreen()
-        } else if (state.isEmpty) {
-            EmptyScreen(context = context)
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 85.dp)
-                    .background(MaterialTheme.colorScheme.background)
-                    .nestedScroll(nestedScrollConnection),
-                state = listState,
-            ) {
-//                    stickyHeader {
-//
-//                    }
-                items(
-                    items = taskListState.value,
-                    key = { taskItem -> taskItem.id },
-                    itemContent = { item ->
-                        val currentItem by rememberUpdatedState(item)
-//                            Spacer(modifier = Modifier.height(10.dp))
-                        ItemHolder(currentItem, mainViewModel)
-                        Spacer(modifier = Modifier.height(5.dp))
+
+            if (state.isLoading) {
+                LoadingScreen()
+            } else if (state.isEmpty) {
+                EmptyScreen(context = context)
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.background)
+                        .nestedScroll(nestedScrollConnection),
+                    state = listState,
+                ) {
+                    items(
+                        items = taskListState.value,
+                        key = { taskItem -> taskItem.id },
+                        itemContent = { item ->
+                            val currentItem by rememberUpdatedState(item)
+                            Spacer(modifier = Modifier.height(10.dp))
+                            ItemHolder(currentItem, mainViewModel)
+                        }
+                    )
+                    // avoid over-lapping with bottom navigation bar
+                    item {
+                        Spacer(modifier = Modifier.height(20.dp))
                     }
-                )
-                // avoid over-lapping with bottom navigation bar
-                item {
-                    Spacer(modifier = Modifier.height(50.dp))
                 }
             }
         }
