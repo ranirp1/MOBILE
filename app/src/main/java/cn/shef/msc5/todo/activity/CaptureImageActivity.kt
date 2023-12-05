@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import cn.shef.msc5.todo.base.BaseActivity
 import java.io.File
 
 
@@ -41,7 +42,8 @@ class CaptureImageActivity : ComponentActivity() {
             var cameraImageUri by remember { mutableStateOf<Uri?>(null) }
             var cameraImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
             val imageFromCameraLauncher = rememberLauncherForActivityResult(
-                ActivityResultContracts.TakePicture() ) { captured ->
+                ActivityResultContracts.TakePicture()
+            ) { captured ->
                 if (!captured) {
                     cameraImageBitmap = null
                     cameraImageUri = null
@@ -57,13 +59,15 @@ class CaptureImageActivity : ComponentActivity() {
             } else {
                 val requestPermissionLauncher =
                     rememberLauncherForActivityResult(
-                        ActivityResultContracts.RequestPermission() ) {
-                            isGranted: Boolean ->
+                        ActivityResultContracts.RequestPermission()
+                    ) { isGranted: Boolean ->
                         if (isGranted) {
                             hasCameraPermission = true
                         } else {
-                            Toast.makeText(getBaseContext(),
-                                "Camera Permission denied", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                getBaseContext(),
+                                "Camera Permission denied", Toast.LENGTH_SHORT
+                            ).show()
                             // Below is likely redundant
                             hasCameraPermission = false
                         }
@@ -88,7 +92,11 @@ class CaptureImageActivity : ComponentActivity() {
                                 val authority = "$packageName.provider"
                                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
                                     cameraImageUri =
-                                        FileProvider.getUriForFile(applicationContext, authority, newImageFile())
+                                        FileProvider.getUriForFile(
+                                            applicationContext,
+                                            authority,
+                                            newImageFile()
+                                        )
                                 } else {
                                     cameraImageUri = Uri.fromFile(newImageFile())
                                 }
@@ -110,34 +118,38 @@ class CaptureImageActivity : ComponentActivity() {
         }
     }
 
-    private fun newImageFile(): File{
+    private fun newImageFile(): File {
         val timeMillis = System.currentTimeMillis().toString()
         val storageDir = applicationContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile("SNAP-$timeMillis", ".jpg",storageDir)
+        return File.createTempFile("SNAP-$timeMillis", ".jpg", storageDir)
     }
 
     private fun getImageBitmap(uri: Uri?): ImageBitmap? {
         var result: ImageBitmap? = null
         if (uri != null) {
             result = ImageDecoder.decodeBitmap(
-                ImageDecoder.createSource(getContentResolver(),
-                    uri)).asImageBitmap()
+                ImageDecoder.createSource(
+                    getContentResolver(),
+                    uri
+                )
+            ).asImageBitmap()
         }
         return result
     }
+
     private fun checkCameraPermission(): Boolean {
         return PackageManager.PERMISSION_GRANTED ==
-                ActivityCompat.checkSelfPermission(applicationContext,
+                ActivityCompat.checkSelfPermission(
+                    applicationContext,
                     android.Manifest.permission.CAMERA
                 )
     }
+
     private fun checkCameraPermission2(): Boolean {
         return PackageManager.PERMISSION_GRANTED ==
-                ActivityCompat.checkSelfPermission(applicationContext,
+                ActivityCompat.checkSelfPermission(
+                    applicationContext,
                     android.Manifest.permission.READ_EXTERNAL_STORAGE
                 )
     }
 }
-
-
-

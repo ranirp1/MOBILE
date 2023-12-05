@@ -23,8 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.tooling.preview.Preview
-import cn.shef.msc5.todo.activity.ui.theme.TodoTheme
 
 class OpenGalleryActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
