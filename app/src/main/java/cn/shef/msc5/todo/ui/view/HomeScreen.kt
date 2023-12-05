@@ -146,7 +146,9 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
         },
         hostState = snackbarHostState
     ) {
-        Column {
+        Column(
+            modifier = Modifier.padding(horizontal = 15.dp)
+        ) {
             DatePickerBar(
                 onDateSelected = {
                     date = it
