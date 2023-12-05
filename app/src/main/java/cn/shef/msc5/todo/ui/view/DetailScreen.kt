@@ -39,6 +39,7 @@ import cn.shef.msc5.todo.base.component.DatePicker
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
 import cn.shef.msc5.todo.base.component.dialog.TimePickerDialog
 import cn.shef.msc5.todo.model.Task
+import cn.shef.msc5.todo.model.TaskStateEnum
 import cn.shef.msc5.todo.model.dto.SubTask
 import cn.shef.msc5.todo.model.getPriorityValues
 import cn.shef.msc5.todo.model.getTemplateStr
@@ -107,11 +108,6 @@ fun DetailScreen(
                 onLocation = {
 
                 },
-//                onSubTask = {
-//                    scope.launch {
-//
-//                    }
-//                },
                 onCalender = {
                     scope.launch {
                         showCalender = !showCalender
@@ -132,7 +128,7 @@ fun DetailScreen(
                             title, text, prior, 1.11F, 1.11F,
                             "imageUrl", Date.valueOf(LocalDate.now().toString()),
                             Date.valueOf(LocalDate.now().toString()), date,
-                            0, false, subTasks, null
+                            0, TaskStateEnum.UNFINISHED.level, subTasks, null
                         )
                         GeneralUtil.finishActivity2(context)
                     }

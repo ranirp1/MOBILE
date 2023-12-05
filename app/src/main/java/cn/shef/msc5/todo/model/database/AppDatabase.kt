@@ -18,7 +18,7 @@ import cn.shef.msc5.todo.utilities.SubTaskConverter
  * @date Created in 04/11/2023 19:18
  */
 @TypeConverters(SubTaskConverter::class)
-@Database(entities = [Task::class], version = 6, exportSchema = false)
+@Database(entities = [Task::class], version = 7, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {

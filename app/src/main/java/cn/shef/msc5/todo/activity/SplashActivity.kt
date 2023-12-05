@@ -25,7 +25,6 @@ import cn.shef.msc5.todo.utilities.Constants
  */
 class SplashActivity : ComponentActivity() {
 
-
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

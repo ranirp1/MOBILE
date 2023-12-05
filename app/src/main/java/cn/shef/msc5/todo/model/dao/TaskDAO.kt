@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import cn.shef.msc5.todo.base.BaseDAO
 import cn.shef.msc5.todo.model.Task
+import cn.shef.msc5.todo.model.TaskStateEnum
 import cn.shef.msc5.todo.utilities.Constants.Companion.TABLE_TASK
 import kotlinx.coroutines.flow.Flow
 
@@ -31,6 +32,9 @@ interface TaskDAO : BaseDAO<Task> {
     @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0 AND date(dueTime / 1000, 'unixepoch') = date(:selectedDate / 1000, 'unixepoch')")
     fun getAllTasksByDate(selectedDate: Long): Flow<List<Task>>
 
+    @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0 and state = :state")
+    fun getTasksList(state: Int): Flow<List<Task>>
+
     @Query("SELECT count(*) from $TABLE_TASK WHERE isDeleted = 0")
     suspend fun getCount(): Int
 
@@ -40,7 +44,7 @@ interface TaskDAO : BaseDAO<Task> {
     }
 
     fun updateComplete(task: Task){
-        task.isCompleted = !task.isCompleted
+        task.state = TaskStateEnum.ISCOMPLETED.level
         update(task)
     }
 

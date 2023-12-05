@@ -21,6 +21,8 @@
 
     <string name="todo_tasks">Progress</string>
 
+    <string name="todo_tasks_data">Progress States</string>
+
     <string name="profile_about">About</string>
 
     <string name="profile_account">My Account</string>

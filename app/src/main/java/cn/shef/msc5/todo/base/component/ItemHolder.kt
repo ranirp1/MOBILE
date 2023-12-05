@@ -34,23 +34,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
-import cn.shef.msc5.todo.base.component.topbar.CancelTopAppBar
-import cn.shef.msc5.todo.base.component.topbar.CenterTopAppBar
-import cn.shef.msc5.todo.base.component.topbar.NormalTopAppBar
-import cn.shef.msc5.todo.base.component.topbar.SearchTopAppBar
 import cn.shef.msc5.todo.model.PriorityLevelEnum
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.theme.Grey
-import cn.shef.msc5.todo.ui.theme.Orange
 import cn.shef.msc5.todo.ui.theme.OrangeGrey
 import cn.shef.msc5.todo.ui.theme.Purple40
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
@@ -64,6 +56,7 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 import java.sql.Date
 import java.time.LocalDate
 import cn.shef.msc5.todo.activity.ViewActivity
+import cn.shef.msc5.todo.model.TaskStateEnum
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,7 +86,7 @@ fun ItemHolder(
             .fillMaxWidth()
             .padding(8.dp),
         shape = RoundedCornerShape(15.dp),
-        enabled = !(task.isCompleted),
+        enabled = !(task.state == TaskStateEnum.ISCOMPLETED.level),
         onClick = {
             val intent = Intent(context, ViewActivity::class.java)
             intent.putExtra("taskId", task.id)
@@ -132,7 +125,7 @@ fun ItemHolder(
                                     contentDescription = OPTIONS_DONE
                                 )
                             },
-                            text = { Text(text = if(!task.isCompleted) OPTIONS_DONE else OPTIONS_UNDONE, color = PurpleGrey40) },
+                            text = { Text(text = if(!(task.state == TaskStateEnum.ISCOMPLETED.level)) OPTIONS_DONE else OPTIONS_UNDONE, color = PurpleGrey40) },
                             onClick = {
                                 showOptionsMenu = false
                                 mainViewModel.markAsDone(task)
@@ -181,21 +174,23 @@ fun ItemHolder(
                 is PriorityLevelEnum.LOW -> Text(
                     text = PriorityLevelEnum.LOW.value,
                     fontStyle = FontStyle.Italic,
-                    color = if(!task.isCompleted) PriorityLevelEnum.LOW.color else Grey,
+                    color = if(!(task.state == TaskStateEnum.ISCOMPLETED.level)) PriorityLevelEnum.LOW.color else Grey,
                     fontSize = 14.sp
                 )
                 is PriorityLevelEnum.MEDIUM -> Text(
                     text = PriorityLevelEnum.MEDIUM.value,
                     fontStyle = FontStyle.Italic,
-                    color = if(!task.isCompleted) PriorityLevelEnum.MEDIUM.color else Grey,
+                    color = if(!(task.state == TaskStateEnum.ISCOMPLETED.level)) PriorityLevelEnum.MEDIUM.color else Grey,
                     fontSize = 14.sp
                 )
                 is PriorityLevelEnum.HIGH -> Text(
                     text = PriorityLevelEnum.HIGH.value,
                     fontStyle = FontStyle.Italic,
-                    color = if(!task.isCompleted) PriorityLevelEnum.HIGH.color else Grey,
+                    color = if(!(task.state == TaskStateEnum.ISCOMPLETED.level)) PriorityLevelEnum.HIGH.color else Grey,
                     fontSize = 14.sp
                 )
+
+                else -> {}
             }
 
             Spacer(modifier = Modifier.height(2.dp))

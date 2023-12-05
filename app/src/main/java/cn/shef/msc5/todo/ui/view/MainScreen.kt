@@ -50,6 +50,18 @@ fun MainScreen() {
         create(MainViewModel::class.java)
     }
 
+
+    val progressUnfinishedViewModel by lazy {
+        MainViewModelFactory(ScreenTypeEnum.PROGRESS_UNFINISHED, AppDatabase.INSTANCE.getTaskDAO()).
+        create(MainViewModel::class.java)
+    }
+
+
+    val progressIsCompletedViewModel by lazy {
+        MainViewModelFactory(ScreenTypeEnum.PROGRESS_ISCOMPLETED, AppDatabase.INSTANCE.getTaskDAO()).
+        create(MainViewModel::class.java)
+    }
+
     //get context
     val items = listOf(
         Constants.NAVIGATION_HOME,
@@ -86,7 +98,9 @@ fun MainScreen() {
             Constants.NAVIGATION_HOME -> HomeScreen(context, homeViewModel)
             Constants.NAVIGATION_TASKS -> TasksScreen(context, mainViewModel)
             // TODO add progress screen
-            Constants.NAVIGATION_PROGRESS -> ProgressScreen(context, mainViewModel)
+//            Constants.NAVIGATION_PROGRESS -> ProgressScreen(context, mainViewModel)
+            Constants.NAVIGATION_PROGRESS -> ProgressStateScreen(context, progressUnfinishedViewModel,
+                progressIsCompletedViewModel)
             Constants.NAVIGATION_PROFILE -> ProfileScreen(context, mainViewModel)
         }
     }

@@ -13,6 +13,7 @@ import cn.shef.msc5.todo.model.SortOrder
 import cn.shef.msc5.todo.model.SortType
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.TaskListState
+import cn.shef.msc5.todo.model.TaskStateEnum
 import cn.shef.msc5.todo.model.dao.TaskDAO
 import cn.shef.msc5.todo.model.dto.SubTask
 import cn.shef.msc5.todo.utilities.DateConverter
@@ -52,10 +53,25 @@ class MainViewModel(
         state = state.copy(isLoading = true)
         when (screenType) {
             ScreenTypeEnum.HOME_SCREEN -> loadTaskListByDate()
+            ScreenTypeEnum.PROGRESS_UNFINISHED -> loadTaskByState(TaskStateEnum.UNFINISHED.level)
+            ScreenTypeEnum.PROGRESS_ISCOMPLETED -> loadTaskByState(TaskStateEnum.ISCOMPLETED.level)
             ScreenTypeEnum.OTHER_SCREEN -> loadTaskList()
         }
     }
 
+    private fun loadTaskByState(taskstate: Int) {
+        viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            delay(500)
+            taskDAO.getTasksList(taskstate).collect{
+                taskList = it.toMutableStateList()
+                _taskListFlow.value = taskList
+                state = state.copy(isLoading = false,
+                    data = _taskListFlow.value)
+                postExecute?.invoke()
+            }
+        }
+    }
     private fun loadTaskList() {
         sortAllTasks(sortType)
     }
@@ -83,14 +99,14 @@ class MainViewModel(
         gmtModified: Date,
         dueTime: Date,
         parentId: Int,
-        isCompleted: Boolean,
+        state: Int,
         subTask: List<SubTask>,
         postInsert: (() -> Unit)? = null
     ) {
         val id = taskList.lastOrNull()?.id ?: -1
         val todoItem = Task(
             id + 1, title, 1, description, priority, longitude, latitude,
-            imageUrl, dueTime, parentId, gmtCreated, gmtModified, 0, isCompleted, subTask
+            imageUrl, dueTime, parentId, gmtCreated, gmtModified, 0, state, subTask
         )
         viewModelScope.launch(Dispatchers.IO) {
             taskDAO.insert(todoItem)
@@ -123,7 +139,7 @@ class MainViewModel(
         val id = taskList.lastOrNull()?.id ?: -1
         val todoItem = Task(
             id + 1, task.title, 1, task.description, task.priority, task.longitude, task.latitude,
-            task.imageUrl, task.dueTime, task.parentId, gmtCreated, gmtModified, 0, false, task.subTasks
+            task.imageUrl, task.dueTime, task.parentId, gmtCreated, gmtModified, 0, TaskStateEnum.UNFINISHED.level, task.subTasks
         )
         viewModelScope.launch(Dispatchers.IO) {
             taskDAO.insert(todoItem)
