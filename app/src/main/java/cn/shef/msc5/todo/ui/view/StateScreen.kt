@@ -28,9 +28,11 @@ import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.base.component.BaseFloatingActionBar
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.ItemHolder
-import cn.shef.msc5.todo.base.component.SortingMenu
 import cn.shef.msc5.todo.base.component.TopBarType
+import cn.shef.msc5.todo.model.isEmpty
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
+import cn.shef.msc5.todo.ui.view.state.EmptyScreen
+import cn.shef.msc5.todo.ui.view.state.LoadingScreen
 import cn.shef.msc5.todo.utilities.GeneralUtil
 
 /**
@@ -47,6 +49,8 @@ fun StateScreen(context: Context, mainViewModel: MainViewModel, level: String) {
 
     var fabVisibleAddTask by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
+
+    val state = mainViewModel.state
 
     BaseScaffold(
         showTopBar = false,
@@ -65,25 +69,30 @@ fun StateScreen(context: Context, mainViewModel: MainViewModel, level: String) {
         },
         hostState = snackbarHostState
     ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 15.dp)
-        ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .background(MaterialTheme.colorScheme.background)
-                ,
+        if (state.isLoading) {
+            LoadingScreen()
+        } else if (state.isEmpty) {
+            EmptyScreen(context = context)
+        } else {
+            Column(
+                modifier = Modifier.padding(horizontal = 15.dp)
             ) {
-                items(
-                    items = taskListState.value,
-                    key = { taskItem -> taskItem.id },
-                    itemContent = { item ->
-                        val currentItem by rememberUpdatedState(item)
-                        ItemHolder(currentItem, mainViewModel)
-                        Spacer(modifier = Modifier.height(15.dp))
-                    }
-                )
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .background(MaterialTheme.colorScheme.background),
+                ) {
+                    items(
+                        items = taskListState.value,
+                        key = { taskItem -> taskItem.id },
+                        itemContent = { item ->
+                            val currentItem by rememberUpdatedState(item)
+                            ItemHolder(currentItem, mainViewModel)
+                            Spacer(modifier = Modifier.height(15.dp))
+                        }
+                    )
+                }
             }
         }
     }
