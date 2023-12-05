@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,6 +48,7 @@ import cn.shef.msc5.todo.model.isEmpty
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.view.state.EmptyScreen
 import cn.shef.msc5.todo.ui.view.state.LoadingScreen
+import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.utilities.GeneralUtil
 
 /**
@@ -59,6 +61,7 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 @Composable
 fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
 
+    val dateConverter = DateConverter()
     val taskListState = mainViewModel.taskListFlow.collectAsState(listOf())
     var sortType by remember { mutableStateOf(mainViewModel.sortType) }
 
@@ -66,6 +69,9 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
     var fabVisibleLocation by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     var date by remember { mutableStateOf(mainViewModel.date) }
+    var numTaskDue by remember { mutableStateOf(0) }
+
+    var snackbarShown by remember { mutableStateOf(false) }
 
     val listState = rememberLazyListState()
     val isVisible = rememberSaveable { mutableStateOf(true) }
@@ -84,6 +90,29 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
             }
         }
     }
+
+
+    if(!state.isEmpty && !snackbarShown){
+        LaunchedEffect(Unit) {
+            if (!snackbarShown) {
+                val currentTime = System.currentTimeMillis()
+                for (task in taskListState.value) {
+                    val taskDueTime = dateConverter.converterDate(task.dueTime)
+                    Log.d("dateeee", "Task Due Time: $taskDueTime, Current Time: $currentTime")
+
+                    if (currentTime > taskDueTime) {
+                        numTaskDue++
+                    }
+                }
+
+                if (numTaskDue > 0) {
+                    snackbarHostState.showSnackbar("You have $numTaskDue ToDo due!")
+                    snackbarShown = true
+                }
+            }
+        }
+    }
+
 
     BaseScaffold(
         showTopBar = true,

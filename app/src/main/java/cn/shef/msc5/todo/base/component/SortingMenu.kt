@@ -30,9 +30,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.model.SortOrder
 import cn.shef.msc5.todo.model.SortType
-import cn.shef.msc5.todo.ui.theme.Purple40
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
-import cn.shef.msc5.todo.ui.theme.PurpleGrey80
+import cn.shef.msc5.todo.ui.theme.Teal
+import cn.shef.msc5.todo.ui.theme.TealGrey
+import cn.shef.msc5.todo.ui.theme.TealGrey40
 import cn.shef.msc5.todo.utilities.Constants.Companion.SORT_DUE
 import cn.shef.msc5.todo.utilities.Constants.Companion.SORT_LOCATION
 import cn.shef.msc5.todo.utilities.Constants.Companion.SORT_PRIORITY
@@ -52,7 +53,6 @@ fun SortingMenu(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 45.dp)
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.End,
@@ -64,7 +64,7 @@ fun SortingMenu(
                 content = {
                     Icon(
                         imageVector = Icons.Outlined.FilterAlt,
-                        tint = Purple40,
+                        tint = Teal,
                         contentDescription = "Filter icon"
                     )
                     Text(
@@ -79,7 +79,7 @@ fun SortingMenu(
                 onDismissRequest = { showSortingMenu = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text(text = SORT_PRIORITY, color = PurpleGrey40) },
+                    text = { Text(text = SORT_PRIORITY, color = TealGrey40) },
                     onClick = {
                         showSortingMenu = false
                         sortString = SORT_PRIORITY
@@ -111,7 +111,7 @@ fun SortingMenu(
         }
 
         Divider(
-            color = PurpleGrey80,
+            color = TealGrey,
             modifier = Modifier
                 .height(25.dp)
                 .width(1.dp)
@@ -131,13 +131,13 @@ fun SortingMenu(
                 Icon(
                     imageVector = Icons.Default.ArrowDownward,
                     contentDescription = "Sort by ascending order",
-                    tint = Purple40,
+                    tint = Teal,
                 )
             } else {
                 Icon(
                     imageVector = Icons.Default.ArrowUpward,
                     contentDescription = "Sort by descending order",
-                    tint = Purple40
+                    tint = Teal
                 )
             }
         }

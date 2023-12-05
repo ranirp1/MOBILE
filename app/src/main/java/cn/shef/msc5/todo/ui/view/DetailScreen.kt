@@ -109,11 +109,11 @@ fun DetailScreen(
                 onLocation = {
 
                 },
-                onSubTask = {
-                    scope.launch {
-
-                    }
-                },
+//                onSubTask = {
+//                    scope.launch {
+//
+//                    }
+//                },
                 onCalender = {
                     scope.launch {
                         showCalender = !showCalender
@@ -125,13 +125,19 @@ fun DetailScreen(
                     }
                 },
                 addClick = {
-                    mainViewModel.addTask(
-                        title, text, prior, 1.11F, 1.11F,
-                        "imageUrl", Date.valueOf(LocalDate.now().toString()),
-                        Date.valueOf(LocalDate.now().toString()), date,
-                        0, false, subTasks, null
-                    )
-                    GeneralUtil.finishActivity2(context)
+                    if(title.isEmpty()){
+                        scope.launch{
+                            snackbarHostState.showSnackbar("Please fill in a title!")
+                        }
+                    }else{
+                        mainViewModel.addTask(
+                            title, text, prior, 1.11F, 1.11F,
+                            "imageUrl", Date.valueOf(LocalDate.now().toString()),
+                            Date.valueOf(LocalDate.now().toString()), date,
+                            0, false, subTasks, null
+                        )
+                        GeneralUtil.finishActivity2(context)
+                    }
                 }
             )
         }

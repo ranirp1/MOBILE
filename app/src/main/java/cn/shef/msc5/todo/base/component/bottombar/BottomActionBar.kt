@@ -49,7 +49,7 @@ fun BottomActionBar(
     onCamera: () -> Unit = {},
     onCalender:() -> Unit={},
     onReminder:()-> Unit={},
-    onSubTask: () -> Unit = {},
+//    onSubTask: () -> Unit = {},
     addClick: () -> Unit = {},
 ) {
     val scope: CoroutineScope = rememberCoroutineScope()
@@ -76,7 +76,7 @@ fun BottomActionBar(
                 onCamera = onCamera,
                 onCalender=onCalender,
                 onReminder=onReminder,
-                onSubTask = onSubTask
+//                onSubTask = onSubTask
             )
             Spacer(modifier = modifier.width(16.dp))
             Row(modifier = modifier.fillMaxWidth(), Arrangement.End) {
@@ -111,7 +111,8 @@ fun ActionIcons(
     onCamera: () -> Unit,
     onCalender: () -> Unit,
     onReminder: () -> Unit,
-    onSubTask: () -> Unit) {
+//    onSubTask: () -> Unit
+) {
     Row(modifier = Modifier.wrapContentWidth(), horizontalArrangement = Arrangement.SpaceAround) {
         IconButton(onClick = { onLocation.invoke() }) {
             Icon(
@@ -129,14 +130,6 @@ fun ActionIcons(
             )
         }
 
-        IconButton(onClick = { onReminder.invoke() }) {
-            Icon(
-                Icons.Rounded.AddAlert,
-                contentDescription = stringResource(R.string.todo_new_task),
-                tint = Color.White
-            )
-        }
-
         IconButton(onClick = { onCalender.invoke() }) {
             Icon(
                 Icons.Rounded.CalendarMonth,
@@ -145,12 +138,20 @@ fun ActionIcons(
             )
         }
 
-        IconButton(onClick = { onSubTask.invoke() }) {
+        IconButton(onClick = { onReminder.invoke() }) {
             Icon(
-                Icons.Rounded.AddTask,
+                Icons.Rounded.AddAlert,
                 contentDescription = stringResource(R.string.todo_new_task),
                 tint = Color.White
             )
         }
+
+//        IconButton(onClick = { onSubTask.invoke() }) {
+//            Icon(
+//                Icons.Rounded.AddTask,
+//                contentDescription = stringResource(R.string.todo_new_task),
+//                tint = Color.White
+//            )
+//        }
     }
 }

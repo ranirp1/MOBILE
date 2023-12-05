@@ -49,9 +49,12 @@ import cn.shef.msc5.todo.base.component.topbar.SearchTopAppBar
 import cn.shef.msc5.todo.model.PriorityLevelEnum
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
+import cn.shef.msc5.todo.ui.theme.Grey
 import cn.shef.msc5.todo.ui.theme.Orange
+import cn.shef.msc5.todo.ui.theme.OrangeGrey
 import cn.shef.msc5.todo.ui.theme.Purple40
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
+import cn.shef.msc5.todo.ui.theme.RedGrey
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DONE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
@@ -74,17 +77,17 @@ fun ItemHolder(
     var color = Purple40
 
     if(task.priority == 1){
-        color = Color.Red
+        color = RedGrey
     }else if(task.priority == 2){
-        color = Orange
+        color = OrangeGrey
     }else if(task.priority == 3){
         color = Purple40
     }
 
     ElevatedCard(
-        colors = CardDefaults.elevatedCardColors(
-            containerColor = color
-        ),
+//        colors = CardDefaults.elevatedCardColors(
+//            containerColor = color
+//        ),
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
@@ -170,25 +173,25 @@ fun ItemHolder(
 
             Text(text = task.description)
 
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(7.dp))
 
             when(PriorityLevelEnum.createFromInt(task.priority)){
                 is PriorityLevelEnum.LOW -> Text(
                     text = PriorityLevelEnum.LOW.value,
                     fontStyle = FontStyle.Italic,
-                    color = PriorityLevelEnum.LOW.color,
+                    color = if(!task.isCompleted) PriorityLevelEnum.LOW.color else Grey,
                     fontSize = 14.sp
                 )
                 is PriorityLevelEnum.MEDIUM -> Text(
                     text = PriorityLevelEnum.MEDIUM.value,
                     fontStyle = FontStyle.Italic,
-                    color = PriorityLevelEnum.MEDIUM.color,
+                    color = if(!task.isCompleted) PriorityLevelEnum.MEDIUM.color else Grey,
                     fontSize = 14.sp
                 )
                 is PriorityLevelEnum.HIGH -> Text(
                     text = PriorityLevelEnum.HIGH.value,
                     fontStyle = FontStyle.Italic,
-                    color = PriorityLevelEnum.HIGH.color,
+                    color = if(!task.isCompleted) PriorityLevelEnum.HIGH.color else Grey,
                     fontSize = 14.sp
                 )
             }
@@ -200,7 +203,10 @@ fun ItemHolder(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Due on: ${task.dueTime} at ${dateConverter.formatHourMinute(task.dueTime)}", fontSize = 14.sp)
+                Text(
+                    text = "Due on: ${task.dueTime} at ${dateConverter.formatHourMinute(task.dueTime)}",
+                    fontSize = 14.sp
+                )
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = "(" + task.latitude.toString() + ", " + task.longitude.toString() + ")",

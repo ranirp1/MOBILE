@@ -29,6 +29,7 @@ import java.sql.Date
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 05/11/2023 15:52
  */
+
 class MainViewModel(
     private val screenType: ScreenTypeEnum,
     private val taskDAO: TaskDAO
@@ -128,7 +129,7 @@ class MainViewModel(
     fun sortAllTasks(sortTypeSelected: SortType) {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
-            delay(1400)
+            delay(500)
             taskDAO.getAllTasks().map { tasks ->
                 when (sortTypeSelected.sortOrder) {
                     is SortOrder.Ascending -> {
@@ -161,7 +162,7 @@ class MainViewModel(
         val selectedDate = dateConverter.converterDate(date)
         viewModelScope.launch {
             state = state.copy(isLoading = true)
-            delay(1400)
+            delay(500)
             taskDAO.getAllTasksByDate(selectedDate).map { tasks ->
                 when (sortType.sortOrder) {
                     is SortOrder.Ascending -> {

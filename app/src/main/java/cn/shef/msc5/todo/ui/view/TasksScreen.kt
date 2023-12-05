@@ -64,7 +64,9 @@ fun TasksScreen(context: Context, mainViewModel: MainViewModel) {
         },
         hostState = snackbarHostState
     ) {
-        Column {
+        Column(
+            modifier = Modifier.padding(horizontal = 15.dp)
+        ) {
             SortingMenu(sortType) {
                 mainViewModel.sortAllTasks(it)
             }
@@ -73,21 +75,18 @@ fun TasksScreen(context: Context, mainViewModel: MainViewModel) {
                     .fillMaxWidth()
                     .fillMaxHeight()
                     .background(MaterialTheme.colorScheme.background)
-                    .padding(horizontal = 25.dp),
+                ,
             ) {
                 items(
                     items = taskListState.value,
                     key = { taskItem -> taskItem.id },
                     itemContent = { item ->
                         val currentItem by rememberUpdatedState(item)
-                        Spacer(modifier = Modifier.height(10.dp))
                         ItemHolder(currentItem, mainViewModel)
                         Spacer(modifier = Modifier.height(15.dp))
                     }
                 )
             }
         }
-
     }
-
 }
