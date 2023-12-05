@@ -48,6 +48,11 @@ interface TaskDAO : BaseDAO<Task> {
         update(task)
     }
 
+    fun updateIncomplete(task: Task){
+        task.state = TaskStateEnum.UNFINISHED.level
+        update(task)
+    }
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(task : Task)
 }

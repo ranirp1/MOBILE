@@ -128,7 +128,11 @@ fun ItemHolder(
                             text = { Text(text = if(!(task.state == TaskStateEnum.ISCOMPLETED.level)) OPTIONS_DONE else OPTIONS_UNDONE, color = PurpleGrey40) },
                             onClick = {
                                 showOptionsMenu = false
-                                mainViewModel.markAsDone(task)
+                                if(task.state == TaskStateEnum.ISCOMPLETED.level) {
+                                    mainViewModel.markAsUndone(task)
+                                } else {
+                                    mainViewModel.markAsDone(task)
+                                }
                             }
                         )
 

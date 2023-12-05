@@ -126,6 +126,12 @@ class MainViewModel(
         }
     }
 
+    fun markAsUndone(task: Task){
+        viewModelScope.launch(Dispatchers.IO){
+            taskDAO.updateIncomplete(task)
+        }
+    }
+
     fun getTask(id: Int):Task?{
         return taskDAO.findByPrimaryKey(id)
     }
