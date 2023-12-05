@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.sql.Date
+import java.sql.RowId
 
 /**
  * @author Zhecheng Zhao
@@ -107,6 +108,10 @@ class MainViewModel(
         viewModelScope.launch(Dispatchers.IO){
             taskDAO.updateComplete(task)
         }
+    }
+
+    fun getTask(id: Int):Task?{
+        return taskDAO.findByPrimaryKey(id)
     }
 
     fun duplicate(

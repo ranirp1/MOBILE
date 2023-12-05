@@ -63,6 +63,7 @@ import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import java.sql.Date
 import java.time.LocalDate
+import cn.shef.msc5.todo.activity.ViewActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -94,7 +95,8 @@ fun ItemHolder(
         shape = RoundedCornerShape(15.dp),
         enabled = !(task.isCompleted),
         onClick = {
-            val intent = Intent(context, DetailActivity::class.java)
+            val intent = Intent(context, ViewActivity::class.java)
+            intent.putExtra("taskId", task.id)
             GeneralUtil.startActivity2(context, intent)
         }
     ) {
