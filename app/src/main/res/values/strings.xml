@@ -28,4 +28,6 @@
     <string name="todo_map">Choose Your Location</string>
     <string name="title_activity_open_gallery">OpenGalleryActivity</string>
     <string name="title_activity_capture">CaptureActivity</string>
+    <string name="title_activity_geo_location">GeoLocationActivity</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>

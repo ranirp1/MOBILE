@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- camera permission -->
     <uses-feature android:name="android.hardware.camera.any" />
 
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -24,17 +25,20 @@
         android:theme="@style/Theme.Todo"
         tools:targetApi="34">
         <activity
+            android:name=".activity.GeoLocationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_geo_location"
+            android:theme="@style/Theme.Todo" />
+        <activity
             android:name=".activity.CaptureActivity"
             android:exported="false"
             android:label="@string/title_activity_capture"
-            android:theme="@style/Theme.Todo" >
-        </activity>
+            android:theme="@style/Theme.Todo" />
         <activity
             android:name=".activity.OpenGalleryActivity"
             android:exported="false"
             android:label="@string/title_activity_open_gallery"
             android:theme="@style/Theme.Todo" />
-
         <activity
             android:name=".activity.SplashActivity"
             android:exported="true"
@@ -66,14 +70,13 @@
         <activity
             android:name=".activity.DetailActivity"
             android:exported="true"
-            android:screenOrientation="portrait" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
-        <!-- location service -->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- location service -->
         <service
             android:name=".services.LocationService"
             android:exported="false"
