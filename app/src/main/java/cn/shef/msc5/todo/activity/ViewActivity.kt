@@ -26,12 +26,13 @@ class ViewActivity : BaseActivity() {
         MainViewModelFactory(ScreenTypeEnum.OTHER_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
         create(MainViewModel::class.java)
     }
-    var id = taskId
-    private var tas=mainViewModel.gettask(taskId)
 
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val taskId = intent.getIntExtra("taskId", 0)
+        var task = mainViewModel.getTask(taskId)
 
         setContent {
             MaterialTheme {
@@ -40,7 +41,7 @@ class ViewActivity : BaseActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    tas?.let { ViewScreen(it,mainViewModel) }
+                    task?.let { ViewScreen(it,mainViewModel) }
                 }
             }
         }
@@ -48,7 +49,6 @@ class ViewActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        //TODO request permissions
         Log.d(TAG, "onStart: ")
     }
 

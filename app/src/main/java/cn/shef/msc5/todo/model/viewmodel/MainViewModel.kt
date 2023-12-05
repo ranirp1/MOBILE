@@ -101,9 +101,10 @@ class MainViewModel(
         }
     }
 
-    fun gettask(id: Int):Task?{
+    fun getTask(id: Int):Task?{
         return taskDAO.findByPrimaryKey(id)
     }
+
     fun duplicate(
         task: Task,
         gmtCreated: Date,

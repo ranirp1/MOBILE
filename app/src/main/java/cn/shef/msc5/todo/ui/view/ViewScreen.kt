@@ -43,6 +43,7 @@ import cn.shef.msc5.todo.base.component.Chips
 import cn.shef.msc5.todo.base.component.DatePicker
 import cn.shef.msc5.todo.base.component.ItemHolder
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
+import cn.shef.msc5.todo.base.component.bottombar.BottomConfirmBar
 import cn.shef.msc5.todo.base.component.dialog.TimePickerDialog
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.dto.SubTask
@@ -65,80 +66,93 @@ import java.sql.Date
 @ExperimentalAnimationApi
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ViewScreen(task: Task,
-               mainViewModel: MainViewModel
+fun ViewScreen(
+    task: Task,
+    mainViewModel: MainViewModel
 ) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
     val dateConverter = DateConverter()
 
-    var showCalender by remember { mutableStateOf(false) }
-    var showTimePicker by remember { mutableStateOf(false) }
-    var date by remember { mutableStateOf(mainViewModel.date) }
-    val state = rememberTimePickerState()
+//    var showCalender by remember { mutableStateOf(false) }
+//    var showTimePicker by remember { mutableStateOf(false) }
+//    var date by remember { mutableStateOf(mainViewModel.date) }
+//    val state = rememberTimePickerState()
 
     val priorityLevels = getPriorityValues()
     var prior by remember { mutableIntStateOf(task.priority) }
 
-    val templates = getTemplateStr()
-    val templateDesc = getTemplateTextStr()
-    var selectedTemplate by remember { mutableStateOf("") }
-    var title by remember { mutableStateOf(task.title) }
-    var text by remember { mutableStateOf(task.description) }
-    var subTasks by remember { mutableStateOf(task.subTasks) }
+//    val templates = getTemplateStr()
+//    val templateDesc = getTemplateTextStr()
+//    var selectedTemplate by remember { mutableStateOf("") }
+//    var title by remember { mutableStateOf(task.title) }
+//    var text by remember { mutableStateOf(task.description) }
+//    var subTasks by remember { mutableStateOf(task.subTasks) }
 
-    if (selectedTemplate.isNotBlank()) {
-        val templateIndex = templates.indexOf(selectedTemplate)
-        if (templateIndex != -1 && templateIndex < templateDesc.size) {
-            text = templateDesc[templateIndex]
-            title = templates[templateIndex]
-        }
-    }
+    var title = task.title
+    var text = task.description
+    var subTasks = task.subTasks
+    val date = task.dueTime
+
+//    if (selectedTemplate.isNotBlank()) {
+//        val templateIndex = templates.indexOf(selectedTemplate)
+//        if (templateIndex != -1 && templateIndex < templateDesc.size) {
+//            text = templateDesc[templateIndex]
+//            title = templates[templateIndex]
+//        }
+//    }
 
     BaseScaffold(
         showTopBar = true,
         showNavigationIcon = true,
         showFirstIcon = false,
         showSecondIcon = false,
-        title = title,
+        title = "",
         hostState = snackbarHostState,
         bottomBar = {
-            BottomActionBar(modifier = Modifier.height(70.dp),
-                title = "Update",
-                onCamera = {
-                    val intent = Intent(context, CaptureImageActivity::class.java)
-                    GeneralUtil.startActivity2(context, intent)
-                },
-                onLocation = {
-
-                },
-                onSubTask = {
-                    scope.launch {
-
-                    }
-                },
-                onCalender = {
-                    scope.launch {
-                        showCalender = !showCalender
-                    }
-                },
-                onReminder = {
-                    scope.launch {
-                        showTimePicker = !showTimePicker
-                    }
-                },
+            BottomConfirmBar(
+                title = "Edit",
                 addClick = {
-                    mainViewModel.addTask(
-                        title, text, prior, 1.11F, 1.11F,
-                        "imageUrl", task.gmtCreated,
-                        Date.valueOf(LocalDate.now().toString()), date,
-                        0, false, subTasks, null
-                    )
-                    GeneralUtil.finishActivity2(context)
+
                 }
             )
         }
+//            BottomActionBar(modifier = Modifier.height(70.dp),
+//                title = "Update",
+//                onCamera = {
+//                    val intent = Intent(context, CaptureImageActivity::class.java)
+//                    GeneralUtil.startActivity2(context, intent)
+//                },
+//                onLocation = {
+//
+//                },
+//                onSubTask = {
+//                    scope.launch {
+//
+//                    }
+//                },
+//                onCalender = {
+//                    scope.launch {
+//                        showCalender = !showCalender
+//                    }
+//                },
+//                onReminder = {
+//                    scope.launch {
+//                        showTimePicker = !showTimePicker
+//                    }
+//                },
+//                addClick = {
+//                    mainViewModel.addTask(
+//                        title, text, prior, 1.11F, 1.11F,
+//                        "imageUrl", task.gmtCreated,
+//                        Date.valueOf(LocalDate.now().toString()), date,
+//                        0, false, subTasks, null
+//                    )
+//                    GeneralUtil.finishActivity2(context)
+//                }
+//            )
+//        }
     ) {
         Column(
             modifier = Modifier
@@ -146,10 +160,6 @@ fun ViewScreen(task: Task,
                 .padding(10.dp),
             verticalArrangement = Arrangement.Top
         ) {
-            Chips("", "Templates: ", templates) {
-                selectedTemplate = it
-            }
-
             OutlinedTextField(modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(80.dp)
@@ -172,7 +182,7 @@ fun ViewScreen(task: Task,
                 onValueChange = { text = it }
             )
 
-            Chips(priorityLevels[1], "Priority: ", priorityLevels) {
+            Chips(priorityLevels[task.priority - 1], "Priority: ", priorityLevels) {
                 prior = priorityLevels.indexOf(it) + 1
             }
 
@@ -194,24 +204,24 @@ fun ViewScreen(task: Task,
                 subTasks = it
             }
 
-            if (showCalender) {
-                DatePicker(
-                    onDateSelected = { date = dateConverter.updateDateWithTime(it, state) },
-                    onDismiss = { showCalender = false }
-                )
-            }
-
-            if(showTimePicker){
-                TimePickerDialog(
-                    onCancel = { showTimePicker = false },
-                    onConfirm = {
-                        date = dateConverter.updateDateWithTime(date, state)
-                        showTimePicker = false
-                    }
-                ) {
-                    TimePicker(state = state)
-                }
-            }
+//            if (showCalender) {
+//                DatePicker(
+//                    onDateSelected = { date = dateConverter.updateDateWithTime(it, state) },
+//                    onDismiss = { showCalender = false }
+//                )
+//            }
+//
+//            if(showTimePicker){
+//                TimePickerDialog(
+//                    onCancel = { showTimePicker = false },
+//                    onConfirm = {
+//                        date = dateConverter.updateDateWithTime(date, state)
+//                        showTimePicker = false
+//                    }
+//                ) {
+//                    TimePicker(state = state)
+//                }
+//            }
         }
     }
 }

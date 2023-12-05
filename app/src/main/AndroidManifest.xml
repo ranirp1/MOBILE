@@ -47,6 +47,10 @@
             android:name=".activity.DetailActivity"
             android:screenOrientation="portrait"
             android:exported="false"></activity>
+        <activity
+            android:name=".activity.ViewActivity"
+            android:screenOrientation="portrait"
+            android:exported="false"></activity>
         <!-- location service -->
         <service
             android:name=".services.LocationService"

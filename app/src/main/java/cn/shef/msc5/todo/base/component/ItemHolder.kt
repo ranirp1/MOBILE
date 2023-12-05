@@ -68,6 +68,7 @@ fun ItemHolder(
         enabled = !(task.isCompleted),
         onClick = {
             val intent = Intent(context, ViewActivity::class.java)
+            intent.putExtra("taskId", task.id)
             GeneralUtil.startActivity2(context, intent)
         }
     ) {

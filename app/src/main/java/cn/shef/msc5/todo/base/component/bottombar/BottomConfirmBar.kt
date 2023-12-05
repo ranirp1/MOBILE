@@ -14,6 +14,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -66,7 +67,7 @@ fun BottomConfirmBar(
                     )
                 ) {
                     androidx.compose.material.Icon(
-                        Icons.Filled.Check,
+                        Icons.Filled.Edit,
 //                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
                         contentDescription = title,
                         tint = Color.White
