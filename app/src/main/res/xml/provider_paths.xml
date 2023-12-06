@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<paths>-->
-<!--&lt;!&ndash;    <files-path name = "images/" path = "Pictures"/>&ndash;&gt;-->
-<!--    <root-path-->
-<!--        name="root-path"-->
-<!--        path="" />-->
-<!--    -->
-<!--</paths>-->
 <paths>
     <files-path name="image_picked" path="picked/"/>
     <external-files-path name="to_be_replaced" path="Pictures/"/>
