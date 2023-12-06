@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.activity.CaptureImageActivity
+import cn.shef.msc5.todo.activity.OpenGalleryActivity
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,7 +34,7 @@ fun ImageBottomSheet(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
-    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
 
     val activityResultLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -41,8 +42,8 @@ fun ImageBottomSheet(
         if (result.resultCode == Activity.RESULT_OK) {
             val data = result.data
             val capturedImageUriString = data?.getStringExtra("capturedImageUri")
-            capturedImageUri = Uri.parse(capturedImageUriString)
-            onCapturedImageUri(capturedImageUri)
+            imageUri = Uri.parse(capturedImageUriString)
+            onCapturedImageUri(imageUri)
             onSelect(false)
         }
     }
@@ -67,9 +68,8 @@ fun ImageBottomSheet(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 scope.launch { sheetState.hide() }.invokeOnCompletion {
-                    if (!sheetState.isVisible) {
-                        onSelect(false)
-                    }
+                    val intent = Intent(context, OpenGalleryActivity::class.java)
+                    activityResultLauncher.launch(intent)
                 }
             }) {
             Text(text = "Choose from gallery")
