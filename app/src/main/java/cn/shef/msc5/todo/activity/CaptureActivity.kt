@@ -21,7 +21,7 @@ import androidx.core.content.FileProvider
 import cn.shef.msc5.todo.utilities.ImageUtil
 
 
-class CaptureImageActivity : ComponentActivity() {
+class CaptureActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -29,7 +31,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,7 +43,6 @@ import cn.shef.msc5.todo.base.component.Chips
 import cn.shef.msc5.todo.base.component.DatePicker
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
 import cn.shef.msc5.todo.base.component.dialog.TimePickerDialog
-import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.TaskStateEnum
 import cn.shef.msc5.todo.model.dto.SubTask
 import cn.shef.msc5.todo.model.getPriorityValues
@@ -65,7 +65,7 @@ import java.sql.Date
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalAnimationApi
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "UnrememberedMutableState")
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun DetailScreen(
     mainViewModel: MainViewModel
@@ -73,6 +73,7 @@ fun DetailScreen(
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
+    val scrollState = rememberScrollState()
     val dateConverter = DateConverter()
     val contentResolver = context.contentResolver
     val imageUtil = ImageUtil()
@@ -93,7 +94,6 @@ fun DetailScreen(
     var subTasks by remember { mutableStateOf(listOf(SubTask("Enter subtask", false))) }
     var isSheetOpen by remember { mutableStateOf(false) }
     var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
-    var cameraImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
 
     if (selectedTemplate.isNotBlank()) {
         val templateIndex = templates.indexOf(selectedTemplate)
@@ -139,7 +139,7 @@ fun DetailScreen(
                     }else{
                         mainViewModel.addTask(
                             title, text, prior, 1.11F, 1.11F,
-                            "imageUrl", Date.valueOf(LocalDate.now().toString()),
+                            capturedImageUri.toString(), Date.valueOf(LocalDate.now().toString()),
                             Date.valueOf(LocalDate.now().toString()), date,
                             0, TaskStateEnum.UNFINISHED.level, subTasks, null
                         )
@@ -152,7 +152,8 @@ fun DetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp),
+                .padding(10.dp)
+                .verticalScroll(enabled = true, state = scrollState),
             verticalArrangement = Arrangement.Top
         ) {
             Chips("", "Templates: ", templates) {
@@ -181,6 +182,15 @@ fun DetailScreen(
                 onValueChange = { text = it }
             )
 
+            if(capturedImageUri != null){
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(10.dp),
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    Image(bitmap = imageUtil.getImageBitmap(contentResolver, capturedImageUri)!!, contentDescription = "Captured Image")
+                }
+            }
+
             Chips(priorityLevels[1], "Priority: ", priorityLevels) {
                 prior = priorityLevels.indexOf(it) + 1
             }
@@ -198,16 +208,6 @@ fun DetailScreen(
                     .padding(10.dp),
                 text = "Due Date: $date at ${dateConverter.formatHourMinute(date)}",
             )
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ){
-                capturedImageUri?.let { uri ->
-                    cameraImageBitmap = imageUtil.getImageBitmap(contentResolver, uri)
-                    Image(bitmap = cameraImageBitmap!!, contentDescription = "Captured Image")
-                }
-            }
 
             CheckboxListTextFieldExample(subTasks){
                 subTasks = it

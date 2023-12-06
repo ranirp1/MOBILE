@@ -21,7 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.activity.CaptureImageActivity
+import cn.shef.msc5.todo.activity.CaptureActivity
 import cn.shef.msc5.todo.activity.OpenGalleryActivity
 import kotlinx.coroutines.launch
 
@@ -56,7 +56,7 @@ fun ImageBottomSheet(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 scope.launch { sheetState.hide() }.invokeOnCompletion {
-                    val intent = Intent(context, CaptureImageActivity::class.java)
+                    val intent = Intent(context, CaptureActivity::class.java)
                     activityResultLauncher.launch(intent)
                 }
             }

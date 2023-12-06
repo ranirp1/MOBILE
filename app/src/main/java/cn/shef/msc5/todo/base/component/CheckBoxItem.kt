@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -37,41 +36,37 @@ fun CheckboxListTextField(
     onAddItemClick: () -> Unit,
     onDeleteItemClick: (Int) -> Unit
 ) {
-    LazyColumn {
-        items(items.size) { index ->
-            CheckboxRow(
-                item = items[index],
-                onItemCheckedChange = { isChecked ->
-                    onItemCheckedChange(index, isChecked)
-                },
-                onItemTextChange = { newText ->
-                    onItemTextChange(index, newText)
-                },
-                onDeleteItemClick = {
-                    onDeleteItemClick(index)
-                }
-            )
-        }
-
-        // Add item row
-        item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End
-            ) {
-                Text(text = "Add Subtask")
-
-                IconButton(
-                    onClick = {
-                        onAddItemClick()
-                    }
-                ) {
-                    Icon(imageVector = Icons.Outlined.Add, contentDescription = "Add Item")
-                }
+    for (index in items.indices) {
+        CheckboxRow(
+            item = items[index],
+            onItemCheckedChange = { isChecked ->
+                onItemCheckedChange(index, isChecked)
+            },
+            onItemTextChange = { newText ->
+                onItemTextChange(index, newText)
+            },
+            onDeleteItemClick = {
+                onDeleteItemClick(index)
             }
+        )
+    }
+
+    // Add item row
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.End
+    ) {
+        Text(text = "Add Subtask")
+
+        IconButton(
+            onClick = {
+                onAddItemClick()
+            }
+        ) {
+            Icon(imageVector = Icons.Outlined.Add, contentDescription = "Add Item")
         }
     }
 }
