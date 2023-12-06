@@ -48,6 +48,7 @@ class MainViewModel(
     private var postExecute: (() -> Unit)? = null
 
     var state by mutableStateOf(TaskListState())
+    var notInitial by mutableStateOf(false)
 
     init {
         state = state.copy(isLoading = true)
@@ -78,6 +79,10 @@ class MainViewModel(
 
     private fun loadTaskListByDate() {
         sortTasksByDate(sortType, date)
+    }
+
+    fun notInitialLaunch() {
+        notInitial = true
     }
 
     fun setLevel(index: Int, value: Int) {

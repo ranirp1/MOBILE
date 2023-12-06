@@ -44,6 +44,7 @@ import cn.shef.msc5.todo.base.component.DatePickerBar
 import cn.shef.msc5.todo.base.component.ItemHolder
 import cn.shef.msc5.todo.base.component.SortingMenu
 import cn.shef.msc5.todo.base.component.TopBarType
+import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.model.isEmpty
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.view.state.EmptyScreen
@@ -71,7 +72,8 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
     var date by remember { mutableStateOf(mainViewModel.date) }
     var numTaskDue by remember { mutableIntStateOf(0) }
 
-    var snackbarShown by remember { mutableStateOf(false) }
+    var snackbarShown by remember { mutableStateOf(mainViewModel.notInitial) }
+    var showNoticeDialog by remember { mutableStateOf(false) }
 
     val listState = rememberLazyListState()
     val isVisible = rememberSaveable { mutableStateOf(true) }
@@ -104,11 +106,12 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                 }
 
                 if (numTaskDue > 0) {
-                    snackbarHostState.showSnackbar("You have $numTaskDue ToDo due!")
+                    showNoticeDialog = true
                     snackbarShown = true
                 }
             }
         }
+        mainViewModel.notInitialLaunch()
     }
 
 
@@ -191,6 +194,16 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
             }
         }
 
+        if(showNoticeDialog){
+            ConfirmDialog(
+                titleText = "Notice",
+                contentText = "You have $numTaskDue task${if (numTaskDue > 1) "s" else ""} due!",
+                confirmText = "Ok",
+                dismissText = ""
+            ){
+                showNoticeDialog = it
+            }
+        }
     }
 }
 
