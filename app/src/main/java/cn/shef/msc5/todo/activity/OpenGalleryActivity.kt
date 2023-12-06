@@ -37,7 +37,7 @@ class OpenGalleryActivity : ComponentActivity() {
                 } else {
                     pickedImageBitmap = ImageDecoder.decodeBitmap(
                         ImageDecoder.createSource(
-                            getContentResolver(), uri)).asImageBitmap()
+                            contentResolver, uri)).asImageBitmap()
                 }
             }
             MaterialTheme {
@@ -64,14 +64,4 @@ class OpenGalleryActivity : ComponentActivity() {
             }
         }
     }
-    private fun getImageBitmap(uri: Uri?): ImageBitmap? {
-        var result: ImageBitmap? = null
-        if (uri != null) {
-            result = ImageDecoder.decodeBitmap(
-                ImageDecoder.createSource(getContentResolver(),
-                    uri)).asImageBitmap()
-        }
-        return result
-    }
-
 }

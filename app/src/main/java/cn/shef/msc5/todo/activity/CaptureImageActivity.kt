@@ -1,37 +1,24 @@
 package cn.shef.msc5.todo.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
-import cn.shef.msc5.todo.base.BaseActivity
-import java.io.File
+import cn.shef.msc5.todo.utilities.ImageUtil
 
 
 class CaptureImageActivity : ComponentActivity() {
@@ -39,18 +26,21 @@ class CaptureImageActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             // TODO will also need pickedImageUri for storing in DB ...
+            val imageUtil = ImageUtil()
             var cameraImageUri by remember { mutableStateOf<Uri?>(null) }
-            var cameraImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+            var cameraLaunched by remember { mutableStateOf(false) }
             val imageFromCameraLauncher = rememberLauncherForActivityResult(
                 ActivityResultContracts.TakePicture()
             ) { captured ->
                 if (!captured) {
-                    cameraImageBitmap = null
                     cameraImageUri = null
                 } else {
-                    cameraImageBitmap = getImageBitmap(cameraImageUri)
+                    val resultIntent = Intent().apply {
+                        putExtra("capturedImageUri", cameraImageUri.toString())
+                    }
+                    setResult(Activity.RESULT_OK, resultIntent)
                 }
-                Log.i("picture_eg", "$captured $cameraImageUri")
+                finish()
             }
 
             var hasCameraPermission by remember { mutableStateOf(false) }
@@ -70,71 +60,37 @@ class CaptureImageActivity : ComponentActivity() {
                             ).show()
                             // Below is likely redundant
                             hasCameraPermission = false
+                            finish()
                         }
                     }
                 SideEffect {
                     requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
                 }
             }
-            MaterialTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Column {
-                        if (hasCameraPermission) {
-                            cameraImageBitmap?.let { cameraBitmap ->
-                                Image(cameraBitmap, null)
-                            }
-                            Button(onClick = {
-                                cameraImageBitmap = null
-                                val authority = "$packageName.provider"
-                                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-                                    cameraImageUri =
-                                        FileProvider.getUriForFile(
-                                            applicationContext,
-                                            authority,
-                                            newImageFile()
-                                        )
-                                } else {
-                                    cameraImageUri = Uri.fromFile(newImageFile())
-                                }
-                                cameraImageUri = FileProvider.getUriForFile(
-                                    applicationContext,
-                                    authority,
-                                    newImageFile()
-                                )
-                                imageFromCameraLauncher.launch(cameraImageUri)
-                            }) {
-                                Text("Open Camera")
-                            }
-                        } else {
-                            Text("Camera Permission needs to be granted")
-                        }
-                    }
+
+            if(hasCameraPermission && !cameraLaunched){
+                val authority = "$packageName.provider"
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                    cameraImageUri =
+                        FileProvider.getUriForFile(
+                            applicationContext,
+                            authority,
+                            imageUtil.newImageFile(applicationContext)
+                        )
+                } else {
+                    cameraImageUri = Uri.fromFile(imageUtil.newImageFile(applicationContext))
                 }
+
+                cameraImageUri = FileProvider.getUriForFile(
+                    applicationContext,
+                    authority,
+                    imageUtil.newImageFile(applicationContext)
+                )
+
+                imageFromCameraLauncher.launch(cameraImageUri)
+                cameraLaunched = true
             }
         }
-    }
-
-    private fun newImageFile(): File {
-        val timeMillis = System.currentTimeMillis().toString()
-        val storageDir = applicationContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile("SNAP-$timeMillis", ".jpg", storageDir)
-    }
-
-    private fun getImageBitmap(uri: Uri?): ImageBitmap? {
-        var result: ImageBitmap? = null
-        if (uri != null) {
-            result = ImageDecoder.decodeBitmap(
-                ImageDecoder.createSource(
-                    getContentResolver(),
-                    uri
-                )
-            ).asImageBitmap()
-        }
-        return result
     }
 
     private fun checkCameraPermission(): Boolean {
