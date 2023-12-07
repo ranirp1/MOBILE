@@ -26,10 +26,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import cn.shef.msc5.todo.activity.LoginActivity
 import cn.shef.msc5.todo.activity.MainActivity
 import cn.shef.msc5.todo.utilities.GeneralUtil
-import cn.shef.msc5.todo.utilities.GeneralUtil.Companion.startActivity
 import cn.shef.msc5.todo.utilities.SharedPreferenceManger
 
 /**
