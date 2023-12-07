@@ -51,7 +51,8 @@ class SplashActivity : ComponentActivity() {
         //waiting 4 seconds in the main thread, using intent to jump to the main activity
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
+//            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }, Constants.DELAY_TIME)

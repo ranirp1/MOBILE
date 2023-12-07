@@ -53,6 +53,7 @@ import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.AppInfoUtil
 import cn.shef.msc5.todo.utilities.GeneralUtil
+import cn.shef.msc5.todo.utilities.SharedPreferenceManger
 
 @ExperimentalAnimationApi
 @Composable
@@ -62,6 +63,7 @@ fun ProfileScreen(
 ) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
+    val sharedPreferenceManger = SharedPreferenceManger(context)
     BaseScaffold(
         showTopBar = true,
         showNavigationIcon = false,
@@ -77,7 +79,7 @@ fun ProfileScreen(
                 .background(color = MaterialTheme.colorScheme.background),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ProfileImage("UserName")
+            sharedPreferenceManger.userName?.let { it1 -> ProfileImage(it1) }
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
