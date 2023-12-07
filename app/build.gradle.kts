@@ -109,6 +109,7 @@ dependencies {
     // KTX for the Maps SDK for Android Utility Library
     implementation("com.google.maps.android:maps-utils-ktx:$google_map_ktx")
 
+
 //    val camerax_version = "1.1.0"
 //    // camera
 //    implementation("androidx.camera:camera-core:${camerax_version}")

@@ -3,11 +3,17 @@ package cn.shef.msc5.todo.activity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
 import cn.shef.msc5.todo.base.BaseActivity
+import cn.shef.msc5.todo.model.database.data.NotesDatabase
+import cn.shef.msc5.todo.model.database.presentation.NotesViewModel
 import cn.shef.msc5.todo.ui.view.MainScreen
 
 /**
