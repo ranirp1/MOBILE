@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -110,8 +111,17 @@ fun DetailScreen(
     var subTasks by remember { mutableStateOf(if(task == null) listOf(SubTask("Enter subtask", false)) else task.subTasks) }
 
     var isSheetOpen by remember { mutableStateOf(false) }
-    var capturedImageUri by remember { mutableStateOf<Uri?>(if(task == null) null else Uri.parse(task.imageUrl)) }
-    var capturedImageBitmap by remember { mutableStateOf<ImageBitmap?>(if(task == null) null else imageUtil.getImageBitmap(contentResolver, capturedImageUri)) }
+    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
+    var capturedImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+
+    LaunchedEffect(Unit){
+        if (task != null) {
+            if(task.imageUrl != ""){
+                capturedImageUri = Uri.parse(task.imageUrl)
+                capturedImageBitmap = imageUtil.getImageBitmap(contentResolver, capturedImageUri)
+            }
+        }
+    }
 
     val location = mainViewModel.location
     var latitude by remember { mutableDoubleStateOf(if(task == null) location.latitude else task.latitude) }
@@ -237,7 +247,7 @@ fun DetailScreen(
                 Text(text = text)
             }
 
-            if(capturedImageBitmap != null){
+            if(capturedImageUri != null){
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -306,7 +316,7 @@ fun DetailScreen(
                 }
             }
 
-            if (isSheetOpen) {
+            if (isSheetOpen && isEdit) {
                 ImageBottomSheet(
                     onCapturedImageUri = {
                         capturedImageUri = it
