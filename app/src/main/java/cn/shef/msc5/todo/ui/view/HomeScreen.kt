@@ -100,7 +100,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                 for (task in taskListState.value) {
                     val taskDueTime = dateConverter.converterDate(task.dueTime)
 
-                    if (currentTime > taskDueTime) {
+                    if (currentTime > taskDueTime && task.state != 2) {
                         numTaskDue++
                     }
                 }

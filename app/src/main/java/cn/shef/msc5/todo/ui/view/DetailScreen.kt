@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -94,6 +95,7 @@ fun DetailScreen(
     var subTasks by remember { mutableStateOf(listOf(SubTask("Enter subtask", false))) }
     var isSheetOpen by remember { mutableStateOf(false) }
     var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
+    var capturedImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
 
     if (selectedTemplate.isNotBlank()) {
         val templateIndex = templates.indexOf(selectedTemplate)
@@ -187,7 +189,7 @@ fun DetailScreen(
                     modifier = Modifier.fillMaxWidth().padding(10.dp),
                     horizontalArrangement = Arrangement.Center
                 ){
-                    Image(bitmap = imageUtil.getImageBitmap(contentResolver, capturedImageUri)!!, contentDescription = "Captured Image")
+                    Image(bitmap = capturedImageBitmap!!, contentDescription = "Captured Image")
                 }
             }
 
@@ -234,7 +236,10 @@ fun DetailScreen(
 
             if (isSheetOpen) {
                 ImageBottomSheet(
-                    onCapturedImageUri = { capturedImageUri = it },
+                    onCapturedImageUri = {
+                        capturedImageUri = it
+                        capturedImageBitmap = imageUtil.getImageBitmap(contentResolver, capturedImageUri)
+                    },
                     onSelect = {isSheetOpen = it}
                 )
             }
