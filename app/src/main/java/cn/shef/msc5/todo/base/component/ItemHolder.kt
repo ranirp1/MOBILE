@@ -210,7 +210,7 @@ fun ItemHolder(
                 )
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
-                    text = "(" + task.latitude.toString() + ", " + task.longitude.toString() + ")",
+                    text = "(" + String.format("%.3f", task.latitude) + ", " + String.format("%.3f", task.longitude) + ")",
                     fontSize = 14.sp
                 )
             }

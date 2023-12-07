@@ -14,8 +14,19 @@ class TaskDTOMapper : DomainMapper<TaskDTO, Task> {
         return TaskDTO(
             id = domainModel.id,
             title = domainModel.title,
+            userId = domainModel.userId,
+            description = domainModel.description,
+            priority =  domainModel.priority,
             longitude =  domainModel.longitude,
             latitude =  domainModel.latitude,
+            imageUrl =  domainModel.imageUrl,
+            dueTime =  domainModel.dueTime,
+            parentId =  domainModel.parentId,
+            gmtModified =  domainModel.gmtModified,
+            gmtCreated =  domainModel.gmtCreated,
+            isDeleted =  domainModel.isDeleted,
+            state = domainModel.state,
+            subTasks = domainModel.subTasks
         )
     }
 
