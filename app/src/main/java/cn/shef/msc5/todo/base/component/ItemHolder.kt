@@ -38,15 +38,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.model.PriorityLevelEnum
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.theme.Grey
-import cn.shef.msc5.todo.ui.theme.OrangeGrey
-import cn.shef.msc5.todo.ui.theme.Purple40
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
-import cn.shef.msc5.todo.ui.theme.RedGrey
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DONE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
@@ -55,7 +53,6 @@ import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import java.sql.Date
 import java.time.LocalDate
-import cn.shef.msc5.todo.activity.ViewActivity
 import cn.shef.msc5.todo.model.TaskStateEnum
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -68,27 +65,15 @@ fun ItemHolder(
     val context = LocalContext.current
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
-    var color = Purple40
-
-    if(task.priority == 1){
-        color = RedGrey
-    }else if(task.priority == 2){
-        color = OrangeGrey
-    }else if(task.priority == 3){
-        color = Purple40
-    }
 
     ElevatedCard(
-//        colors = CardDefaults.elevatedCardColors(
-//            containerColor = color
-//        ),
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
         shape = RoundedCornerShape(15.dp),
         enabled = !(task.state == TaskStateEnum.ISCOMPLETED.level),
         onClick = {
-            val intent = Intent(context, ViewActivity::class.java)
+            val intent = Intent(context, DetailActivity::class.java)
             intent.putExtra("taskId", task.id)
             GeneralUtil.startActivity2(context, intent)
         }

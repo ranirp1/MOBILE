@@ -36,6 +36,8 @@ fun ImageBottomSheet(
     val sheetState = rememberModalBottomSheetState()
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
+    var cameraActivity by remember { mutableStateOf(true) }
+
     val activityResultLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -43,8 +45,10 @@ fun ImageBottomSheet(
             val data = result.data
             val capturedImageUriString = data?.getStringExtra("capturedImageUri")
             imageUri = Uri.parse(capturedImageUriString)
-            imageUri?.let { uri ->
-                context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION )
+            if(!cameraActivity){
+                imageUri?.let { uri ->
+                    context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION )
+                }
             }
             onCapturedImageUri(imageUri)
             onSelect(false)
@@ -70,6 +74,7 @@ fun ImageBottomSheet(
         TextButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
+                cameraActivity = false
                 scope.launch { sheetState.hide() }.invokeOnCompletion {
                     val intent = Intent(context, OpenGalleryActivity::class.java)
                     activityResultLauncher.launch(intent)

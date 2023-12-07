@@ -50,6 +50,7 @@ import cn.shef.msc5.todo.base.component.CheckboxListTextFieldExample
 import cn.shef.msc5.todo.base.component.Chips
 import cn.shef.msc5.todo.base.component.DatePicker
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
+import cn.shef.msc5.todo.base.component.bottombar.BottomConfirmBar
 import cn.shef.msc5.todo.base.component.dialog.TimePickerDialog
 import cn.shef.msc5.todo.model.TaskStateEnum
 import cn.shef.msc5.todo.model.dto.SubTask
@@ -59,6 +60,7 @@ import cn.shef.msc5.todo.model.getTemplateTextStr
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.base.component.dialog.ImageBottomSheet
+import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import cn.shef.msc5.todo.utilities.ImageUtil
 import cn.shef.msc5.todo.utilities.SharedPreferenceManger
@@ -77,8 +79,11 @@ import java.sql.Date
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun DetailScreen(
-    mainViewModel: MainViewModel
+    mainViewModel: MainViewModel,
+    task: Task?
 ) {
+    var isEdit by remember { mutableStateOf(if(task != null) false else true) }
+    val id = if(task == null) null else task.id
 
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -90,26 +95,29 @@ fun DetailScreen(
 
     var showCalender by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
-    var date by remember { mutableStateOf(mainViewModel.date) }
+    var date by remember { mutableStateOf(if(task == null) mainViewModel.date else task.dueTime) }
     val state = rememberTimePickerState()
 
     val priorityLevels = getPriorityValues()
-    var prior by remember { mutableIntStateOf(2) }
+    var prior by remember { mutableIntStateOf(if(task == null) 2 else task.priority) }
 
     val templates = getTemplateStr()
     val templateDesc = getTemplateTextStr()
     var selectedTemplate by remember { mutableStateOf("") }
-    var title by remember { mutableStateOf("") }
-    var text by remember { mutableStateOf("") }
-    var subTasks by remember { mutableStateOf(listOf(SubTask("Enter subtask", false))) }
+
+    var title by remember { mutableStateOf(if(task == null) "" else task.title) }
+    var text by remember { mutableStateOf(if(task == null) "" else task.description) }
+    var subTasks by remember { mutableStateOf(if(task == null) listOf(SubTask("Enter subtask", false)) else task.subTasks) }
+
     var isSheetOpen by remember { mutableStateOf(false) }
-    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
-    var capturedImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+    var capturedImageUri by remember { mutableStateOf<Uri?>(if(task == null) null else Uri.parse(task.imageUrl)) }
+    var capturedImageBitmap by remember { mutableStateOf<ImageBitmap?>(if(task == null) null else imageUtil.getImageBitmap(contentResolver, capturedImageUri)) }
 
     val location = mainViewModel.location
-    var latitude by remember { mutableDoubleStateOf(location.latitude) }
-    var longitude by remember { mutableDoubleStateOf(location.longitude) }
+    var latitude by remember { mutableDoubleStateOf(if(task == null) location.latitude else task.latitude) }
+    var longitude by remember { mutableDoubleStateOf(if(task == null) location.longitude else task.longitude) }
     var address by remember { mutableStateOf("") }
+
     val resultLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_OK){
             var latitude1 = result.data?.getDoubleExtra("latitude", 0.0)
@@ -125,7 +133,7 @@ fun DetailScreen(
         }
     }
 
-    if (selectedTemplate.isNotBlank()) {
+    if (selectedTemplate.isNotBlank() && isEdit) {
         val templateIndex = templates.indexOf(selectedTemplate)
         if (templateIndex != -1 && templateIndex < templateDesc.size) {
             text = templateDesc[templateIndex]
@@ -141,45 +149,54 @@ fun DetailScreen(
         title = stringResource(R.string.todo_new_task),
         hostState = snackbarHostState,
         bottomBar = {
-            BottomActionBar(modifier = Modifier.height(70.dp),
-                title = "Save",
-                onCamera = {
-                    isSheetOpen = true
-                },
-                onLocation = {
+            if(isEdit){
+                BottomActionBar(modifier = Modifier.height(70.dp),
+                    title = "Save",
+                    onCamera = {
+                        isSheetOpen = true
+                    },
+                    onLocation = {
 //                    val intent = Intent(context, GeoLocationActivity::class.java)
 //                    GeneralUtil.startActivity2(context, intent)
-                    val intent = Intent(context, MapsActivity::class.java)
-                    intent.putExtra("startActivity", 1)
-                    resultLauncher.launch(intent)
-                },
-                onCalender = {
-                    scope.launch {
-                        showCalender = !showCalender
-                    }
-                },
-                onReminder = {
-                    scope.launch {
-                        showTimePicker = !showTimePicker
-                    }
-                },
-                addClick = {
-                    if(title.isEmpty()){
-                        scope.launch{
-                            snackbarHostState.showSnackbar("Please fill in a title!")
+                        val intent = Intent(context, MapsActivity::class.java)
+                        intent.putExtra("startActivity", 1)
+                        resultLauncher.launch(intent)
+                    },
+                    onCalender = {
+                        scope.launch {
+                            showCalender = !showCalender
                         }
-                    }else{
-                        val userId = SharedPreferenceManger(context).userId
-                        mainViewModel.addTask(
-                            title, userId, text, prior, longitude, latitude,
-                            capturedImageUri.toString(), Date.valueOf(LocalDate.now().toString()),
-                            Date.valueOf(LocalDate.now().toString()), date,
-                            0, TaskStateEnum.UNFINISHED.level, subTasks, null
-                        )
-                        GeneralUtil.finishActivity2(context)
+                    },
+                    onReminder = {
+                        scope.launch {
+                            showTimePicker = !showTimePicker
+                        }
+                    },
+                    addClick = {
+                        if(title.isEmpty()){
+                            scope.launch{
+                                snackbarHostState.showSnackbar("Please fill in a title!")
+                            }
+                        }else{
+                            val userId = SharedPreferenceManger(context).userId
+                            mainViewModel.addTask(
+                                id, title, userId, text, prior, longitude, latitude,
+                                capturedImageUri.toString(), Date.valueOf(LocalDate.now().toString()),
+                                Date.valueOf(LocalDate.now().toString()), date,
+                                0, TaskStateEnum.UNFINISHED.level, subTasks, null
+                            )
+                            GeneralUtil.finishActivity2(context)
+                        }
                     }
-                }
-            )
+                )
+            }else{
+                BottomConfirmBar(
+                    title = "Edit",
+                    addClick = {
+                        isEdit = true
+                    }
+                )
+            }
         }
     ) {
         Column(
@@ -189,43 +206,52 @@ fun DetailScreen(
                 .verticalScroll(enabled = true, state = scrollState),
             verticalArrangement = Arrangement.Top
         ) {
-            Chips("", "Templates: ", templates) {
-                selectedTemplate = it
+            if(isEdit){
+                Chips("", "Templates: ", templates) {
+                    selectedTemplate = it
+                }
+
+                OutlinedTextField(modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(80.dp)
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(10.dp),
+                    value = title,
+                    singleLine = true,
+                    label = { Text(text = "Title") },
+                    onValueChange = { title = it }
+                )
+
+                OutlinedTextField(modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(135.dp)
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(10.dp), value = text,
+                    maxLines = 4,
+                    minLines = 1,
+                    label = { Text(text = "Description") },
+                    onValueChange = { text = it }
+                )
+            }else{
+                Text(text = title)
+                Text(text = text)
             }
-
-            OutlinedTextField(modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(80.dp)
-                .background(MaterialTheme.colorScheme.background)
-                .padding(10.dp),
-                value = title,
-                singleLine = true,
-                label = { Text(text = "Title") },
-                onValueChange = { title = it }
-            )
-
-            OutlinedTextField(modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(135.dp)
-                .background(MaterialTheme.colorScheme.background)
-                .padding(10.dp), value = text,
-                maxLines = 4,
-                minLines = 1,
-                label = { Text(text = "Description") },
-                onValueChange = { text = it }
-            )
 
             if(capturedImageBitmap != null){
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(10.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
                     horizontalArrangement = Arrangement.Center
                 ){
                     Image(bitmap = capturedImageBitmap!!, contentDescription = "Captured Image")
                 }
             }
 
-            Chips(priorityLevels[1], "Priority: ", priorityLevels) {
-                prior = priorityLevels.indexOf(it) + 1
+            if(isEdit){
+                Chips(priorityLevels[1], "Priority: ", priorityLevels) {
+                    prior = priorityLevels.indexOf(it) + 1
+                }
             }
 
             Text(

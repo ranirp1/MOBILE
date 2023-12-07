@@ -97,6 +97,7 @@ class MainViewModel(
     }
 
     fun addTask(
+        id: Int?,
         title: String,
         userId: Int,
         description: String,
@@ -112,9 +113,15 @@ class MainViewModel(
         subTask: List<SubTask>,
         postInsert: (() -> Unit)? = null
     ) {
-        val id = taskList.lastOrNull()?.id ?: -1
+        var itemId: Int
+        if(id == null){
+            itemId = taskList.lastOrNull()?.id ?: -1
+            itemId += 1
+        }else{
+            itemId = id
+        }
         val todoItem = Task(
-            id + 1, title, userId, description, priority, longitude, latitude,
+            itemId, title, userId, description, priority, longitude, latitude,
             imageUrl, dueTime, parentId, gmtCreated, gmtModified, 0, state, subTask
         )
         viewModelScope.launch(Dispatchers.IO) {
