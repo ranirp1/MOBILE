@@ -3,6 +3,8 @@
 
     <string name="todo_list">Todo List</string>
 
+    <string name="todo_progress">Progress</string>
+
     <string name="mode">Debug</string>
 
     <string name="todo_title">Hi there</string>

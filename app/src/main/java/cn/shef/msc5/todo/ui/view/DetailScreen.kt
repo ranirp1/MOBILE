@@ -229,9 +229,23 @@ fun DetailScreen(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 7.dp),
-                text = "Location " + "Latitude: " + latitude + "  Longitude: " + longitude
+                    .padding(horizontal = 10.dp, vertical = 3.dp),
+                text = "Location"
 //                text = "Location " + "Latitude: " + latitude + "  Longitude: " + longitude + "  Address:" + address
+            )
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                text = "Latitude: " + latitude
+            )
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                text = "Longitude: " + longitude
             )
 
             Text(
