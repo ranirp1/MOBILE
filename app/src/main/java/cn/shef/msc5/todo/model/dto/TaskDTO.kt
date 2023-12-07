@@ -24,34 +24,34 @@ data class TaskDTO(
 
     var title: String,
 
-    var userId: Int,
+//    var userId: Int,
+//
+//    var description: String,
+//
+//    var priority: Int,
 
-    var description: String,
+    var longitude: Double,
 
-    var priority: Int,
+    var latitude: Double,
 
-    var longitude: Float,
-
-    var latitude: Float,
-
-    var imageUrl: String,
-
-    var dueTime: Date,
-
-    var parentId: Int,
-
-    var gmtCreated: Date,
-
-    var gmtModified: Date,
-
-    var isDeleted: Int,
-
-    var state: Int,
-
-    var subTasks: List<SubTask>
+//    var imageUrl: String,
+//
+//    var dueTime: Date,
+//
+//    var parentId: Int,
+//
+//    var gmtCreated: Date,
+//
+//    var gmtModified: Date,
+//
+//    var isDeleted: Int,
+//
+//    var state: Int,
+//
+//    var subTasks: List<SubTask>
 
 ) : Parcelable{
-    override fun toString(): String {
-        return "TaskDTO(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, state=$state, subTasks=$subTasks)"
-    }
+//    override fun toString(): String {
+//        return "TaskDTO(id=$id, title=$title, description=$description, priority=$priority, longitude=$longitude, latitude=$latitude, imageUrl=$imageUrl, dueTime=$dueTime, parentId=$parentId, gmtCreated=$gmtCreated, gmtModified=$gmtModified, isDeleted=$isDeleted, state=$state, subTasks=$subTasks)"
+//    }
 }

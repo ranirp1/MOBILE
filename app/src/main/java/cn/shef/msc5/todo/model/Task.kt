@@ -36,10 +36,10 @@ data class Task(
     var priority: Int,
 
     @ColumnInfo(name = "longitude", typeAffinity = ColumnInfo.REAL)
-    var longitude: Float,
+    var longitude: Double,
 
     @ColumnInfo(name = "latitude", typeAffinity = ColumnInfo.REAL)
-    var latitude: Float,
+    var latitude: Double,
 
     @ColumnInfo(name = "imageUrl", typeAffinity = ColumnInfo.TEXT)
     var imageUrl: String,

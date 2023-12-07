@@ -8,6 +8,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import cn.shef.msc5.todo.model.Location
 import cn.shef.msc5.todo.model.ScreenTypeEnum
 import cn.shef.msc5.todo.model.SortOrder
 import cn.shef.msc5.todo.model.SortType
@@ -49,6 +50,8 @@ class MainViewModel(
 
     var state by mutableStateOf(TaskListState())
     var notInitial by mutableStateOf(false)
+
+    var location by mutableStateOf(Location())
 
     init {
         state = state.copy(isLoading = true)
@@ -97,8 +100,8 @@ class MainViewModel(
         title: String,
         description: String,
         priority: Int,
-        longitude: Float,
-        latitude: Float,
+        longitude: Double,
+        latitude: Double,
         imageUrl: String,
         gmtCreated: Date,
         gmtModified: Date,

@@ -50,8 +50,7 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 ) {
                     MapScreen(
                         state = viewModel.state.value,
-                        setupClusterManager = viewModel::setupClusterManager,
-                        calculateZoneViewCenter = viewModel::calculateZoneLatLngBounds
+                        intent = this.intent
                     )
                 }
             }
