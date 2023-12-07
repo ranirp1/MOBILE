@@ -1,14 +1,13 @@
 package cn.shef.msc5.todo.model.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import cn.shef.msc5.todo.base.BaseDAO
 import cn.shef.msc5.todo.model.Task
-import cn.shef.msc5.todo.model.TaskStateEnum
+import cn.shef.msc5.todo.model.enums.TaskStateEnum
 import cn.shef.msc5.todo.utilities.Constants.Companion.TABLE_TASK
 import kotlinx.coroutines.flow.Flow
 

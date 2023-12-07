@@ -1,4 +1,6 @@
-package cn.shef.msc5.todo.model
+package cn.shef.msc5.todo.model.enums
+
+import cn.shef.msc5.todo.model.Task
 
 /**
  * @author Zhecheng Zhao

@@ -9,7 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import cn.shef.msc5.todo.base.BaseActivity
-import cn.shef.msc5.todo.model.ScreenTypeEnum
+import cn.shef.msc5.todo.model.enums.ScreenTypeEnum
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory

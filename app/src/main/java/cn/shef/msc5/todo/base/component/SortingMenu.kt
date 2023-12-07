@@ -29,7 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.model.SortOrder
-import cn.shef.msc5.todo.model.SortType
+import cn.shef.msc5.todo.model.enums.SortType
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
 import cn.shef.msc5.todo.ui.theme.Teal
 import cn.shef.msc5.todo.ui.theme.TealGrey

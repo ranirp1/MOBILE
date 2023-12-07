@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.model
+package cn.shef.msc5.todo.model.enums
 
 sealed class TemplateEnum(val templateType: String, val templateText: String){
     object ASSIGNMENT : TemplateEnum("Assignment", "Assignment submission for course ")

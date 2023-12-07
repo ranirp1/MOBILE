@@ -8,13 +8,13 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import cn.shef.msc5.todo.model.Location
-import cn.shef.msc5.todo.model.ScreenTypeEnum
+import cn.shef.msc5.todo.model.dto.Location
+import cn.shef.msc5.todo.model.enums.ScreenTypeEnum
 import cn.shef.msc5.todo.model.SortOrder
-import cn.shef.msc5.todo.model.SortType
+import cn.shef.msc5.todo.model.enums.SortType
 import cn.shef.msc5.todo.model.Task
-import cn.shef.msc5.todo.model.TaskListState
-import cn.shef.msc5.todo.model.TaskStateEnum
+import cn.shef.msc5.todo.model.enums.TaskListState
+import cn.shef.msc5.todo.model.enums.TaskStateEnum
 import cn.shef.msc5.todo.model.dao.TaskDAO
 import cn.shef.msc5.todo.model.dto.SubTask
 import cn.shef.msc5.todo.utilities.DateConverter
@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.sql.Date
-import java.sql.RowId
 
 /**
  * @author Zhecheng Zhao

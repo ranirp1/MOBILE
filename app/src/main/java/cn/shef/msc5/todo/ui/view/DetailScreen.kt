@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
-import android.location.Geocoder
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
@@ -43,7 +42,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
-import cn.shef.msc5.todo.activity.GeoLocationActivity
 import cn.shef.msc5.todo.activity.MapsActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.CheckboxListTextFieldExample
@@ -51,11 +49,11 @@ import cn.shef.msc5.todo.base.component.Chips
 import cn.shef.msc5.todo.base.component.DatePicker
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
 import cn.shef.msc5.todo.base.component.dialog.TimePickerDialog
-import cn.shef.msc5.todo.model.TaskStateEnum
+import cn.shef.msc5.todo.model.enums.TaskStateEnum
 import cn.shef.msc5.todo.model.dto.SubTask
-import cn.shef.msc5.todo.model.getPriorityValues
-import cn.shef.msc5.todo.model.getTemplateStr
-import cn.shef.msc5.todo.model.getTemplateTextStr
+import cn.shef.msc5.todo.model.enums.getPriorityValues
+import cn.shef.msc5.todo.model.enums.getTemplateStr
+import cn.shef.msc5.todo.model.enums.getTemplateTextStr
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.base.component.dialog.ImageBottomSheet

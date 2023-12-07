@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.model
+package cn.shef.msc5.todo.model.dto
 
 /**
  * @author Zhecheng Zhao
