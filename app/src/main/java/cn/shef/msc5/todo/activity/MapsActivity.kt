@@ -76,6 +76,8 @@ class MapsActivity : BaseActivity(), OnMapReadyCallback {
                 ActivityCompat.shouldShowRequestPermissionRationale(
                     this, perm)) {
                 needRequestPermissionList.add(perm)
+            }else{
+                viewModel.getDeviceLocation(fusedLocationProviderClient)
             }
         }
         return needRequestPermissionList

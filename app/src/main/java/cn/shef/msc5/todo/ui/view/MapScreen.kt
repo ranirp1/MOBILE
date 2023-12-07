@@ -23,15 +23,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.*
-import kotlinx.coroutines.launch
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.TopBarType
 import cn.shef.msc5.todo.model.viewmodel.MapState
-import com.codingwithmitch.composegooglemaps.clusters.ZoneClusterManager
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.MapsActivity
 import cn.shef.msc5.todo.model.dto.TaskDTO
@@ -157,13 +153,13 @@ fun MapScreen(
                         }
                     }
                 }
-                // NOTE: Some features of the MarkerInfoWindow don't work currently. See docs:
-                // https://github.com/googlemaps/android-maps-compose#obtaining-access-to-the-raw-googlemap-experimental
-                MarkerInfoWindowContent(
-                    title = "Current Position",
-                    state = rememberMarkerState(position = LatLng(53.38110821, -1.47992193)),
-                    draggable = false
-                )
+//                // NOTE: Some features of the MarkerInfoWindow don't work currently. See docs:
+//                // https://github.com/googlemaps/android-maps-compose#obtaining-access-to-the-raw-googlemap-experimental
+//                MarkerInfoWindowContent(
+//                    title = "Current Position",
+//                    state = rememberMarkerState(position = LatLng(53.38110821, -1.47992193)),
+//                    draggable = false
+//                )
 
             }
         }
