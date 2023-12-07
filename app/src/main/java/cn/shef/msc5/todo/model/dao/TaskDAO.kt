@@ -25,17 +25,17 @@ interface TaskDAO : BaseDAO<Task> {
     @Query("SELECT * from $TABLE_TASK WHERE id =:id and isDeleted = 0")
     fun findByPrimaryKey(id: Int): Task?
 
-    @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0")
-    fun getAllTasks(): Flow<List<Task>> //List<Task>?
+    @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0 and userId = :userId")
+    fun getAllTasks(userId: Int): Flow<List<Task>> //List<Task>?
 
-    @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0 AND date(dueTime / 1000, 'unixepoch') = date(:selectedDate / 1000, 'unixepoch')")
-    fun getAllTasksByDate(selectedDate: Long): Flow<List<Task>>
+    @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0 and userId = :userId AND date(dueTime / 1000, 'unixepoch') = date(:selectedDate / 1000, 'unixepoch')")
+    fun getAllTasksByDate(selectedDate: Long, userId: Int): Flow<List<Task>>
 
-    @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0 and state = :state")
-    fun getTasksList(state: Int): Flow<List<Task>>
+    @Query("SELECT * from $TABLE_TASK WHERE isDeleted = 0 and userId = :userId and state = :state")
+    fun getTasksList(state: Int, userId: Int): Flow<List<Task>>
 
-    @Query("SELECT count(*) from $TABLE_TASK WHERE isDeleted = 0")
-    suspend fun getCount(): Int
+    @Query("SELECT count(*) from $TABLE_TASK WHERE isDeleted = 0 and userId = :userId")
+    suspend fun getCount(userId: Int): Int
 
     override fun delete(task: Task) {
         task.isDeleted = 1

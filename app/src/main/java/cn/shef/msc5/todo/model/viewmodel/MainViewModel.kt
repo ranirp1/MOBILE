@@ -33,6 +33,7 @@ import java.sql.Date
  */
 
 class MainViewModel(
+    private val userId: Int,
     private val screenType: ScreenTypeEnum,
     private val taskDAO: TaskDAO
 ) : ViewModel() {
@@ -66,7 +67,7 @@ class MainViewModel(
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             delay(500)
-            taskDAO.getTasksList(taskstate).collect{
+            taskDAO.getTasksList(taskstate, userId).collect{
                 taskList = it.toMutableStateList()
                 _taskListFlow.value = taskList
                 state = state.copy(isLoading = false,
@@ -165,7 +166,7 @@ class MainViewModel(
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             delay(500)
-            taskDAO.getAllTasks().map { tasks ->
+            taskDAO.getAllTasks(userId).map { tasks ->
                 when (sortTypeSelected.sortOrder) {
                     is SortOrder.Ascending -> {
                         when (sortTypeSelected) {
@@ -198,7 +199,7 @@ class MainViewModel(
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             delay(500)
-            taskDAO.getAllTasksByDate(selectedDate).map { tasks ->
+            taskDAO.getAllTasksByDate(selectedDate, userId).map { tasks ->
                 when (sortType.sortOrder) {
                     is SortOrder.Ascending -> {
                         when (sortType) {
@@ -228,12 +229,13 @@ class MainViewModel(
 }
 
 class MainViewModelFactory(
+    private val userId: Int,
     private val screenType: ScreenTypeEnum,
     private val taskDAO: TaskDAO
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(screenType, taskDAO) as T
+            return MainViewModel(userId, screenType, taskDAO) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

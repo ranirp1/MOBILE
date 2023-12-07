@@ -14,6 +14,7 @@ import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
 import cn.shef.msc5.todo.ui.view.ViewScreen
+import cn.shef.msc5.todo.utilities.SharedPreferenceManger
 
 /**
  * @author Raghav Chhabra
@@ -23,7 +24,8 @@ class ViewActivity : BaseActivity() {
 
     private val TAG = "ViewActivity"
     val mainViewModel by lazy {
-        MainViewModelFactory(ScreenTypeEnum.OTHER_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
+        MainViewModelFactory(SharedPreferenceManger(this).getIntegerValue("userId"),
+            ScreenTypeEnum.OTHER_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
         create(MainViewModel::class.java)
     }
 

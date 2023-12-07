@@ -29,6 +29,7 @@ import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
 import cn.shef.msc5.todo.utilities.Constants
+import cn.shef.msc5.todo.utilities.SharedPreferenceManger
 
 /**
  * @author Zhecheng Zhao
@@ -39,25 +40,26 @@ import cn.shef.msc5.todo.utilities.Constants
 @Composable
 fun MainScreen() {
 
+    val context = LocalContext.current
+
     val mainViewModel by lazy {
-        MainViewModelFactory(ScreenTypeEnum.OTHER_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
+        MainViewModelFactory(SharedPreferenceManger(context).getIntegerValue("userId"),ScreenTypeEnum.OTHER_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
         create(MainViewModel::class.java)
     }
 
     val homeViewModel by lazy {
-        MainViewModelFactory(ScreenTypeEnum.HOME_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
+        MainViewModelFactory(SharedPreferenceManger(context).getIntegerValue("userId"),ScreenTypeEnum.HOME_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
         create(MainViewModel::class.java)
     }
 
 
     val progressUnfinishedViewModel by lazy {
-        MainViewModelFactory(ScreenTypeEnum.PROGRESS_UNFINISHED, AppDatabase.INSTANCE.getTaskDAO()).
+        MainViewModelFactory(SharedPreferenceManger(context).getIntegerValue("userId"),ScreenTypeEnum.PROGRESS_UNFINISHED, AppDatabase.INSTANCE.getTaskDAO()).
         create(MainViewModel::class.java)
     }
 
-
     val progressIsCompletedViewModel by lazy {
-        MainViewModelFactory(ScreenTypeEnum.PROGRESS_ISCOMPLETED, AppDatabase.INSTANCE.getTaskDAO()).
+        MainViewModelFactory(SharedPreferenceManger(context).getIntegerValue("userId"),ScreenTypeEnum.PROGRESS_ISCOMPLETED, AppDatabase.INSTANCE.getTaskDAO()).
         create(MainViewModel::class.java)
     }
 
@@ -71,7 +73,7 @@ fun MainScreen() {
 
     var selectedItem by remember { mutableStateOf(items.first()) }
     val snackbarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
+
     BaseScaffold(
         showTopBar = false,
         bottomBar = {
