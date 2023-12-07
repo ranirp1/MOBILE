@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cn.shef.msc5.todo.model.database.data.Note
 import cn.shef.msc5.todo.model.database.data.NoteDao
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 class NotesViewModel(private val dao: NoteDao): ViewModel () {
     private val isSortedbyDateadded = MutableStateFlow(true)
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val notes =
         isSortedbyDateadded.flatMapLatest { sort ->
             if (sort) {
@@ -49,7 +51,7 @@ class NotesViewModel(private val dao: NoteDao): ViewModel () {
                 )
 
                 viewModelScope.launch {
-                    dao.UpsertNote(note)
+                    dao.upsertNote(note)
                 }
 
                 _state.update {

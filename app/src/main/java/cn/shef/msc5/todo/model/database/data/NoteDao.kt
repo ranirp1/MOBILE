@@ -12,10 +12,10 @@ import kotlinx.coroutines.flow.Flow
 interface NoteDao {
 
     @Upsert
-    suspend fun UpsertNote(note: Note)
+    suspend fun upsertNote(note: Note)
 
     @Delete
-    suspend fun deleteNote (note: Note)
+    suspend fun deleteNote (note: TaskDAO)
 
     @Query("SELECT * FROM note ORDER BY dateAdded")
     fun getNotesOrderedByDateAdded(): Flow<List<TaskDAO>>
