@@ -184,7 +184,7 @@ fun DetailScreen(
                 onValueChange = { text = it }
             )
 
-            if(capturedImageUri != null){
+            if(capturedImageBitmap != null){
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(10.dp),
                     horizontalArrangement = Arrangement.Center
