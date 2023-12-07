@@ -1,10 +1,13 @@
 package cn.shef.msc5.todo.ui.view
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -16,10 +19,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.base.component.BaseScaffold
@@ -30,6 +35,7 @@ import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.getPriorityValues
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.DateConverter
+import cn.shef.msc5.todo.utilities.ImageUtil
 import kotlinx.coroutines.CoroutineScope
 
 /**
@@ -48,6 +54,9 @@ fun ViewScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
     val dateConverter = DateConverter()
+    val contentResolver = context.contentResolver
+    val imageUtil = ImageUtil()
+
 
 //    var showCalender by remember { mutableStateOf(false) }
 //    var showTimePicker by remember { mutableStateOf(false) }
@@ -68,6 +77,10 @@ fun ViewScreen(
     var text = task.description
     var subTasks = task.subTasks
     val date = task.dueTime
+
+    val photoUri = task.imageUrl
+
+    var capturedImageBitmap by remember { mutableStateOf<ImageBitmap?>(imageUtil.getImageBitmap(contentResolver, Uri.parse(photoUri))) }
 
 //    if (selectedTemplate.isNotBlank()) {
 //        val templateIndex = templates.indexOf(selectedTemplate)
@@ -176,6 +189,15 @@ fun ViewScreen(
 
             CheckboxListTextFieldExample(subTasks){
                 subTasks = it
+            }
+
+            if(capturedImageBitmap != null){
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(10.dp),
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    Image(bitmap = capturedImageBitmap!!, contentDescription = "Captured Image")
+                }
             }
 
 //            if (showCalender) {

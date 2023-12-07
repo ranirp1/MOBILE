@@ -43,6 +43,9 @@ fun ImageBottomSheet(
             val data = result.data
             val capturedImageUriString = data?.getStringExtra("capturedImageUri")
             imageUri = Uri.parse(capturedImageUriString)
+            imageUri?.let { uri ->
+                context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION )
+            }
             onCapturedImageUri(imageUri)
             onSelect(false)
         }
