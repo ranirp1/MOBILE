@@ -9,12 +9,12 @@ object GeoLocationService: LocationListener {
     var locationViewModel: LocationViewModel? = null
 
     override fun onLocationChanged(newLocation: Location) {
-        locationViewModel?.updateLocation( newLocation )
+        locationViewModel?.updateLocation(newLocation)
         Log.i("geolocation", "Location updated")
     }
 
     fun updateLatestLocation(latestLocation: Location) {
-        locationViewModel?.updateLocation( latestLocation )
+        locationViewModel?.updateLocation(latestLocation)
         Log.i("geolocation", "Location set to latest")
     }
 }
