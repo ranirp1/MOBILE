@@ -61,6 +61,7 @@ import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.base.component.dialog.ImageBottomSheet
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import cn.shef.msc5.todo.utilities.ImageUtil
+import cn.shef.msc5.todo.utilities.SharedPreferenceManger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -168,8 +169,9 @@ fun DetailScreen(
                             snackbarHostState.showSnackbar("Please fill in a title!")
                         }
                     }else{
+                        val userId = SharedPreferenceManger(context).userId
                         mainViewModel.addTask(
-                            title, text, prior, longitude, latitude,
+                            title, userId, text, prior, longitude, latitude,
                             capturedImageUri.toString(), Date.valueOf(LocalDate.now().toString()),
                             Date.valueOf(LocalDate.now().toString()), date,
                             0, TaskStateEnum.UNFINISHED.level, subTasks, null
