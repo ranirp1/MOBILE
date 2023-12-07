@@ -38,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.DetailActivity
+import cn.shef.msc5.todo.activity.MapsActivity
 import cn.shef.msc5.todo.base.component.BaseFloatingActionBar
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.DatePickerBar
@@ -46,11 +47,13 @@ import cn.shef.msc5.todo.base.component.SortingMenu
 import cn.shef.msc5.todo.base.component.TopBarType
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.model.isEmpty
+import cn.shef.msc5.todo.model.mapper.TaskDTOMapper
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.view.state.EmptyScreen
 import cn.shef.msc5.todo.ui.view.state.LoadingScreen
 import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.utilities.GeneralUtil
+import cn.shef.msc5.todo.utilities.SubTaskConverter
 
 /**
  * @author Zhecheng Zhao
@@ -131,7 +134,10 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                         imageVector = Icons.Default.PinDrop,
                         contentDescription = "Location",
                         onClick = {
-                            // TODO check todos by location
+                            val intent = Intent(context, MapsActivity::class.java)
+                            intent.putExtra("startActivity", 0)
+                            intent.putExtra("taskList", SubTaskConverter.fromTaskList(TaskDTOMapper().map2DTOModel(taskListState.value)))
+                            GeneralUtil.startActivity2(context, intent)
                         }
                     )
 
@@ -142,6 +148,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                         onClick = {
                             val intent = Intent(context, DetailActivity::class.java)
                             GeneralUtil.startActivity2(context, intent)
+
                         }
                     )
                 }

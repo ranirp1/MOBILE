@@ -1,9 +1,14 @@
 package cn.shef.msc5.todo.ui.view
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
+import android.location.Geocoder
 import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,6 +30,7 @@ import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +44,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.GeoLocationActivity
+import cn.shef.msc5.todo.activity.MapsActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.CheckboxListTextFieldExample
 import cn.shef.msc5.todo.base.component.Chips
@@ -71,6 +78,7 @@ import java.sql.Date
 fun DetailScreen(
     mainViewModel: MainViewModel
 ) {
+
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope: CoroutineScope = rememberCoroutineScope()
@@ -97,6 +105,25 @@ fun DetailScreen(
     var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
     var capturedImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
 
+    val location = mainViewModel.location
+    var latitude by remember { mutableDoubleStateOf(location.latitude) }
+    var longitude by remember { mutableDoubleStateOf(location.longitude) }
+    var address by remember { mutableStateOf("") }
+    val resultLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if(result.resultCode == Activity.RESULT_OK){
+            var latitude1 = result.data?.getDoubleExtra("latitude", 0.0)
+            var longitude1 = result.data?.getDoubleExtra("longitude", 0.0)
+            if (latitude1 != null) {
+                latitude = latitude1
+            }
+            if (longitude1 != null) {
+                longitude = longitude1
+            }
+//            val geoCoder = Geocoder(context)
+//            address = geoCoder.getFromLocation(latitude, longitude, 1)?.get(0)?.getAddressLine(0).toString()
+        }
+    }
+
     if (selectedTemplate.isNotBlank()) {
         val templateIndex = templates.indexOf(selectedTemplate)
         if (templateIndex != -1 && templateIndex < templateDesc.size) {
@@ -119,9 +146,11 @@ fun DetailScreen(
                     isSheetOpen = true
                 },
                 onLocation = {
-                    //GeneralUtil.finishActivity2(context)
-                    val intent = Intent(context, GeoLocationActivity::class.java)
-                    GeneralUtil.startActivity2(context, intent)
+//                    val intent = Intent(context, GeoLocationActivity::class.java)
+//                    GeneralUtil.startActivity2(context, intent)
+                    val intent = Intent(context, MapsActivity::class.java)
+                    intent.putExtra("startActivity", 1)
+                    resultLauncher.launch(intent)
                 },
                 onCalender = {
                     scope.launch {
@@ -140,7 +169,7 @@ fun DetailScreen(
                         }
                     }else{
                         mainViewModel.addTask(
-                            title, text, prior, 1.11F, 1.11F,
+                            title, text, prior, longitude, latitude,
                             capturedImageUri.toString(), Date.valueOf(LocalDate.now().toString()),
                             Date.valueOf(LocalDate.now().toString()), date,
                             0, TaskStateEnum.UNFINISHED.level, subTasks, null
@@ -201,7 +230,8 @@ fun DetailScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp, vertical = 7.dp),
-                text = "Location: "
+                text = "Location " + "Latitude: " + latitude + "  Longitude: " + longitude
+//                text = "Location " + "Latitude: " + latitude + "  Longitude: " + longitude + "  Address:" + address
             )
 
             Text(
