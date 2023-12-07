@@ -17,23 +17,23 @@ class NotesViewModel(private val dao: NoteDao): ViewModel () {
     private val isSortedbyDateadded = MutableStateFlow(true)
 
     private val notes =
-        isSortedbyDateadded.flatMapLatest {sort ->
-            if(sort) {
+        isSortedbyDateadded.flatMapLatest { sort ->
+            if (sort) {
                 dao.getNotesOrderedByDateAdded()
             } else {
                 dao.getNotesOrderedByTitle()
             }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     val _state = MutableStateFlow(NoteState())
     val state =
-        combine(_state, isSortedbyDateadded, notes) { state, isSortedbyDateadded , notes ->
+        combine(_state, isSortedbyDateadded, notes) { state, isSortedbyDateadded, notes ->
             state.copy(
                 notes = notes
             )
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), NoteState())
 
-    fun OnEvent(event: NotesEvent) {
+    fun onEvent(event: NotesEvent) {
         when (event) {
             is NotesEvent.DeleteNote -> {
                 viewModelScope.launch {
@@ -42,21 +42,21 @@ class NotesViewModel(private val dao: NoteDao): ViewModel () {
             }
 
             is NotesEvent.SaveNote -> {
-                val note = Note (
-                        title = state.value.title.value,
-                        description = state.value.description.value,
-                        dateadded = System.currentTimeMillis()
-                    )
+                val note = Note(
+                    title = state.value.title.value,
+                    description = state.value.description.value,
+                    dateadded = System.currentTimeMillis()
+                )
 
                 viewModelScope.launch {
                     dao.UpsertNote(note)
                 }
 
                 _state.update {
-                     it.copy(
+                    it.copy(
                         title = mutableStateOf(""),
                         description = mutableStateOf("")
-                     )
+                    )
                 }
             }
 
@@ -65,5 +65,7 @@ class NotesViewModel(private val dao: NoteDao): ViewModel () {
 
             }
         }
+
+
     }
 }
