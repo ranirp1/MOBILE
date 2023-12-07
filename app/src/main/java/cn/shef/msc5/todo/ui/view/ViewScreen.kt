@@ -77,10 +77,13 @@ fun ViewScreen(
     var text = task.description
     var subTasks = task.subTasks
     val date = task.dueTime
+    var photoUri by remember{ mutableStateOf<String?>(null) }
+    var capturedImageBitmap by remember { mutableStateOf<ImageBitmap?>(null)}
 
-    val photoUri = task.imageUrl
-
-    var capturedImageBitmap by remember { mutableStateOf<ImageBitmap?>(imageUtil.getImageBitmap(contentResolver, Uri.parse(photoUri))) }
+    task.imageUrl?.let{
+        photoUri = task.imageUrl
+        capturedImageBitmap = imageUtil.getImageBitmap(contentResolver, Uri.parse(photoUri))
+    }
 
 //    if (selectedTemplate.isNotBlank()) {
 //        val templateIndex = templates.indexOf(selectedTemplate)

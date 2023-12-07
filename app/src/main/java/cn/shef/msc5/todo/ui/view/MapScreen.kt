@@ -10,14 +10,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -30,12 +28,11 @@ import cn.shef.msc5.todo.base.component.TopBarType
 import cn.shef.msc5.todo.model.viewmodel.MapState
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.MapsActivity
-import cn.shef.msc5.todo.model.dto.TaskDTO
+import cn.shef.msc5.todo.utilities.MapItems
 import cn.shef.msc5.todo.utilities.SubTaskConverter
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Marker
 
-@OptIn(MapsComposeExperimentalApi::class)
 @Composable
 fun MapScreen(
     state: MapState,
@@ -53,7 +50,7 @@ fun MapScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val startActivity = remember { intent.getIntExtra("startActivity", 0) }
 
-    var taskList: List<TaskDTO>? = null
+    var taskList: List<MapItems>? = null
     var title1 = stringResource(R.string.todo_task_map)
     Log.d("MapScreen startActivity", intent.getIntExtra("startActivity", 0).toString())
 
@@ -136,11 +133,10 @@ fun MapScreen(
                                     modifier = Modifier
                                         .width(88.dp)
                                         .height(36.dp)
-                                        .clip(RoundedCornerShape(16.dp))
-                                        .background(Color.Red),
+                                        .background(Color.White),
                                     contentAlignment = Alignment.Center,
                                 ) {
-                                    Text(it.title ?: "Title", color = Color.Blue)
+                                    Text(it.title ?: "Title", color = Color.Black)
                                 }
 
                             }

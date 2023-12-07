@@ -6,6 +6,13 @@ import cn.shef.msc5.todo.model.dto.TaskDTO
 import org.json.JSONArray
 import org.json.JSONObject
 
+class MapItems(id: Int, title: String, longitude: Double, latitude: Double) {
+    var id: Int = id
+    var title: String = title
+    var longitude: Double = longitude
+    var latitude: Double = latitude
+}
+
 class SubTaskConverter {
     companion object {
         @TypeConverter
@@ -53,9 +60,9 @@ class SubTaskConverter {
 
         @TypeConverter
         @JvmStatic
-        fun toTaskList(jsonString: String): List<TaskDTO> {
+        fun toTaskList(jsonString: String): List<MapItems> {
             val jsonArray = JSONArray(jsonString)
-            val itemList = mutableListOf<TaskDTO>()
+            val itemList = mutableListOf<MapItems>()
 
             for (i in 0 until jsonArray.length()) {
                 val jsonObject = jsonArray.getJSONObject(i)
@@ -63,7 +70,7 @@ class SubTaskConverter {
                 val title = jsonObject.getString("title")
                 val latitude = jsonObject.getDouble("latitude")
                 val longitude = jsonObject.getDouble("longitude")
-                itemList.add(TaskDTO(id, title, longitude, latitude))
+                itemList.add(MapItems(id, title, longitude, latitude))
             }
             return itemList
         }
