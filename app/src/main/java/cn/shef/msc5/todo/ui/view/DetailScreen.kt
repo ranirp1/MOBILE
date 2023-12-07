@@ -169,7 +169,7 @@ fun DetailScreen(
                             snackbarHostState.showSnackbar("Please fill in a title!")
                         }
                     }else{
-                        val userId = SharedPreferenceManger(context).userId
+                        val userId = SharedPreferenceManger(context).getIntegerValue("userId")
                         mainViewModel.addTask(
                             title, userId, text, prior, longitude, latitude,
                             capturedImageUri.toString(), Date.valueOf(LocalDate.now().toString()),

@@ -30,7 +30,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name=".activity.LocationActivity"
             android:exported="false"

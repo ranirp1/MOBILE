@@ -36,7 +36,7 @@ import cn.shef.msc5.todo.utilities.Constants
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 05/11/2023 22:56
  */
-@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainScreen() {
 
@@ -101,7 +101,7 @@ fun MainScreen() {
 //            Constants.NAVIGATION_PROGRESS -> ProgressScreen(context, mainViewModel)
             Constants.NAVIGATION_PROGRESS -> ProgressStateScreen(context, progressUnfinishedViewModel,
                 progressIsCompletedViewModel)
-            Constants.NAVIGATION_PROFILE -> ProfileScreen(context, mainViewModel)
+            Constants.NAVIGATION_PROFILE -> ProfileScreen()
         }
     }
 }

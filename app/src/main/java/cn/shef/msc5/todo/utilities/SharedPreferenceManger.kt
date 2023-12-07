@@ -1,7 +1,6 @@
 package cn.shef.msc5.todo.utilities
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatDelegate
 
 /**
  * @author Zhecheng Zhao
@@ -16,7 +15,7 @@ class SharedPreferenceManger(context: Context) {
     )
     private val editor = preference.edit()
 
-    private val keyTheme = "theme"
+    private val islogin = "islogin"
     private val id = "userId"
     private val name = "userName"
 
@@ -34,4 +33,22 @@ class SharedPreferenceManger(context: Context) {
             editor.commit()
         }
 
+    var isLogin
+        get() = preference.getBoolean(islogin, false)
+        set(value) {
+            editor.putBoolean(islogin, true)
+            editor.commit()
+        }
+
+    fun getStringValue(key: String): String? {
+        return preference.getString(key, "")
+    }
+
+    fun getIntegerValue(key: String): Int {
+        return preference.getInt(key, 0)
+    }
+
+    fun getBooleanValue(key: String, default: Boolean = false): Boolean {
+        return preference.getBoolean(key, default)
+    }
 }
