@@ -1,6 +1,9 @@
 package cn.shef.msc5.todo.base.component
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,7 +40,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.shef.msc5.todo.activity.DetailActivity
-import androidx.lifecycle.viewmodel.compose.viewModel
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.model.enums.PriorityLevelEnum
 import cn.shef.msc5.todo.model.Task
@@ -53,12 +55,10 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 import java.sql.Date
 import java.time.LocalDate
 import cn.shef.msc5.todo.model.enums.TaskStateEnum
-import cn.shef.msc5.todo.model.viewmodel.LocationViewModel
-import cn.shef.msc5.todo.model.viewmodel.MapState
-import cn.shef.msc5.todo.model.viewmodel.MapViewModel
 import cn.shef.msc5.todo.services.GeoLocationService
 import cn.shef.msc5.todo.utilities.DistanceUtil
 
+@SuppressLint("MissingPermission")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemHolder(
@@ -70,7 +70,12 @@ fun ItemHolder(
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
 
-    val locationViewModel: MapViewModel = viewModel<MapViewModel>()
+    val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+    if (location != null) {
+        GeoLocationService.updateLatestLocation(location)
+    }
+
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -121,10 +126,9 @@ fun ItemHolder(
                                 if(task.state == TaskStateEnum.ISCOMPLETED.level) {
                                     mainViewModel.markAsUndone(task)
                                 } else {
-                                    var lastKnownLocation = locationViewModel.state.value.lastKnownLocation
-                                    if(lastKnownLocation?.latitude != null && lastKnownLocation?.longitude != null){
+                                    if (location != null) {
                                         if(inScope(task.latitude, task.longitude,
-                                                lastKnownLocation.latitude!!, lastKnownLocation.longitude!!
+                                                location.latitude, location.longitude
                                             )){
                                             mainViewModel.markAsDone(task)
                                         }else{
@@ -133,11 +137,6 @@ fun ItemHolder(
                                                 "Not in the Area", Toast.LENGTH_SHORT
                                             ).show()
                                         }
-                                    }else{
-                                        Toast.makeText(
-                                            context,
-                                            "Please waiting to get current location", Toast.LENGTH_SHORT
-                                        ).show()
                                     }
                                 }
                             }
