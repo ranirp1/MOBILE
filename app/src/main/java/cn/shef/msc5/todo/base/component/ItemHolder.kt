@@ -52,9 +52,10 @@ import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import java.sql.Date
 import java.time.LocalDate
-import cn.shef.msc5.todo.activity.ViewActivity
 import cn.shef.msc5.todo.model.enums.TaskStateEnum
 import cn.shef.msc5.todo.model.viewmodel.LocationViewModel
+import cn.shef.msc5.todo.model.viewmodel.MapState
+import cn.shef.msc5.todo.model.viewmodel.MapViewModel
 import cn.shef.msc5.todo.services.GeoLocationService
 import cn.shef.msc5.todo.utilities.DistanceUtil
 
@@ -69,11 +70,8 @@ fun ItemHolder(
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
 
-    val locationViewModel = viewModel<LocationViewModel>()
-    GeoLocationService.locationViewModel = locationViewModel
-
+    val locationViewModel: MapViewModel = viewModel<MapViewModel>()
     ElevatedCard(
-
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
@@ -123,9 +121,10 @@ fun ItemHolder(
                                 if(task.state == TaskStateEnum.ISCOMPLETED.level) {
                                     mainViewModel.markAsUndone(task)
                                 } else {
-                                    if(locationViewModel.latitude != null && locationViewModel.longitude != null){
+                                    var lastKnownLocation = locationViewModel.state.value.lastKnownLocation
+                                    if(lastKnownLocation?.latitude != null && lastKnownLocation?.longitude != null){
                                         if(inScope(task.latitude, task.longitude,
-                                                locationViewModel.latitude!!, locationViewModel.longitude!!
+                                                lastKnownLocation.latitude!!, lastKnownLocation.longitude!!
                                             )){
                                             mainViewModel.markAsDone(task)
                                         }else{
@@ -137,7 +136,7 @@ fun ItemHolder(
                                     }else{
                                         Toast.makeText(
                                             context,
-                                            "Getting current location...", Toast.LENGTH_SHORT
+                                            "Please waiting to get current location", Toast.LENGTH_SHORT
                                         ).show()
                                     }
                                 }
