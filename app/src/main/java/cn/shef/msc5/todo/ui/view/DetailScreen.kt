@@ -15,6 +15,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -41,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
@@ -111,12 +113,12 @@ fun DetailScreen(
     var subTasks by remember { mutableStateOf(if(task == null) listOf(SubTask("Enter subtask", false)) else task.subTasks) }
 
     var isSheetOpen by remember { mutableStateOf(false) }
-    var capturedImageUri by remember { mutableStateOf<Uri?>(null) }
+    var capturedImageUri by remember { mutableStateOf<Uri?>(Uri.EMPTY) }
     var capturedImageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         if (task != null) {
-            if(task.imageUrl != ""){
+            if (task.imageUrl != "" && task.imageUrl != "null") {
                 capturedImageUri = Uri.parse(task.imageUrl)
                 capturedImageBitmap = imageUtil.getImageBitmap(contentResolver, capturedImageUri)
             }
@@ -243,11 +245,13 @@ fun DetailScreen(
                     onValueChange = { text = it }
                 )
             }else{
-                Text(text = title)
-                Text(text = text)
+                Text(text = title, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp))
+                Text(text = text, modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp))
             }
+            
+            Spacer(modifier = Modifier.height(5.dp))
 
-            if(capturedImageUri != null){
+            if(capturedImageBitmap != null){
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
