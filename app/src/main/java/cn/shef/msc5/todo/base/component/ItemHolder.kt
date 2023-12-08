@@ -1,6 +1,7 @@
 package cn.shef.msc5.todo.base.component
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.model.enums.PriorityLevelEnum
 import cn.shef.msc5.todo.model.Task
@@ -54,6 +56,9 @@ import java.sql.Date
 import java.time.LocalDate
 import cn.shef.msc5.todo.activity.ViewActivity
 import cn.shef.msc5.todo.model.enums.TaskStateEnum
+import cn.shef.msc5.todo.model.viewmodel.LocationViewModel
+import cn.shef.msc5.todo.services.GeoLocationService
+import cn.shef.msc5.todo.utilities.DistanceUtil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,20 +70,12 @@ fun ItemHolder(
     val context = LocalContext.current
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
-    var color = Purple40
 
-    if(task.priority == 1){
-        color = RedGrey
-    }else if(task.priority == 2){
-        color = OrangeGrey
-    }else if(task.priority == 3){
-        color = Purple40
-    }
+    val locationViewModel = viewModel<LocationViewModel>()
+    GeoLocationService.locationViewModel = locationViewModel
 
     ElevatedCard(
-//        colors = CardDefaults.elevatedCardColors(
-//            containerColor = color
-//        ),
+
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
@@ -128,7 +125,23 @@ fun ItemHolder(
                                 if(task.state == TaskStateEnum.ISCOMPLETED.level) {
                                     mainViewModel.markAsUndone(task)
                                 } else {
-                                    mainViewModel.markAsDone(task)
+                                    if(locationViewModel.latitude != null && locationViewModel.longitude != null){
+                                        if(inScope(task.latitude, task.longitude,
+                                                locationViewModel.latitude!!, locationViewModel.longitude!!
+                                            )){
+                                            mainViewModel.markAsDone(task)
+                                        }else{
+                                            Toast.makeText(
+                                                context,
+                                                "Not in the Area", Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }else{
+                                        Toast.makeText(
+                                            context,
+                                            "Please waiting to get current location", Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
                             }
                         )
@@ -221,4 +234,8 @@ fun ItemHolder(
             ){ showDeleteDialog = it }
         }
     }
+}
+
+fun inScope(latitude1: Double, longitude1: Double, latitude2: Double, longitude2: Double): Boolean {
+    return DistanceUtil.distance(latitude1, longitude1, latitude2, longitude2) < 500
 }
