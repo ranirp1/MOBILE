@@ -36,16 +36,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cn.shef.msc5.todo.activity.DetailActivity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.model.enums.PriorityLevelEnum
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.theme.Grey
-import cn.shef.msc5.todo.ui.theme.OrangeGrey
-import cn.shef.msc5.todo.ui.theme.Purple40
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
-import cn.shef.msc5.todo.ui.theme.RedGrey
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DELETE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DONE
 import cn.shef.msc5.todo.utilities.Constants.Companion.OPTIONS_DUPLICATE
@@ -82,7 +80,7 @@ fun ItemHolder(
         shape = RoundedCornerShape(15.dp),
         enabled = !(task.state == TaskStateEnum.ISCOMPLETED.level),
         onClick = {
-            val intent = Intent(context, ViewActivity::class.java)
+            val intent = Intent(context, DetailActivity::class.java)
             intent.putExtra("taskId", task.id)
             GeneralUtil.startActivity2(context, intent)
         }
@@ -139,7 +137,7 @@ fun ItemHolder(
                                     }else{
                                         Toast.makeText(
                                             context,
-                                            "Please waiting to get current location", Toast.LENGTH_SHORT
+                                            "Getting current location...", Toast.LENGTH_SHORT
                                         ).show()
                                     }
                                 }
