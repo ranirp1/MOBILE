@@ -21,7 +21,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import cn.shef.msc5.todo.base.BaseActivity
 import cn.shef.msc5.todo.model.viewmodel.MapViewModel
 import cn.shef.msc5.todo.ui.theme.AppTheme
-import cn.shef.msc5.todo.ui.view.LocationScreen
 import cn.shef.msc5.todo.ui.view.MapScreen
 
 /**
