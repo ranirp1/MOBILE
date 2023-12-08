@@ -143,7 +143,7 @@ fun MapScreen(
                                 center = circleCenter,
                                 fillColor = MaterialTheme.colors.secondary,
                                 strokeColor = MaterialTheme.colors.secondaryVariant,
-                                radius = 500.0,
+                                radius = 50.0,
                             )
                         }
                     }

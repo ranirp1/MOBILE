@@ -233,5 +233,5 @@ fun ItemHolder(
 }
 
 fun inScope(latitude1: Double, longitude1: Double, latitude2: Double, longitude2: Double): Boolean {
-    return DistanceUtil.distance(latitude1, longitude1, latitude2, longitude2) < 500
+    return DistanceUtil.distance(latitude1, longitude1, latitude2, longitude2) < 50
 }
