@@ -49,7 +49,7 @@ import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.GeoLocationActivity
 import cn.shef.msc5.todo.activity.MapsActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
-import cn.shef.msc5.todo.base.component.CheckboxListTextFieldExample
+import cn.shef.msc5.todo.base.component.CheckboxListTextFieldList
 import cn.shef.msc5.todo.base.component.Chips
 import cn.shef.msc5.todo.base.component.DatePicker
 import cn.shef.msc5.todo.base.component.bottombar.BottomActionBar
@@ -158,7 +158,7 @@ fun DetailScreen(
         showNavigationIcon = true,
         showFirstIcon = false,
         showSecondIcon = false,
-        title = stringResource(R.string.todo_new_task),
+        title = if(isEdit) stringResource(R.string.todo_new_task) else "",
         hostState = snackbarHostState,
         bottomBar = {
             if(isEdit){
@@ -297,8 +297,16 @@ fun DetailScreen(
                 text = "Due Date: $date at ${dateConverter.formatHourMinute(date)}",
             )
 
-            CheckboxListTextFieldExample(subTasks){
-                subTasks = it
+            if(!isEdit){
+                if(subTasks.size >= 1 && subTasks[0].text != "Enter subtask"){
+                    CheckboxListTextFieldList(subTasks, isEdit){
+                        subTasks = it
+                    }
+                }
+            }else{
+                CheckboxListTextFieldList(subTasks, isEdit){
+                    subTasks = it
+                }
             }
 
             if (showCalender) {

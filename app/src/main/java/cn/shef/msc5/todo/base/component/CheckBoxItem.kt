@@ -31,6 +31,7 @@ import cn.shef.msc5.todo.model.dto.SubTask
 @Composable
 fun CheckboxListTextField(
     items: List<SubTask>,
+    isEdit: Boolean,
     onItemCheckedChange: (Int, Boolean) -> Unit,
     onItemTextChange: (Int, String) -> Unit,
     onAddItemClick: () -> Unit,
@@ -39,11 +40,14 @@ fun CheckboxListTextField(
     for (index in items.indices) {
         CheckboxRow(
             item = items[index],
+            isEdit = isEdit,
             onItemCheckedChange = { isChecked ->
-                onItemCheckedChange(index, isChecked)
+                if(isEdit) onItemCheckedChange(index, isChecked)
+                else {}
             },
             onItemTextChange = { newText ->
-                onItemTextChange(index, newText)
+                if(isEdit) onItemTextChange(index, newText)
+                else {}
             },
             onDeleteItemClick = {
                 onDeleteItemClick(index)
@@ -52,29 +56,33 @@ fun CheckboxListTextField(
     }
 
     // Add item row
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.End
-    ) {
-        Text(text = "Add Subtask")
-
-        IconButton(
-            onClick = {
-                onAddItemClick()
-            }
+    if(isEdit){
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
         ) {
-            Icon(imageVector = Icons.Outlined.Add, contentDescription = "Add Item")
+            Text(text = "Add Subtask")
+
+            IconButton(
+                onClick = {
+                    onAddItemClick()
+                }
+            ) {
+                Icon(imageVector = Icons.Outlined.Add, contentDescription = "Add Item")
+            }
         }
     }
+
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CheckboxRow(
     item: SubTask,
+    isEdit: Boolean,
     onItemCheckedChange: (Boolean) -> Unit,
     onItemTextChange: (String) -> Unit,
     onDeleteItemClick: () -> Unit
@@ -120,23 +128,27 @@ fun CheckboxRow(
         )
 
         // Delete button
-        IconButton(
-            onClick = onDeleteItemClick
-        ) {
-            Icon(imageVector = Icons.Outlined.Delete, contentDescription = "Delete Item")
+        if(isEdit){
+            IconButton(
+                onClick = onDeleteItemClick
+            ) {
+                Icon(imageVector = Icons.Outlined.Delete, contentDescription = "Delete Item")
+            }
         }
     }
 }
 
 @Composable
-fun CheckboxListTextFieldExample(
+fun CheckboxListTextFieldList(
     subTasks: List<SubTask>,
+    isEdit: Boolean,
     onChangeSubTaskList: (List<SubTask>) -> Unit
 ) {
     var checkboxItems by remember { mutableStateOf(subTasks) }
 
     CheckboxListTextField(
         items = checkboxItems,
+        isEdit = isEdit,
         onItemCheckedChange = { index, isChecked ->
             checkboxItems = checkboxItems.toMutableList().also {
                 it[index] = it[index].copy(isChecked = isChecked)
