@@ -52,8 +52,6 @@ import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.utilities.GeneralUtil
 import java.sql.Date
 import java.time.LocalDate
-import cn.shef.msc5.todo.model.TaskStateEnum
-import cn.shef.msc5.todo.activity.ViewActivity
 import cn.shef.msc5.todo.model.enums.TaskStateEnum
 import cn.shef.msc5.todo.model.viewmodel.LocationViewModel
 import cn.shef.msc5.todo.services.GeoLocationService
@@ -69,6 +67,9 @@ fun ItemHolder(
     val context = LocalContext.current
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
+
+    val locationViewModel = viewModel<LocationViewModel>()
+    GeoLocationService.locationViewModel = locationViewModel
 
     ElevatedCard(
         modifier = Modifier
