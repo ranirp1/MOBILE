@@ -1,4 +1,4 @@
-package cn.shef.msc5.todo.model
+package cn.shef.msc5.todo.model.enums
 
 import androidx.compose.ui.graphics.Color
 import cn.shef.msc5.todo.ui.theme.Orange

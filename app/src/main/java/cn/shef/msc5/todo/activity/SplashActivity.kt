@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import cn.shef.msc5.todo.ui.theme.AppTheme
 import cn.shef.msc5.todo.ui.view.SplashScreen
 import cn.shef.msc5.todo.utilities.Constants
+import cn.shef.msc5.todo.utilities.SharedPreferenceManger
 
 
 /**
@@ -51,9 +52,14 @@ class SplashActivity : ComponentActivity() {
         //waiting 4 seconds in the main thread, using intent to jump to the main activity
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-//            val intent = Intent(this, MainActivity::class.java)
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            var isLogin = SharedPreferenceManger(this).getBooleanValue("islogin")
+            if(!isLogin){
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            } else{
+                intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
             finish()
         }, Constants.DELAY_TIME)
     }

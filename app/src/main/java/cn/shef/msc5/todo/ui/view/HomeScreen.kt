@@ -46,7 +46,7 @@ import cn.shef.msc5.todo.base.component.ItemHolder
 import cn.shef.msc5.todo.base.component.SortingMenu
 import cn.shef.msc5.todo.base.component.TopBarType
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
-import cn.shef.msc5.todo.model.isEmpty
+import cn.shef.msc5.todo.model.enums.isEmpty
 import cn.shef.msc5.todo.model.mapper.TaskDTOMapper
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.view.state.EmptyScreen

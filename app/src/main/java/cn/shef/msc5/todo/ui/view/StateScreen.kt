@@ -29,7 +29,7 @@ import cn.shef.msc5.todo.base.component.BaseFloatingActionBar
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.ItemHolder
 import cn.shef.msc5.todo.base.component.TopBarType
-import cn.shef.msc5.todo.model.isEmpty
+import cn.shef.msc5.todo.model.enums.isEmpty
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.view.state.EmptyScreen
 import cn.shef.msc5.todo.ui.view.state.LoadingScreen

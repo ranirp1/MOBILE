@@ -32,7 +32,7 @@ import cn.shef.msc5.todo.base.component.CheckboxListTextFieldExample
 import cn.shef.msc5.todo.base.component.Chips
 import cn.shef.msc5.todo.base.component.bottombar.BottomConfirmBar
 import cn.shef.msc5.todo.model.Task
-import cn.shef.msc5.todo.model.getPriorityValues
+import cn.shef.msc5.todo.model.enums.getPriorityValues
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.utilities.DateConverter
 import cn.shef.msc5.todo.utilities.ImageUtil

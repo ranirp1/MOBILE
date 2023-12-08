@@ -1,7 +1,7 @@
 package cn.shef.msc5.todo.base.component
 
 import android.content.Intent
-import androidx.compose.animation.ExperimentalAnimationApi
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,8 +18,6 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
@@ -39,8 +37,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.shef.msc5.todo.activity.DetailActivity
+import androidx.lifecycle.viewmodel.compose.viewModel
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
-import cn.shef.msc5.todo.model.PriorityLevelEnum
+import cn.shef.msc5.todo.model.enums.PriorityLevelEnum
 import cn.shef.msc5.todo.model.Task
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.theme.Grey
@@ -54,6 +53,11 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 import java.sql.Date
 import java.time.LocalDate
 import cn.shef.msc5.todo.model.TaskStateEnum
+import cn.shef.msc5.todo.activity.ViewActivity
+import cn.shef.msc5.todo.model.enums.TaskStateEnum
+import cn.shef.msc5.todo.model.viewmodel.LocationViewModel
+import cn.shef.msc5.todo.services.GeoLocationService
+import cn.shef.msc5.todo.utilities.DistanceUtil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -116,7 +120,23 @@ fun ItemHolder(
                                 if(task.state == TaskStateEnum.ISCOMPLETED.level) {
                                     mainViewModel.markAsUndone(task)
                                 } else {
-                                    mainViewModel.markAsDone(task)
+                                    if(locationViewModel.latitude != null && locationViewModel.longitude != null){
+                                        if(inScope(task.latitude, task.longitude,
+                                                locationViewModel.latitude!!, locationViewModel.longitude!!
+                                            )){
+                                            mainViewModel.markAsDone(task)
+                                        }else{
+                                            Toast.makeText(
+                                                context,
+                                                "Not in the Area", Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }else{
+                                        Toast.makeText(
+                                            context,
+                                            "Please waiting to get current location", Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
                             }
                         )
@@ -209,4 +229,8 @@ fun ItemHolder(
             ){ showDeleteDialog = it }
         }
     }
+}
+
+fun inScope(latitude1: Double, longitude1: Double, latitude2: Double, longitude2: Double): Boolean {
+    return DistanceUtil.distance(latitude1, longitude1, latitude2, longitude2) < 500
 }

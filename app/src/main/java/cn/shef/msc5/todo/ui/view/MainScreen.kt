@@ -2,7 +2,6 @@ package cn.shef.msc5.todo.ui.view
 
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -25,40 +24,42 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.base.component.BaseScaffold
-import cn.shef.msc5.todo.model.ScreenTypeEnum
+import cn.shef.msc5.todo.model.enums.ScreenTypeEnum
 import cn.shef.msc5.todo.model.database.AppDatabase
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
 import cn.shef.msc5.todo.utilities.Constants
+import cn.shef.msc5.todo.utilities.SharedPreferenceManger
 
 /**
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 05/11/2023 22:56
  */
-@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainScreen() {
 
+    val context = LocalContext.current
+
     val mainViewModel by lazy {
-        MainViewModelFactory(ScreenTypeEnum.OTHER_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
+        MainViewModelFactory(SharedPreferenceManger(context).getIntegerValue("userId"),ScreenTypeEnum.OTHER_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
         create(MainViewModel::class.java)
     }
 
     val homeViewModel by lazy {
-        MainViewModelFactory(ScreenTypeEnum.HOME_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
+        MainViewModelFactory(SharedPreferenceManger(context).getIntegerValue("userId"),ScreenTypeEnum.HOME_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).
         create(MainViewModel::class.java)
     }
 
 
     val progressUnfinishedViewModel by lazy {
-        MainViewModelFactory(ScreenTypeEnum.PROGRESS_UNFINISHED, AppDatabase.INSTANCE.getTaskDAO()).
+        MainViewModelFactory(SharedPreferenceManger(context).getIntegerValue("userId"),ScreenTypeEnum.PROGRESS_UNFINISHED, AppDatabase.INSTANCE.getTaskDAO()).
         create(MainViewModel::class.java)
     }
 
-
     val progressIsCompletedViewModel by lazy {
-        MainViewModelFactory(ScreenTypeEnum.PROGRESS_ISCOMPLETED, AppDatabase.INSTANCE.getTaskDAO()).
+        MainViewModelFactory(SharedPreferenceManger(context).getIntegerValue("userId"),ScreenTypeEnum.PROGRESS_ISCOMPLETED, AppDatabase.INSTANCE.getTaskDAO()).
         create(MainViewModel::class.java)
     }
 
@@ -72,7 +73,7 @@ fun MainScreen() {
 
     var selectedItem by remember { mutableStateOf(items.first()) }
     val snackbarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
+
     BaseScaffold(
         showTopBar = false,
         bottomBar = {
@@ -101,7 +102,7 @@ fun MainScreen() {
 //            Constants.NAVIGATION_PROGRESS -> ProgressScreen(context, mainViewModel)
             Constants.NAVIGATION_PROGRESS -> ProgressStateScreen(context, progressUnfinishedViewModel,
                 progressIsCompletedViewModel)
-            Constants.NAVIGATION_PROFILE -> ProfileScreen(context, mainViewModel)
+            Constants.NAVIGATION_PROFILE -> ProfileScreen()
         }
     }
 }

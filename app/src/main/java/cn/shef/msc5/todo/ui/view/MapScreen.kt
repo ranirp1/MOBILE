@@ -32,6 +32,7 @@ import cn.shef.msc5.todo.utilities.MapItems
 import cn.shef.msc5.todo.utilities.SubTaskConverter
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Marker
+import kotlinx.coroutines.launch
 
 @Composable
 fun MapScreen(
@@ -100,8 +101,6 @@ fun MapScreen(
                     }
                     if (taskList != null) {
                         Log.d("MapScreen", "taskListState size: " + taskList.size)
-                    }
-                    if (taskList != null) {
                         for (i in taskList.indices) {
                             val task = taskList[i]
                             val taskState = rememberMarkerState(
@@ -149,21 +148,24 @@ fun MapScreen(
                         }
                     }
                 }
-//                // NOTE: Some features of the MarkerInfoWindow don't work currently. See docs:
-//                // https://github.com/googlemaps/android-maps-compose#obtaining-access-to-the-raw-googlemap-experimental
-//                MarkerInfoWindowContent(
-//                    title = "Current Position",
-//                    state = rememberMarkerState(position = LatLng(53.38110821, -1.47992193)),
-//                    draggable = false
-//                )
-
             }
         }
         // Center camera to include all the Zones.
         LaunchedEffect(state.lastKnownLocation) {
-            cameraPositionState.animate(
-                update = CameraUpdateFactory.newLatLng(LatLng(53.38110821, -1.47992193))
-            )
+            if (state.lastKnownLocation != null) {
+                cameraPositionState.animate(
+                    update = CameraUpdateFactory.newLatLng(
+                        LatLng(
+                            state.lastKnownLocation.latitude,
+                            state.lastKnownLocation.latitude
+                        )
+                    )
+                )
+            } else {
+                cameraPositionState.animate(
+                    update = CameraUpdateFactory.newLatLng(LatLng(53.38110821, -1.47992193))
+                )
+            }
         }
     }
 }

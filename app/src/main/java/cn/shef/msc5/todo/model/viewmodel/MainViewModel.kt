@@ -8,13 +8,13 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import cn.shef.msc5.todo.model.Location
-import cn.shef.msc5.todo.model.ScreenTypeEnum
+import cn.shef.msc5.todo.model.dto.Location
+import cn.shef.msc5.todo.model.enums.ScreenTypeEnum
 import cn.shef.msc5.todo.model.SortOrder
-import cn.shef.msc5.todo.model.SortType
+import cn.shef.msc5.todo.model.enums.SortType
 import cn.shef.msc5.todo.model.Task
-import cn.shef.msc5.todo.model.TaskListState
-import cn.shef.msc5.todo.model.TaskStateEnum
+import cn.shef.msc5.todo.model.enums.TaskListState
+import cn.shef.msc5.todo.model.enums.TaskStateEnum
 import cn.shef.msc5.todo.model.dao.TaskDAO
 import cn.shef.msc5.todo.model.dto.SubTask
 import cn.shef.msc5.todo.utilities.DateConverter
@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.sql.Date
-import java.sql.RowId
 
 /**
  * @author Zhecheng Zhao
@@ -34,6 +33,7 @@ import java.sql.RowId
  */
 
 class MainViewModel(
+    private val userId: Int,
     private val screenType: ScreenTypeEnum,
     private val taskDAO: TaskDAO
 ) : ViewModel() {
@@ -67,7 +67,7 @@ class MainViewModel(
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             delay(500)
-            taskDAO.getTasksList(taskstate).collect{
+            taskDAO.getTasksList(taskstate, userId).collect{
                 taskList = it.toMutableStateList()
                 _taskListFlow.value = taskList
                 state = state.copy(isLoading = false,
@@ -173,7 +173,7 @@ class MainViewModel(
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             delay(500)
-            taskDAO.getAllTasks().map { tasks ->
+            taskDAO.getAllTasks(userId).map { tasks ->
                 when (sortTypeSelected.sortOrder) {
                     is SortOrder.Ascending -> {
                         when (sortTypeSelected) {
@@ -206,7 +206,7 @@ class MainViewModel(
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             delay(500)
-            taskDAO.getAllTasksByDate(selectedDate).map { tasks ->
+            taskDAO.getAllTasksByDate(selectedDate, userId).map { tasks ->
                 when (sortType.sortOrder) {
                     is SortOrder.Ascending -> {
                         when (sortType) {
@@ -236,12 +236,13 @@ class MainViewModel(
 }
 
 class MainViewModelFactory(
+    private val userId: Int,
     private val screenType: ScreenTypeEnum,
     private val taskDAO: TaskDAO
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(screenType, taskDAO) as T
+            return MainViewModel(userId, screenType, taskDAO) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
