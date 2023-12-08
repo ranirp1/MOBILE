@@ -152,8 +152,11 @@ fun ItemHolder(
                             text = { Text(text = OPTIONS_DUPLICATE, color = PurpleGrey40) },
                             onClick = {
                                 showOptionsMenu = false
-                                mainViewModel.duplicate(task, Date.valueOf(LocalDate.now().toString()),
-                                    Date.valueOf(LocalDate.now().toString()), null)
+//                                mainViewModel.duplicate(task, Date.valueOf(LocalDate.now().toString()),
+//                                    Date.valueOf(LocalDate.now().toString()), null)
+                                mainViewModel.addTask(null, task.title, task.userId, task.description, task.priority, task.longitude,
+                                task.latitude, task.imageUrl, Date.valueOf(LocalDate.now().toString()), Date.valueOf(LocalDate.now().toString()),
+                                    task.dueTime, task.parentId, task.state, task.subTasks, null)
                             }
                         )
 
