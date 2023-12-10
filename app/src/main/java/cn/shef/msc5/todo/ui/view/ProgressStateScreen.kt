@@ -35,7 +35,7 @@ fun ProgressStateScreen(context: Context,
 
     BaseScaffold(
         showTopBar = true,
-        topBarType = TopBarType.SEARCH,
+        topBarType = TopBarType.NORMAL,
         title = stringResource(R.string.todo_progress),
         floatingActionButton = {
             Column {

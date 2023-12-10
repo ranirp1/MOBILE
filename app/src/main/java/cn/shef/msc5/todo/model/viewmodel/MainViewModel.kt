@@ -38,6 +38,9 @@ class MainViewModel(
     private val taskDAO: TaskDAO
 ) : ViewModel() {
 
+    private var allTaskList = mutableStateListOf<Task>()
+    private val _allTaskListFlow = MutableStateFlow(allTaskList)
+
     private var taskList = mutableStateListOf<Task>()
     private val _taskListFlow = MutableStateFlow(taskList)
 
@@ -55,11 +58,22 @@ class MainViewModel(
 
     init {
         state = state.copy(isLoading = true)
+        getAllTasks()
         when (screenType) {
             ScreenTypeEnum.HOME_SCREEN -> loadTaskListByDate()
             ScreenTypeEnum.PROGRESS_UNFINISHED -> loadTaskByState(TaskStateEnum.UNFINISHED.level)
             ScreenTypeEnum.PROGRESS_ISCOMPLETED -> loadTaskByState(TaskStateEnum.ISCOMPLETED.level)
             ScreenTypeEnum.OTHER_SCREEN -> loadTaskList()
+        }
+    }
+
+    private fun getAllTasks(){
+        viewModelScope.launch {
+            taskDAO.getAllTasks(userId).collect{
+                allTaskList = it.toMutableStateList()
+                _allTaskListFlow.value = allTaskList
+                postExecute?.invoke()
+            }
         }
     }
 
@@ -76,6 +90,7 @@ class MainViewModel(
             }
         }
     }
+
     private fun loadTaskList() {
         sortAllTasks(sortType)
     }
@@ -115,7 +130,7 @@ class MainViewModel(
     ) {
         var itemId: Int
         if(id == null){
-            itemId = taskList.lastOrNull()?.id ?: -1
+            itemId = allTaskList.lastOrNull()?.id ?: -1
             itemId += 1
         }else{
             itemId = id

@@ -30,10 +30,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.model.SortOrder
 import cn.shef.msc5.todo.model.enums.SortType
+import cn.shef.msc5.todo.ui.theme.Purple40
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
-import cn.shef.msc5.todo.ui.theme.Teal
-import cn.shef.msc5.todo.ui.theme.TealGrey
-import cn.shef.msc5.todo.ui.theme.TealGrey40
+import cn.shef.msc5.todo.ui.theme.PurpleGrey80
 import cn.shef.msc5.todo.utilities.Constants.Companion.SORT_DUE
 import cn.shef.msc5.todo.utilities.Constants.Companion.SORT_LOCATION
 import cn.shef.msc5.todo.utilities.Constants.Companion.SORT_PRIORITY
@@ -63,7 +62,7 @@ fun SortingMenu(
                 content = {
                     Icon(
                         imageVector = Icons.Outlined.FilterAlt,
-                        tint = Teal,
+                        tint = Purple40,
                         contentDescription = "Filter icon"
                     )
                     Text(
@@ -78,7 +77,7 @@ fun SortingMenu(
                 onDismissRequest = { showSortingMenu = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text(text = SORT_PRIORITY, color = TealGrey40) },
+                    text = { Text(text = SORT_PRIORITY, color = PurpleGrey40) },
                     onClick = {
                         showSortingMenu = false
                         sortString = SORT_PRIORITY
@@ -110,7 +109,7 @@ fun SortingMenu(
         }
 
         Divider(
-            color = TealGrey,
+            color = PurpleGrey80,
             modifier = Modifier
                 .height(25.dp)
                 .width(1.dp)
@@ -130,13 +129,13 @@ fun SortingMenu(
                 Icon(
                     imageVector = Icons.Default.ArrowDownward,
                     contentDescription = "Sort by ascending order",
-                    tint = Teal,
+                    tint = Purple40,
                 )
             } else {
                 Icon(
                     imageVector = Icons.Default.ArrowUpward,
                     contentDescription = "Sort by descending order",
-                    tint = Teal
+                    tint = Purple40
                 )
             }
         }
