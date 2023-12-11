@@ -67,6 +67,9 @@ class MainViewModel(
         }
     }
 
+    /**
+     * get all task by userid
+     */
     private fun getAllTasks(){
         viewModelScope.launch {
             taskDAO.getAllTasks(userId).collect{
@@ -77,6 +80,9 @@ class MainViewModel(
         }
     }
 
+    /**
+     * get user task by task state
+     */
     private fun loadTaskByState(taskstate: Int) {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
@@ -103,14 +109,9 @@ class MainViewModel(
         notInitial = true
     }
 
-    fun setLevel(index: Int, value: Int) {
-        val editedTask = taskList[index].copy(priority = value)
-        viewModelScope.launch(Dispatchers.IO) {
-            taskDAO.update(editedTask)
-            postExecute = null
-        }
-    }
-
+    /**
+     * add task
+     */
     fun addTask(
         id: Int?,
         title: String,
@@ -145,18 +146,27 @@ class MainViewModel(
         }
     }
 
+    /**
+     * delete task
+     */
     fun delete(task: Task) {
         viewModelScope.launch(Dispatchers.IO) {
             taskDAO.delete(task)
         }
     }
 
+    /**
+     * change the task state 2 complete
+     */
     fun markAsDone(task: Task){
         viewModelScope.launch(Dispatchers.IO){
             taskDAO.updateComplete(task)
         }
     }
 
+    /**
+     * change the task state 2 incomplete
+     */
     fun markAsUndone(task: Task){
         viewModelScope.launch(Dispatchers.IO){
             taskDAO.updateIncomplete(task)
@@ -184,6 +194,9 @@ class MainViewModel(
         }
     }
 
+    /**
+     * sort the task
+     */
     fun sortAllTasks(sortTypeSelected: SortType) {
         viewModelScope.launch {
             state = state.copy(isLoading = true)

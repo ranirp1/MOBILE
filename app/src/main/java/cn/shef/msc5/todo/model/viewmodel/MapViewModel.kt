@@ -19,10 +19,6 @@ class MapViewModel : ViewModel() {
     fun getDeviceLocation(
         fusedLocationProviderClient: FusedLocationProviderClient
     ) {
-        /*
-         * Get the best and most recent location of the device, which may be null in rare
-         * cases when a location is not available.
-         */
         try {
             val locationResult = fusedLocationProviderClient.lastLocation
             locationResult.addOnCompleteListener { task ->
@@ -32,13 +28,8 @@ class MapViewModel : ViewModel() {
                     )
                 }
             }
-        } catch (e: SecurityException) {
-            // Show error or something
+        } catch (_: SecurityException) {
         }
-    }
-
-    companion object {
-        private val POLYGON_FILL_COLOR = Color.parseColor("#ABF44336")
     }
 }
 

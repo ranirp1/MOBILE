@@ -280,14 +280,14 @@ fun DetailScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
-                text = "Latitude: " + latitude
+                text = "Latitude: $latitude"
             )
 
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 10.dp),
-                text = "Longitude: " + longitude
+                text = "Longitude: $longitude"
             )
 
             Text(

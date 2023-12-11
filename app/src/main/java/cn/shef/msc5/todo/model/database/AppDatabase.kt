@@ -16,6 +16,8 @@ import cn.shef.msc5.todo.utilities.SubTaskConverter
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 19:18
+ *
+ *      init room database
  */
 @TypeConverters(SubTaskConverter::class)
 @Database(entities = [Task::class], version = 7, exportSchema = false)
