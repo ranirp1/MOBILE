@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.ui.res.stringResource
+import cn.shef.msc5.todo.R
 
 /**
  * @author Zhecheng Zhao
@@ -13,10 +15,10 @@ import androidx.compose.material3.TextButton
 
 @Composable
 fun ConfirmDialog(
-    titleText: String = "Delete Todo",
-    contentText: String = "Once deleted the todo cannot be retrieved.",
-    confirmText: String = "Delete",
-    dismissText: String = "Cancel",
+    titleText: String = stringResource(R.string.confirm_delete_todo),
+    contentText: String = stringResource(R.string.confirm_delete_content),
+    confirmText: String = stringResource(R.string.confirm_delete),
+    dismissText: String = stringResource(R.string.confirm_cancel),
     onClick: () -> Unit = {},
     showDialog: (Boolean) -> Unit
 ) {

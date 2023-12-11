@@ -16,9 +16,11 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import cn.shef.msc5.todo.R
 
 /**
  * @author Zhecheng Zhao
@@ -28,7 +30,7 @@ import androidx.compose.ui.window.DialogProperties
 
 @Composable
 fun TimePickerDialog(
-    title: String = "Select Time",
+    title: String = stringResource(R.string.timepicker_select_time),
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
     toggle: @Composable () -> Unit = {},

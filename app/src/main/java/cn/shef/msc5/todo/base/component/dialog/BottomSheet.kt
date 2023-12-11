@@ -20,7 +20,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.CaptureActivity
 import cn.shef.msc5.todo.activity.OpenGalleryActivity
 import kotlinx.coroutines.launch
@@ -68,7 +70,7 @@ fun ImageBottomSheet(
                 }
             }
         ) {
-            Text(text = "Open camera")
+            Text(text = stringResource(R.string.detail_open_camera))
         }
 
         TextButton(
@@ -80,7 +82,7 @@ fun ImageBottomSheet(
                     activityResultLauncher.launch(intent)
                 }
             }) {
-            Text(text = "Choose from gallery")
+            Text(text = stringResource(R.string.detail_choose_from_gallery))
         }
     }
 }

@@ -41,7 +41,7 @@ class MainActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
         //TODO request permissions
-        if (!hasPermission()) {
+        if (!hasFineLocationPermission()) {
             requestFineLocationPermission()
         }
         Log.d(TAG, "onStart: ")
@@ -56,7 +56,7 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    private fun hasPermission(): Boolean {
+    private fun hasFineLocationPermission(): Boolean {
         return PackageManager.PERMISSION_GRANTED ==
                 ActivityCompat.checkSelfPermission(
                     applicationContext, android.Manifest.permission.ACCESS_FINE_LOCATION )

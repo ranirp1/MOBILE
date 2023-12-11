@@ -44,7 +44,7 @@ class CaptureActivity : ComponentActivity() {
             }
 
             var hasCameraPermission by remember { mutableStateOf(false) }
-            if (checkCameraPermission() && checkCameraPermission2()) {
+            if (checkCameraPermission() && checkExternalStoragePermission()) {
                 hasCameraPermission = true
             } else {
                 val requestPermissionLauncher =
@@ -101,7 +101,7 @@ class CaptureActivity : ComponentActivity() {
                 )
     }
 
-    private fun checkCameraPermission2(): Boolean {
+    private fun checkExternalStoragePermission(): Boolean {
         return PackageManager.PERMISSION_GRANTED ==
                 ActivityCompat.checkSelfPermission(
                     applicationContext,

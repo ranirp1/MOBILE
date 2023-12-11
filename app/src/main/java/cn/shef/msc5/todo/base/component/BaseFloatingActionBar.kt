@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 04/11/2023 11:58
  */
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BaseFloatingActionBar(
     fabVisible: Boolean = false,

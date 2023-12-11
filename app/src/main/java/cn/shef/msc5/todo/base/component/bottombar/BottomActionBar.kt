@@ -146,12 +146,5 @@ fun ActionIcons(
             )
         }
 
-//        IconButton(onClick = { onSubTask.invoke() }) {
-//            Icon(
-//                Icons.Rounded.AddTask,
-//                contentDescription = stringResource(R.string.todo_new_task),
-//                tint = Color.White
-//            )
-//        }
     }
 }

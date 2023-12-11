@@ -38,8 +38,6 @@ fun BottomConfirmBar(
     title: String,
     addClick: () -> Unit = {},
 ) {
-    val scope: CoroutineScope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -68,7 +66,6 @@ fun BottomConfirmBar(
                 ) {
                     androidx.compose.material.Icon(
                         Icons.Filled.Edit,
-//                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
                         contentDescription = title,
                         tint = Color.White
                     )

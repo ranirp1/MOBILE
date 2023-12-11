@@ -27,6 +27,7 @@ import cn.shef.msc5.todo.utilities.SharedPreferenceManger
 class DetailActivity : BaseActivity() {
 
     private val TAG = "DetailActivity"
+
     val mainViewModel by lazy {
         MainViewModelFactory(SharedPreferenceManger(this).getIntegerValue("userId"),
             ScreenTypeEnum.OTHER_SCREEN, AppDatabase.INSTANCE.getTaskDAO()).

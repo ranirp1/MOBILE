@@ -36,7 +36,6 @@ fun CancelTopAppBar(
     firstIcon: ImageVector = Icons.Default.Edit,
     secondIcon: ImageVector = Icons.Default.Delete
 ) {
-    Log.d("CancelTopAppBar", "CancelTopAppBar: ")
     val context = LocalContext.current
     CenterAlignedTopAppBar(
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
