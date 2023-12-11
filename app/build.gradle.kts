@@ -64,20 +64,12 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.ui:ui-text-android:1.5.4")
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
@@ -96,8 +88,6 @@ dependencies {
     val appcompat_version = "1.6.1"
     implementation("androidx.appcompat:appcompat:$appcompat_version")
     implementation("androidx.appcompat:appcompat-resources:$appcompat_version")
-//    val swiperefreshlayout_version = "1.1.0"
-//    implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version")
 
     val room_version = "2.6.0"
     implementation("androidx.room:room-common:$room_version")
@@ -105,8 +95,8 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
 
     val google_gms_location = "21.0.1"
-    val google_gms_map = "18.1.0"
-    val google_map_compose = "2.8.0"
+    val google_gms_map = "18.2.0"
+    val google_map_compose = "4.3.0"
     // google maps
     implementation("com.google.android.gms:play-services-location:$google_gms_location")
     implementation("com.google.android.gms:play-services-maps:$google_gms_map")
@@ -119,21 +109,9 @@ dependencies {
     // KTX for the Maps SDK for Android Utility Library
     implementation("com.google.maps.android:maps-utils-ktx:$google_map_ktx")
 
-//    val camerax_version = "1.1.0"
-//    // camera
-//    implementation("androidx.camera:camera-core:${camerax_version}")
-//    implementation("androidx.camera:camera-camera2:${camerax_version}")
-//    implementation("androidx.camera:camera-lifecycle:${camerax_version}")
-//    implementation("androidx.camera:camera-video:${camerax_version}")
-//
-//    implementation("androidx.camera:camera-view:${camerax_version}")
-//    implementation("androidx.camera:camera-extensions:${camerax_version}")
-
 //     https://developer.android.com/jetpack/androidx/releases/core
 //     To use the Animator APIs
     val animation_version = "1.0.0-beta01"
     implementation("androidx.core:core-animation:$animation_version")
-    // Optional - APIs for SplashScreen, including compatibility helpers on devices prior Android 12
-//    val splashscreen_version = "1.1.0-alpha02"
-//    implementation("androidx.core:core-splashscreen:$splashscreen_version")
+
 }

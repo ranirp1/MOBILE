@@ -37,8 +37,6 @@ fun CenterTopAppBar(
 ) {
     val context = LocalContext.current
     CenterAlignedTopAppBar(
-//        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-//            containerColor =  MaterialTheme.colorScheme.primary),
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
         title = {
             Text(
@@ -49,9 +47,9 @@ fun CenterTopAppBar(
             if (showNavigationIcon) {
                 IconButton(onClick = {
                     if(navigationIIcon == Icons.Filled.ArrowBack){
-                        GeneralUtil.finishActivity(context)
+                        GeneralUtil.finishActivitySlideOut(context)
                     }else{
-                        GeneralUtil.finishActivity2(context)
+                        GeneralUtil.finishActivitySlideDown(context)
                     }
                 }) {
                     Icon(

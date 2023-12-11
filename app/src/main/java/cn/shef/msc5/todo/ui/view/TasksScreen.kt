@@ -64,7 +64,7 @@ fun TasksScreen(context: Context, mainViewModel: MainViewModel) {
                     fabVisible = fabVisibleAddTask,
                     onClick = {
                         val intent = Intent(context, DetailActivity::class.java)
-                        GeneralUtil.startActivity2(context, intent)
+                        GeneralUtil.startActivitySlideUp(context, intent)
                     }
                 )
             }

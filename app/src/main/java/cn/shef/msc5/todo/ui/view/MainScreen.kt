@@ -98,8 +98,6 @@ fun MainScreen() {
         when (selectedItem) {
             Constants.NAVIGATION_HOME -> HomeScreen(context, homeViewModel)
             Constants.NAVIGATION_TASKS -> TasksScreen(context, mainViewModel)
-            // TODO add progress screen
-//            Constants.NAVIGATION_PROGRESS -> ProgressScreen(context, mainViewModel)
             Constants.NAVIGATION_PROGRESS -> ProgressStateScreen(context, progressUnfinishedViewModel,
                 progressIsCompletedViewModel)
             Constants.NAVIGATION_PROFILE -> ProfileScreen()

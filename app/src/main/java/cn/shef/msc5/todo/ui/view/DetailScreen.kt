@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
-import android.location.Geocoder
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
@@ -46,7 +45,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
-import cn.shef.msc5.todo.activity.GeoLocationActivity
 import cn.shef.msc5.todo.activity.MapsActivity
 import cn.shef.msc5.todo.base.component.BaseScaffold
 import cn.shef.msc5.todo.base.component.CheckboxListTextFieldList
@@ -168,8 +166,6 @@ fun DetailScreen(
                         isSheetOpen = true
                     },
                     onLocation = {
-//                    val intent = Intent(context, GeoLocationActivity::class.java)
-//                    GeneralUtil.startActivity2(context, intent)
                         val intent = Intent(context, MapsActivity::class.java)
                         intent.putExtra("startActivity", 1)
                         resultLauncher.launch(intent)
@@ -197,7 +193,7 @@ fun DetailScreen(
                                 Date.valueOf(LocalDate.now().toString()), date,
                                 0, TaskStateEnum.UNFINISHED.level, subTasks, null
                             )
-                            GeneralUtil.finishActivity2(context)
+                            GeneralUtil.finishActivitySlideDown(context)
                         }
                     }
                 )

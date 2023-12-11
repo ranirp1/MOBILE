@@ -36,8 +36,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MapScreen(
-    state: MapState,
-    intent: Intent
+    state: MapState, intent: Intent
 ) {
     val TAG = "MapScreen"
     val context = LocalContext.current as MapsActivity
@@ -72,14 +71,13 @@ fun MapScreen(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            GoogleMap(
-                modifier = Modifier.fillMaxSize(),
+            GoogleMap(modifier = Modifier.fillMaxSize(),
                 properties = mapProperties,
                 cameraPositionState = cameraPositionState,
                 onMapClick = {
                     Log.d(
-                        "MapScreen", "it.latitude + " + it.latitude
-                                + "it.longitude + " + it.longitude
+                        "MapScreen",
+                        "it.latitude + " + it.latitude + "it.longitude + " + it.longitude
                     )
                     if (startActivity == 1) {
                         val intent = Intent()
@@ -89,8 +87,7 @@ fun MapScreen(
                         context.finish();
                     }
 
-                }
-            ) {
+                }) {
                 if (startActivity == 0) {
                     val markerClick: (Marker) -> Boolean = {
                         Log.d(TAG, "${it.title} was clicked")
@@ -105,15 +102,13 @@ fun MapScreen(
                             val task = taskList[i]
                             val taskState = rememberMarkerState(
                                 position = LatLng(
-                                    task.latitude,
-                                    task.longitude
+                                    task.latitude, task.longitude
                                 )
                             )
                             var circleCenter by remember {
                                 mutableStateOf(
                                     LatLng(
-                                        task.latitude,
-                                        task.longitude
+                                        task.latitude, task.longitude
                                     )
                                 )
                             }
@@ -121,7 +116,6 @@ fun MapScreen(
                                 circleCenter = taskState.position
                             }
                             MarkerInfoWindowContent(
-//                            MarkerComposable(
                                 icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE),
                                 title = task.title,
                                 state = taskState,
@@ -156,8 +150,7 @@ fun MapScreen(
                 cameraPositionState.animate(
                     update = CameraUpdateFactory.newLatLng(
                         LatLng(
-                            state.lastKnownLocation.latitude,
-                            state.lastKnownLocation.latitude
+                            state.lastKnownLocation.latitude, state.lastKnownLocation.latitude
                         )
                     )
                 )

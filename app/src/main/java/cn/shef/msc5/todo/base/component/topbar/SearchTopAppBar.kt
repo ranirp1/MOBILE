@@ -33,7 +33,6 @@ fun SearchTopAppBar(
     showFirstIcon: Boolean = true,
     firstIcon: ImageVector = Icons.Default.Search,
 ) {
-    // val context = LocalContext.current
     var showSearchBar by remember { mutableStateOf(false) }
     var inputText by remember { mutableStateOf("") }
     if (!showSearchBar) {

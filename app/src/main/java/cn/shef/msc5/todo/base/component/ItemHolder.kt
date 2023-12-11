@@ -85,7 +85,7 @@ fun ItemHolder(
         onClick = {
             val intent = Intent(context, DetailActivity::class.java)
             intent.putExtra("taskId", task.id)
-            GeneralUtil.startActivity2(context, intent)
+            GeneralUtil.startActivitySlideUp(context, intent)
         }
     ) {
         Column(

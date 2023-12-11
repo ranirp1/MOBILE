@@ -1,12 +1,7 @@
 package cn.shef.msc5.todo.ui.view
 
-import android.app.Activity
 import android.content.Intent
-import android.text.Layout
-import android.util.Log
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -78,8 +73,8 @@ fun LoginScreen() {
                         sharedPreferenceManger.userId = Random.nextInt(1..1000)
                         sharedPreferenceManger.userName = username.value
                         sharedPreferenceManger.isLogin = true
-                        GeneralUtil.startActivity2(context, intent)
-                        GeneralUtil.finishActivity2(context)
+                        GeneralUtil.startActivitySlideUp(context, intent)
+                        GeneralUtil.finishActivitySlideDown(context)
                     },
                     modifier = Modifier.size(120.dp, 40.dp)
                 ) {

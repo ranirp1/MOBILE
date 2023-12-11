@@ -30,7 +30,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:exported="false"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.LocationActivity"
             android:exported="false"
@@ -53,25 +53,21 @@
         <activity
             android:name=".activity.MapsActivity"
             android:screenOrientation="portrait"
-            android:exported="false"></activity>
+            android:exported="false"/>
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
-            android:exported="false"></activity>
+            android:exported="false"/>
         <activity
             android:name=".activity.DetailActivity"
             android:exported="true"
             android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name=".activity.ViewActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"></activity>
         <!-- location service -->
         <service
             android:name=".services.LocationService"
             android:screenOrientation="portrait"
-            android:exported="false"></service>
+            android:exported="false"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -83,7 +79,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <!-- demos -->
+
     </application>
 
     <!-- internet permission -->

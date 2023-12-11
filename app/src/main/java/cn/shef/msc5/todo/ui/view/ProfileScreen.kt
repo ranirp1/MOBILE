@@ -77,7 +77,7 @@ fun ProfileScreen() {
                 ProfileText(stringResource(R.string.profile_location),
                     onClick = {
                         val intent = Intent(context, LocationActivity::class.java)
-                        GeneralUtil.startActivity(context, intent)
+                        GeneralUtil.startActivitySlideIn(context, intent)
                     })
                 HeaderText(text = stringResource(R.string.profile_about))
                 ProfileText(
@@ -91,9 +91,9 @@ fun ProfileScreen() {
                     onClick = {
                         val sharedPreferenceManger = SharedPreferenceManger(context)
                         sharedPreferenceManger.isLogin = false
-                        GeneralUtil.finishActivity(context)
+                        GeneralUtil.finishActivitySlideOut(context)
                         val intent = Intent(context, LoginActivity::class.java)
-                        GeneralUtil.startActivity(context, intent)
+                        GeneralUtil.startActivitySlideIn(context, intent)
                     })
             }
         }

@@ -9,6 +9,7 @@ import android.content.Context
  */
 
 class SharedPreferenceManger(context: Context) {
+    
     private val preference = context.getSharedPreferences(
         context.packageName,
         Context.MODE_PRIVATE

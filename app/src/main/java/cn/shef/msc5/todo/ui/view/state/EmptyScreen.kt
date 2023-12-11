@@ -46,7 +46,7 @@ fun EmptyScreen(context : Context) {
         Button(
             onClick = {
                 val intent = Intent(context, DetailActivity::class.java)
-                GeneralUtil.startActivity2(context, intent)
+                GeneralUtil.startActivitySlideUp(context, intent)
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,

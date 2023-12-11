@@ -39,7 +39,6 @@ import cn.shef.msc5.todo.base.component.BaseScaffold
 fun LocationScreen(){
 
     var text by remember { mutableStateOf("") }
-    var fabVisible by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     BaseScaffold(
         showTopBar = true,

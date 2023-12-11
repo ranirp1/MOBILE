@@ -137,7 +137,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                             val intent = Intent(context, MapsActivity::class.java)
                             intent.putExtra("startActivity", 0)
                             intent.putExtra("taskList", SubTaskConverter.fromTaskList(TaskDTOMapper().map2DTOModel(taskListState.value)))
-                            GeneralUtil.startActivity2(context, intent)
+                            GeneralUtil.startActivitySlideUp(context, intent)
                         }
                     )
 
@@ -147,7 +147,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                         fabVisible = fabVisibleAddTask,
                         onClick = {
                             val intent = Intent(context, DetailActivity::class.java)
-                            GeneralUtil.startActivity2(context, intent)
+                            GeneralUtil.startActivitySlideUp(context, intent)
 
                         }
                     )

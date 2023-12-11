@@ -49,9 +49,9 @@ fun CancelTopAppBar(
             if (showNavigationIcon) {
                 IconButton(onClick = {
                     if(navigationIIcon == Icons.Filled.ArrowBack){
-                        GeneralUtil.finishActivity(context)
+                        GeneralUtil.finishActivitySlideOut(context)
                     }else{
-                        GeneralUtil.finishActivity2(context)
+                        GeneralUtil.finishActivitySlideDown(context)
                     }
                 }) {
                     Icon(

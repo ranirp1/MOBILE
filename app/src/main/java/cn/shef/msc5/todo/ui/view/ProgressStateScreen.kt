@@ -43,7 +43,7 @@ fun ProgressStateScreen(context: Context,
                     fabVisible = fabVisibleAddTask,
                     onClick = {
                         val intent = Intent(context, DetailActivity::class.java)
-                        GeneralUtil.startActivity2(context, intent)
+                        GeneralUtil.startActivitySlideUp(context, intent)
                     }
                 )
             }

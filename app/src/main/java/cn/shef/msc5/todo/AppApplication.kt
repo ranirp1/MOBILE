@@ -2,10 +2,6 @@ package cn.shef.msc5.todo
 
 import android.app.Application
 import android.content.Context
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import cn.shef.msc5.todo.model.User
-import cn.shef.msc5.todo.utilities.DataStoreFactory
 
 
 /**
@@ -19,10 +15,8 @@ class AppApplication : Application() {
         instance = this
     }
 
-
     override fun onCreate() {
         super.onCreate()
-        DataStoreFactory.init(this)
     }
 
     companion object {

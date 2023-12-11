@@ -42,7 +42,7 @@ fun MediumTopAppBar(
         navigationIcon = {
             if (showNavigationIcon) {
                 IconButton(onClick = {
-                    GeneralUtil.finishActivity(context)
+                    GeneralUtil.finishActivitySlideOut(context)
                 }) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,

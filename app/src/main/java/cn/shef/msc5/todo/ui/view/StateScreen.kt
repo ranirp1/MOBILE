@@ -45,7 +45,6 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 fun StateScreen(context: Context, mainViewModel: MainViewModel, level: String) {
 
     val taskListState = mainViewModel.taskListFlow.collectAsState(listOf())
-    val sortType = mainViewModel.sortType
 
     var fabVisibleAddTask by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -62,7 +61,7 @@ fun StateScreen(context: Context, mainViewModel: MainViewModel, level: String) {
                     fabVisible = fabVisibleAddTask,
                     onClick = {
                         val intent = Intent(context, DetailActivity::class.java)
-                        GeneralUtil.startActivity2(context, intent)
+                        GeneralUtil.startActivitySlideUp(context, intent)
                     }
                 )
             }

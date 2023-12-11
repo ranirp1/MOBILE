@@ -1,5 +1,6 @@
 package cn.shef.msc5.todo.utilities
 
+import android.annotation.SuppressLint
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TimePickerState
 import androidx.room.TypeConverter
@@ -30,6 +31,7 @@ class DateConverter {
         return dateFormat.format(selectedDate)
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun formatHourMinute(date: Date): String {
         val timeStr = java.util.Date(date.time)
         val format = SimpleDateFormat("HH:mm")
