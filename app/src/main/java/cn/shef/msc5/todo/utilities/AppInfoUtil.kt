@@ -10,6 +10,9 @@ import android.os.Build
  */
 class AppInfoUtil {
     companion object {
+        /**
+         * get application code
+         */
         fun getAppVersionCode(context : Context): Int? {
             var appVersionCode = 0
             val packageInfo = context.getApplicationContext()
@@ -22,6 +25,10 @@ class AppInfoUtil {
             }
             return appVersionCode;
         }
+
+        /**
+         * get application name
+         */
         fun getAppVersionName(context : Context): String? {
             var appVersionName = ""
             val packageInfo = context.getApplicationContext()

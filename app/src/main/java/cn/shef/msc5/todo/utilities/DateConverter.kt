@@ -26,11 +26,17 @@ class DateConverter {
         return value.time
     }
 
+    /**
+     * format date to string
+     */
     fun formatDateMonth(selectedDate: java.util.Date): String {
         val dateFormat = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
         return dateFormat.format(selectedDate)
     }
 
+    /**
+     * format hour to string
+     */
     @SuppressLint("SimpleDateFormat")
     fun formatHourMinute(date: Date): String {
         val timeStr = java.util.Date(date.time)
@@ -41,7 +47,6 @@ class DateConverter {
     fun formatDateYear(selectedDate: Long): Long {
         val calendar = Calendar.getInstance()
         calendar.time = revertDate(selectedDate)
-
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
@@ -65,6 +70,9 @@ class DateConverter {
         return Date(timestamp.time)
     }
 
+    /**
+     * get yesterday
+     */
     fun getPrevDay(selectedDate: Date): Date {
         val calendar = Calendar.getInstance()
         calendar.time = selectedDate
@@ -76,6 +84,9 @@ class DateConverter {
         return Date(calendar.timeInMillis)
     }
 
+    /**
+     * get tmr
+     */
     fun getNextDay(selectedDate: Date): Date {
         val calendar = Calendar.getInstance()
         calendar.time = selectedDate

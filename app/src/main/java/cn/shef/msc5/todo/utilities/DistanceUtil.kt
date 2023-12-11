@@ -7,6 +7,9 @@ package cn.shef.msc5.todo.utilities
  */
 class DistanceUtil {
     companion object {
+        /**
+         * get distance between to location
+         */
         fun distance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
             val theta = lon1 - lon2
             var dist = (Math.sin(deg2rad(lat1))

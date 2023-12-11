@@ -6,8 +6,9 @@ import android.content.Context
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 07/12/2023 12:16
+ *
+ *      to save the user infomation
  */
-
 class SharedPreferenceManger(context: Context) {
     
     private val preference = context.getSharedPreferences(

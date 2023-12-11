@@ -6,6 +6,7 @@ import cn.shef.msc5.todo.model.dto.TaskDTO
 import org.json.JSONArray
 import org.json.JSONObject
 
+
 class MapItems(id: Int, title: String, longitude: Double, latitude: Double) {
     var id: Int = id
     var title: String = title
@@ -14,7 +15,11 @@ class MapItems(id: Int, title: String, longitude: Double, latitude: Double) {
 }
 
 class SubTaskConverter {
+
     companion object {
+        /**
+         * convert object 2 json
+         */
         @TypeConverter
         @JvmStatic
         fun fromSubTaskList(list: List<SubTask>): String {
@@ -28,6 +33,9 @@ class SubTaskConverter {
             return jsonArray.toString()
         }
 
+        /**
+         * convert json 2 object
+         */
         @TypeConverter
         @JvmStatic
         fun toSubTaskList(jsonString: String): List<SubTask> {

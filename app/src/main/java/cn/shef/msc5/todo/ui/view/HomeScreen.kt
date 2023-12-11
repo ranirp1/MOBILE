@@ -96,6 +96,9 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
         }
     }
 
+    /**
+     * show reminder dialog
+     */
     if(!state.isEmpty && !snackbarShown){
         LaunchedEffect(Unit) {
             if (!snackbarShown) {
@@ -188,7 +191,6 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
                         key = { taskItem -> taskItem.id },
                         itemContent = { item ->
                             val currentItem by rememberUpdatedState(item)
-//                            Spacer(modifier = Modifier.height(10.dp))
                             ItemHolder(currentItem, mainViewModel)
                             Spacer(modifier = Modifier.height(5.dp))
                         }
@@ -201,6 +203,7 @@ fun HomeScreen(context: Context, mainViewModel: MainViewModel) {
             }
         }
 
+        //reminder dialog
         if(showNoticeDialog){
             ConfirmDialog(
                 titleText = "Notice",

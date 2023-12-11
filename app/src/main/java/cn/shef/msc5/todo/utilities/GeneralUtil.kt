@@ -9,6 +9,8 @@ import cn.shef.msc5.todo.base.BaseActivity
  * @author Zhecheng Zhao
  * @email zzhao84@sheffield.ac.uk
  * @date Created in 13/11/2023 23:24
+ *
+ *      start activity animation
  */
 class GeneralUtil {
     companion object {

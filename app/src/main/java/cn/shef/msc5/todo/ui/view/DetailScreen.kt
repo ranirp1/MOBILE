@@ -128,6 +128,9 @@ fun DetailScreen(
     var longitude by remember { mutableDoubleStateOf(if(task == null) location.longitude else task.longitude) }
     var address by remember { mutableStateOf("") }
 
+    /**
+     * get the location from the map activity
+     */
     val resultLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if(result.resultCode == Activity.RESULT_OK){
             var latitude1 = result.data?.getDoubleExtra("latitude", 0.0)
@@ -138,6 +141,7 @@ fun DetailScreen(
             if (longitude1 != null) {
                 longitude = longitude1
             }
+            //get the location address string
 //            val geoCoder = Geocoder(context)
 //            address = geoCoder.getFromLocation(latitude, longitude, 1)?.get(0)?.getAddressLine(0).toString()
         }
@@ -214,11 +218,11 @@ fun DetailScreen(
                 .verticalScroll(enabled = true, state = scrollState),
             verticalArrangement = Arrangement.Top
         ) {
+            // editable logic
             if(isEdit){
                 Chips("", "Templates: ", templates) {
                     selectedTemplate = it
                 }
-
                 OutlinedTextField(modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(80.dp)

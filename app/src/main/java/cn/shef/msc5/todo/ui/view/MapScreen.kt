@@ -79,6 +79,7 @@ fun MapScreen(
                         "MapScreen",
                         "it.latitude + " + it.latitude + "it.longitude + " + it.longitude
                     )
+                    //start activity from detail page
                     if (startActivity == 1) {
                         val intent = Intent()
                         intent.putExtra("latitude", it.latitude)
@@ -88,6 +89,7 @@ fun MapScreen(
                     }
 
                 }) {
+                //start activity from home page
                 if (startActivity == 0) {
                     val markerClick: (Marker) -> Boolean = {
                         Log.d(TAG, "${it.title} was clicked")
@@ -98,6 +100,7 @@ fun MapScreen(
                     }
                     if (taskList != null) {
                         Log.d("MapScreen", "taskListState size: " + taskList.size)
+                        //show task location marker
                         for (i in taskList.indices) {
                             val task = taskList[i]
                             val taskState = rememberMarkerState(
