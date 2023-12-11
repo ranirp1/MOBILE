@@ -1,5 +1,6 @@
 package cn.shef.msc5.todo.base.component.bottombar
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 
@@ -79,4 +81,14 @@ fun BottomConfirmBar(
             }
         }
     }
+}
+
+
+@Preview(name = "Light theme")
+@Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewBottomConfirmBar() {
+    BottomConfirmBar(modifier = Modifier.height(70.dp),
+        title = "Save"
+    )
 }

@@ -1,5 +1,6 @@
 package cn.shef.msc5.todo.base.component.topbar
 
+import android.content.res.Configuration
 import androidx.appcompat.widget.SearchView
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
@@ -19,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 
 /**
  * @author Cheng Man Li
@@ -79,4 +81,12 @@ fun SearchTopAppBar(
             // TODO search history?
         }
     }
+}
+
+
+@Preview(name = "Light theme")
+@Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewSearchTopAppBar() {
+    SearchTopAppBar(title = "NormalTopAppBar")
 }

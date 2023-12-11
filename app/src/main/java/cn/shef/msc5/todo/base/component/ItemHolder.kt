@@ -3,6 +3,7 @@ package cn.shef.msc5.todo.base.component
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.location.LocationManager
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -37,12 +38,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.shef.msc5.todo.activity.DetailActivity
 import cn.shef.msc5.todo.base.component.dialog.ConfirmDialog
 import cn.shef.msc5.todo.model.enums.PriorityLevelEnum
 import cn.shef.msc5.todo.model.Task
+import cn.shef.msc5.todo.model.database.AppDatabase
+import cn.shef.msc5.todo.model.enums.ScreenTypeEnum
 import cn.shef.msc5.todo.model.viewmodel.MainViewModel
 import cn.shef.msc5.todo.ui.theme.Grey
 import cn.shef.msc5.todo.ui.theme.PurpleGrey40
@@ -55,8 +59,10 @@ import cn.shef.msc5.todo.utilities.GeneralUtil
 import java.sql.Date
 import java.time.LocalDate
 import cn.shef.msc5.todo.model.enums.TaskStateEnum
+import cn.shef.msc5.todo.model.viewmodel.MainViewModelFactory
 import cn.shef.msc5.todo.services.GeoLocationService
 import cn.shef.msc5.todo.utilities.DistanceUtil
+import cn.shef.msc5.todo.utilities.SharedPreferenceManger
 
 @SuppressLint("MissingPermission")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -235,4 +241,11 @@ fun ItemHolder(
 
 fun inScope(latitude1: Double, longitude1: Double, latitude2: Double, longitude2: Double): Boolean {
     return DistanceUtil.distance(latitude1, longitude1, latitude2, longitude2) < 50
+}
+
+@Preview(name = "Light theme")
+@Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewItemHolder() {
+
 }

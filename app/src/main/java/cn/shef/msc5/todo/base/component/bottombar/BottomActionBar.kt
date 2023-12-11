@@ -1,5 +1,7 @@
 package cn.shef.msc5.todo.base.component.bottombar
 
+import android.content.Intent
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,9 +34,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
+import cn.shef.msc5.todo.activity.MapsActivity
+import cn.shef.msc5.todo.model.enums.TaskStateEnum
+import cn.shef.msc5.todo.utilities.GeneralUtil
+import cn.shef.msc5.todo.utilities.SharedPreferenceManger
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import java.sql.Date
+import java.time.LocalDate
 
 /**
  * @author Zhecheng Zhao
@@ -110,8 +120,7 @@ fun ActionIcons(
     onLocation: () -> Unit,
     onCamera: () -> Unit,
     onCalender: () -> Unit,
-    onReminder: () -> Unit,
-//    onSubTask: () -> Unit
+    onReminder: () -> Unit
 ) {
     Row(modifier = Modifier.wrapContentWidth(), horizontalArrangement = Arrangement.SpaceAround) {
         IconButton(onClick = { onLocation.invoke() }) {
@@ -147,4 +156,13 @@ fun ActionIcons(
         }
 
     }
+}
+
+@Preview(name = "Light theme")
+@Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewBottomActionBar() {
+    BottomActionBar(modifier = Modifier.height(70.dp),
+        title = "Save"
+    )
 }

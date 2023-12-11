@@ -1,10 +1,12 @@
 package cn.shef.msc5.todo.base.component.dialog
 
+import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import cn.shef.msc5.todo.R
 
 /**
@@ -48,4 +50,17 @@ fun ConfirmDialog(
             }
         }
     )
+}
+
+@Preview(name = "Light theme")
+@Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewConfirmDialog() {
+    ConfirmDialog(
+        titleText = "Notice",
+        contentText = "content",
+        confirmText = "Ok",
+        dismissText = ""
+    ){
+    }
 }

@@ -156,7 +156,7 @@ In marking your demonstration (and app), we will be considering:
 2. Robustness/reliability 坚固性/可靠性
 3. Interface suitability and aesthetics 界面适宜性和美观性
 4. How the app copes with portrait/landscape modes and switching to/from the app 应用程序如何处理纵向/横向模式以及切换到应用程序/从应用程序切换
-5. The quality of the solution; a simplistic (functional) solution will attract fewer marks The quality of the solution; a simplistic (functional) solution will attract fewer marks
+5. The quality of the solution; a simplistic (functional) solution will attract fewer marks The quality of the solution; a simplistic (functional) solution will attract fewer marks 解决方案的质量；简单化（功能性）解决方案将吸引更少的分数 解决方案的质量；简单的（功能性的）解决方案会吸引更少的分数
 
 #### 2.4 Exemplar Code
 
@@ -179,7 +179,7 @@ A.99 (i.e. listing A, line 99) 按字母顺序排列的“字母”，例如上�
 2. the location from right clicking the file in Android Studio → Copy Path/Reference →
 Path from Content Root, to allow the marker to see more detail in your repository
 when necessary 在 Android Studio 中右键单击文件→复制路径/引用→内容根目录中的路径的位置，以允许标记在必要时在存储库中查看更多详细信息
-3. You should not (typically) include a whole file listing You should not (typically) include a whole file listing
+3. You should not (typically) include a whole file listing You should not (typically) include a whole file listing 您不应该（通常）包含整个文件列表 您不应该（通常）包含整个文件列表
 4. You may choose to ‘fold’ parts of your code 您可以选择“折叠”部分代码
 5. Standard code quality applies, e.g. appropriate comments, meaningful naming 标准代码质量适用，例如适当的注释，有意义的命名
 6. Code should, when possible, explain itself and not need many comments, e.g. use

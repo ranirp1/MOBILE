@@ -2,6 +2,7 @@ package cn.shef.msc5.todo.base.component.dialog
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,10 +22,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cn.shef.msc5.todo.R
 import cn.shef.msc5.todo.activity.CaptureActivity
 import cn.shef.msc5.todo.activity.OpenGalleryActivity
+import cn.shef.msc5.todo.base.component.bottombar.BottomConfirmBar
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,4 +88,16 @@ fun ImageBottomSheet(
             Text(text = stringResource(R.string.detail_choose_from_gallery))
         }
     }
+}
+
+@Preview(name = "Light theme")
+@Preview(name = "Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewImageBottomSheet() {
+    ImageBottomSheet(
+        onCapturedImageUri = {
+        },
+        onSelect = {
+        }
+    )
 }
