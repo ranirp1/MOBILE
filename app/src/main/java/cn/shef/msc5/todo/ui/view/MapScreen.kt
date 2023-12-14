@@ -41,9 +41,7 @@ fun MapScreen(
     val TAG = "MapScreen"
     val context = LocalContext.current as MapsActivity
 
-    // Set properties using MapProperties which you can use to recompose the map
     val mapProperties = MapProperties(
-        // Only enable if user has accepted location permissions.
         isMyLocationEnabled = state.lastKnownLocation != null,
     )
     val cameraPositionState = rememberCameraPositionState()
@@ -87,7 +85,6 @@ fun MapScreen(
                         context.setResult(Activity.RESULT_OK, intent)
                         context.finish();
                     }
-
                 }) {
                 //start activity from home page
                 if (startActivity == 0) {
