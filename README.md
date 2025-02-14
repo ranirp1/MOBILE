@@ -23,8 +23,8 @@ The app consists of the following screens:
 6. **Add Task Page** - Create tasks with location, images, and sub-tasks.  
 7. **View Task Page** - View and edit task details.  
 
-### 🖊️ **Figma Wireframe Design**  
-<p align="center"> <img src="https://github.com/ranirp1/MSc-COM6510-AppDevelopment/blob/ChengManLi/Figma-Wireframe-Design.jpg" width="80%"> </p>
+## 🖊️ **Figma Wireframe Design**  
+![Figma Wireframe](https://github.com/ranirp1/MSc-COM6510-AppDevelopment/blob/ChengManLi/Figma-Wireframe-Design.jpg)
 
 ## 🛠 **Technology Stack**  
 - **Language:** Kotlin  
@@ -47,7 +47,7 @@ The app consists of the following screens:
 ## 🔧 **Installation & Setup**  
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-repo-url.git 
+git clone https://github.com/ranirp1/MSc-COM6510-AppDevelopment.git
 ```
 2. Open the project in **Android Studio**.
 3. Install dependencies and sync the project.
