@@ -62,11 +62,11 @@ Manual testing was performed to ensure functionality, covering:
 - Map integration and task location tracking
 
 ## 📌 **Future Enhancements** 
-🔍 Implement a **search task** feature.
-📊 Improve **task progress visualization**.
-🎨 Add **themes and font customization**.
-🔒 Enhance **security and data integrity**.
-📊 Introduce **user analytics**.
+- 🔍 Implement a **search task** feature.
+- 📊 Improve **task progress visualization**.
+- 🎨 Add **themes and font customization**.
+- 🔒 Enhance **security and data integrity**.
+- 📊 Introduce **user analytics**.
 
 
 
