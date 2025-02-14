@@ -4,14 +4,14 @@
 The **Student ToDo App** helps students efficiently manage their daily tasks, improving time management and productivity. It offers features like task creation, tracking, notifications, and progress monitoring.  
 
 ## 🚀 **Features**  
-- ✅ **Task Management:** Create, edit, duplicate, and delete tasks.  
-- 📋 **Task Templates:** Predefined templates for quick task creation.  
-- 🔔 **Notifications & Reminders:** Alerts for upcoming and overdue tasks.  
-- 📍 **Task Tracking:** Mark tasks as completed or undone.  
-- 📊 **Sorting & Filtering:** Organize tasks by due date, priority, or location.  
-- 🔑 **User Authentication:** Secure login and account management.  
-- 🗺 **Map Integration:** View and manage tasks on a map.  
-- 📈 **Task Progress:** Monitor and analyze completed and pending tasks.  
+✅ **Task Management:** Create, edit, duplicate, and delete tasks.  
+📋 **Task Templates:** Predefined templates for quick task creation.  
+🔔 **Notifications & Reminders:** Alerts for upcoming and overdue tasks.  
+📍 **Task Tracking:** Mark tasks as completed or undone.  
+📊 **Sorting & Filtering:** Organize tasks by due date, priority, or location.  
+🔑 **User Authentication:** Secure login and account management.  
+🗺 **Map Integration:** View and manage tasks on a map.  
+📈 **Task Progress:** Monitor and analyze completed and pending tasks.  
 
 ## 🎨 **UI Design**  
 The app consists of the following screens:  
@@ -62,11 +62,11 @@ Manual testing was performed to ensure functionality, covering:
 - Map integration and task location tracking
 
 ## 📌 **Future Enhancements** 
-- 🔍 Implement a **search task** feature.
-- 📊 Improve **task progress visualization**.
-- 🎨 Add **themes and font customization**.
-- 🔒 Enhance **security and data integrity**.
-- 📊 Introduce **user analytics**.
+🔍 Implement a **search task** feature.
+📊 Improve **task progress visualization**.
+🎨 Add **themes and font customization**.
+🔒 Enhance **security and data integrity**.
+📊 Introduce **user analytics**.
 
 
 
